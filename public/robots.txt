@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /settings/
+
+# Set APP_URL to the production domain before deployment.
+Sitemap: http://127.0.0.1:8000/sitemap.xml

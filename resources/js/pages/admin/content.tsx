@@ -1,0 +1,335 @@
+import { ImageUploadPreview } from '@/components/admin/image-upload-preview';
+import { RichTextEditor } from '@/components/admin/rich-text-editor';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import AppLayout from '@/layouts/app-layout';
+import type { BreadcrumbItem, PageContent as PageContentItem, PageMedia, SharedData } from '@/types';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { FormEventHandler, useMemo } from 'react';
+
+function SectionMediaUpload({ page, section, media }: { page: string; section: string; media: PageMedia[] }) {
+    const sectionMedia = media.filter((item) => item.section_key === section);
+    const mediaSlot = sectionMedia[0];
+    const mediaForm = useForm<{ page_key: string; section_key: string; media_key: string; alt_text: string; image: File | null }>({
+        page_key: page,
+        section_key: section,
+        media_key: mediaSlot?.media_key ?? 'image',
+        alt_text: mediaSlot?.alt_text ?? '',
+        image: null,
+    });
+
+    const saveMedia: FormEventHandler = (event) => {
+        event.preventDefault();
+        mediaForm.post(route('admin.content.media.update'), { forceFormData: true, preserveScroll: true });
+    };
+
+    return (
+        <form onSubmit={saveMedia} className="mt-6 border-t pt-5">
+            <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+                <div>
+                    <p className="text-sm font-semibold">Section image</p>
+                    <p className="text-muted-foreground mt-1 text-xs">Upload the image used by this section. The existing image will be replaced.</p>
+                </div>
+                {mediaSlot && <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs">Current image</span>}
+            </div>
+            <div className="grid gap-4 md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]">
+                <div>
+                    {mediaSlot?.image_url ? (
+                        <img
+                            src={mediaSlot.image_url}
+                            alt={mediaSlot.alt_text ?? `${section} image`}
+                            className="h-28 w-full rounded-md border object-cover"
+                        />
+                    ) : (
+                        <div className="bg-muted/50 text-muted-foreground flex h-28 items-center justify-center rounded-md border border-dashed text-xs">
+                            No image uploaded
+                        </div>
+                    )}
+                </div>
+                <div className="space-y-3">
+                    <div>
+                        <Label htmlFor={`media-alt-${section}`} className="mb-2 block text-xs">
+                            Alt text
+                        </Label>
+                        <Input
+                            id={`media-alt-${section}`}
+                            placeholder={`Describe the ${formatLabel(section, sectionLabels).toLowerCase()} image`}
+                            value={mediaForm.data.alt_text}
+                            onChange={(event) => mediaForm.setData('alt_text', event.target.value)}
+                        />
+                        {mediaForm.errors.alt_text && <p className="text-destructive mt-1 text-xs">{mediaForm.errors.alt_text}</p>}
+                    </div>
+                    <div>
+                        <Label htmlFor={`media-file-${section}`} className="mb-2 block text-xs">
+                            Choose image
+                        </Label>
+                        <Input
+                            id={`media-file-${section}`}
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            onChange={(event) => mediaForm.setData('image', event.target.files?.[0] ?? null)}
+                            required={!mediaSlot?.image_url}
+                            className="file:bg-muted file:text-foreground file:mr-4 file:border-0 file:px-3 file:py-1.5"
+                        />
+                        <ImageUploadPreview
+                            file={mediaForm.data.image}
+                            alt={mediaForm.data.alt_text || `${section} image`}
+                            className="mt-3 h-28 w-full rounded-md border object-cover"
+                        />
+                        <p className="text-muted-foreground mt-1 text-xs">JPG, PNG, or WebP. Maximum 5 MB.</p>
+                        {mediaForm.errors.image && <p className="text-destructive mt-1 text-xs">{mediaForm.errors.image}</p>}
+                    </div>
+                    <Button type="submit" size="sm" disabled={mediaForm.processing}>
+                        {mediaForm.processing ? 'Uploading…' : mediaSlot?.image_url ? 'Replace image' : 'Upload image'}
+                    </Button>
+                </div>
+            </div>
+        </form>
+    );
+}
+
+const breadcrumbs: BreadcrumbItem[] = [
+    { title: 'Dashboard', href: '/dashboard' },
+    { title: 'Website Content', href: '/admin/content' },
+];
+
+const pageLabels: Record<string, string> = {
+    home: 'Home',
+    about: 'About',
+    services: 'Services',
+    projects: 'Projects',
+    industries: 'Industries',
+    contact: 'Contact',
+    consultation: 'Consultation',
+};
+
+const sectionLabels: Record<string, string> = {
+    hero: 'Hero section',
+    company: 'Company section',
+    services: 'Services section',
+    delivery: 'Delivery section',
+    standards: 'Standards section',
+    portfolio: 'Portfolio section',
+    scope: 'Scope section',
+    sectors: 'Sectors section',
+    capabilities: 'Capabilities section',
+    contact_cta: 'Contact call to action',
+    cta: 'Call to action',
+    mission: 'Mission section',
+    team: 'Team section',
+    references: 'References section',
+    form: 'Form section',
+    location: 'Location section',
+};
+
+const fieldLabels: Record<string, string> = {
+    eyebrow: 'Eyebrow label',
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Description',
+    primary_cta: 'Primary button label',
+    secondary_cta: 'Secondary button label',
+    success_message: 'Success message',
+};
+
+const formatLabel = (value: string, labels: Record<string, string>) =>
+    labels[value] ?? value.replace(/_/g, ' ').replace(/\b\w/g, (character) => character.toUpperCase());
+
+export default function Content({
+    page,
+    pages,
+    contents,
+    media,
+}: {
+    page: string;
+    pages: string[];
+    contents: PageContentItem[];
+    media: PageMedia[];
+}) {
+    const { flash } = usePage<SharedData>().props;
+    const contentForm = useForm<{ page_key: string; contents: Record<string, string> }>({
+        page_key: page,
+        contents: Object.fromEntries(contents.map((item) => [`${item.section_key}.${item.field_key}`, item.value ?? ''])),
+    });
+    const groupedContents = useMemo(() => {
+        return contents.reduce<Record<string, PageContentItem[]>>((groups, item) => {
+            groups[item.section_key] ??= [];
+            groups[item.section_key].push(item);
+            return groups;
+        }, {});
+    }, [contents]);
+
+    const selectPage = (value: string) => router.get(route('admin.content.index'), { page: value });
+    const saveContent: FormEventHandler = (event) => {
+        event.preventDefault();
+        contentForm.put(route('admin.content.update'), { preserveScroll: true });
+    };
+    return (
+        <AppLayout breadcrumbs={breadcrumbs}>
+            <Head title="Website Content" />
+            <div className="flex flex-1 flex-col gap-6 p-4 lg:p-6">
+                <header className="bg-card flex flex-col gap-4 rounded-xl border p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">Website CMS</p>
+                        <h2 className="mt-1 text-2xl font-semibold tracking-tight">Website Content</h2>
+                        <p className="text-muted-foreground mt-1 max-w-2xl text-sm">
+                            Kelola teks dan media halaman publik tanpa mengubah kode aplikasi.
+                        </p>
+                    </div>
+                    <div className="min-w-52">
+                        <Label htmlFor="page-selector" className="mb-2 block text-xs font-medium">
+                            Editing page
+                        </Label>
+                        <select
+                            id="page-selector"
+                            value={page}
+                            onChange={(event) => selectPage(event.target.value)}
+                            className="border-input bg-background focus-visible:ring-ring h-10 w-full rounded-md border px-3 text-sm outline-none focus-visible:ring-2"
+                        >
+                            {pages.map((item) => (
+                                <option key={item} value={item}>
+                                    {pageLabels[item] ?? item}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </header>
+
+                {flash?.success && (
+                    <div role="status" className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+                        {flash.success}
+                    </div>
+                )}
+
+                <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(18rem,24rem)] xl:items-start">
+                    <div className="min-w-0 space-y-5">
+                        <form onSubmit={saveContent} className="space-y-5">
+                            <div className="flex items-end justify-between gap-4">
+                                <div>
+                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Copy editor</p>
+                                    <h3 className="mt-1 text-lg font-semibold">{pageLabels[page] ?? page} page content</h3>
+                                </div>
+                                <span className="text-muted-foreground text-xs">{contents.length} editable fields</span>
+                            </div>
+
+                            {Object.entries(groupedContents).map(([section, items]) => (
+                                <section key={section} className="bg-card rounded-xl border p-5 shadow-sm sm:p-6">
+                                    <div className="mb-5 flex items-start justify-between gap-4 border-b pb-4">
+                                        <div>
+                                            <h4 className="font-semibold">{formatLabel(section, sectionLabels)}</h4>
+                                            <p className="text-muted-foreground mt-1 text-xs">Edit the copy displayed in this section.</p>
+                                        </div>
+                                        <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs font-medium">
+                                            {items.length} {items.length === 1 ? 'field' : 'fields'}
+                                        </span>
+                                    </div>
+                                    <div className="grid gap-5 md:grid-cols-2">
+                                        {items.map((item) => {
+                                            const key = `${item.section_key}.${item.field_key}`;
+                                            const value = contentForm.data.contents[key] ?? '';
+                                            const isLongText =
+                                                item.field_key === 'description' || item.field_key === 'success_message' || value.length > 120;
+                                            const error = contentForm.errors[`contents.${key}`];
+
+                                            return (
+                                                <div key={key} className={isLongText ? 'md:col-span-2' : ''}>
+                                                    {isLongText ? (
+                                                        <RichTextEditor
+                                                            id={key}
+                                                            label={formatLabel(item.field_key, fieldLabels)}
+                                                            value={value}
+                                                            onChange={(nextValue) =>
+                                                                contentForm.setData('contents', {
+                                                                    ...contentForm.data.contents,
+                                                                    [key]: nextValue,
+                                                                })
+                                                            }
+                                                            error={error}
+                                                            rows={5}
+                                                            hint={`Key: ${key}`}
+                                                        />
+                                                    ) : (
+                                                        <>
+                                                            <Label htmlFor={key} className="mb-2 block">
+                                                                {formatLabel(item.field_key, fieldLabels)}
+                                                            </Label>
+                                                            <Input
+                                                                id={key}
+                                                                value={value}
+                                                                onChange={(event) =>
+                                                                    contentForm.setData('contents', {
+                                                                        ...contentForm.data.contents,
+                                                                        [key]: event.target.value,
+                                                                    })
+                                                                }
+                                                                maxLength={5000}
+                                                            />
+                                                            <div className="mt-1 flex items-start justify-between gap-3">
+                                                                <p className="text-muted-foreground text-xs">Key: {key}</p>
+                                                                <p className="text-muted-foreground shrink-0 text-xs">{value.length}/5000</p>
+                                                            </div>
+                                                            {error && <p className="text-destructive mt-1 text-xs">{error}</p>}
+                                                        </>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <SectionMediaUpload page={page} section={section} media={media} />
+                                </section>
+                            ))}
+
+                            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                                <p className="text-muted-foreground text-xs">Changes are applied to the selected page only.</p>
+                                <Button type="submit" disabled={contentForm.processing} className="sm:min-w-32">
+                                    {contentForm.processing ? 'Saving…' : 'Save content'}
+                                </Button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <aside className="space-y-5">
+                        <section className="bg-card rounded-xl border p-5 shadow-sm sm:p-6">
+                            <div className="mb-4 flex items-center justify-between gap-3">
+                                <div>
+                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Visual assets</p>
+                                    <h3 className="mt-1 font-semibold">Page media</h3>
+                                    <p className="text-muted-foreground mt-1 text-xs">Upload images directly inside their related sections.</p>
+                                </div>
+                                <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs font-medium">{media.length}</span>
+                            </div>
+                            {media.length > 0 ? (
+                                <div className="space-y-3">
+                                    {media.map((item) => (
+                                        <div key={item.id} className="flex items-center gap-3 rounded-lg border p-3">
+                                            {item.image_url ? (
+                                                <img
+                                                    src={item.image_url}
+                                                    alt={item.alt_text ?? item.media_key}
+                                                    className="h-12 w-16 rounded border object-cover"
+                                                />
+                                            ) : (
+                                                <div className="bg-muted text-muted-foreground flex h-12 w-16 items-center justify-center rounded border text-[10px]">
+                                                    No preview
+                                                </div>
+                                            )}
+                                            <div className="min-w-0">
+                                                <p className="truncate text-sm font-medium">{formatLabel(item.section_key, sectionLabels)}</p>
+                                                <p className="text-muted-foreground mt-1 truncate text-xs">Slot: {item.media_key}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="bg-muted/50 text-muted-foreground rounded-lg border border-dashed p-6 text-center text-sm">
+                                    No media uploaded for this page yet.
+                                </div>
+                            )}
+                        </section>
+                    </aside>
+                </div>
+            </div>
+        </AppLayout>
+    );
+}

@@ -1,0 +1,237 @@
+{
+  "company": {
+    "name": "PT. Citra Protecta Semesta",
+    "shortName": "CPS",
+    "tagline": "Quick Response and Good Quality are our commitment to serve",
+    "about": "PT. Citra Protecta Semesta is a company enthusiastic in Electrical & Electronic Engineering, through our idealism as a native entrepreneur, who wants to build a good worldwide company/manufacturer from Indonesia. We pursue good creation and innovation in business in Electrical System and Power Electronics.",
+    "address": {
+      "line1": "Kavling DPR Blok C No. 234, Neroktog, Pinang",
+      "city": "Tangerang",
+      "province": "Banten",
+      "postalCode": "15145",
+      "country": "Indonesia",
+      "full": "Kavling DPR Blok C No. 234 Neroktog Pinang Tangerang, Banten, Indonesia 15145"
+    },
+    "contact": {
+      "phones": [
+        "+62-21-55746808",
+        "+62-21-90572001",
+        "+62-21-90572002",
+        "+62-21-90572003"
+      ],
+      "fax": "+62-21-68469494",
+      "email": "cps@cpsindo.com",
+      "website": "https://www.cpsindo.com"
+    }
+  },
+
+  "divisions": [
+    {
+      "id": "service-maintenance",
+      "name": "Service and Maintenance Division",
+      "description": "Serves clients for Service & Maintenance of power-electronic equipment: Energy Monitoring, UPS, Battery Monitoring, Charger, Inverter, Rectifier. Supported by expert human resources to give correct and fast solutions, reducing production time losses and improving production efficiency."
+    },
+    {
+      "id": "design-manufacture",
+      "name": "Design and Manufacture Division",
+      "description": "Provides customized Power Electronic equipment solutions based on client requirements. Production covers Electrical Panel, Battery Monitoring, Inverter & Rectifier, and Cathodic Protection."
+    },
+    {
+      "id": "trading-construction",
+      "name": "Trading and Construction Division",
+      "description": "Assists customers in reaching project goals. Electrical, Mechanical & Instrument equipment comes with ANSI/NEMA or IEC Standard, competitive price, and good delivery, keeping projects on budget and schedule."
+    }
+  ],
+
+  "productCategories": [
+    {
+      "id": "electrical",
+      "name": "Electrical",
+      "description": "Supply & Installation of electrical panels and distribution systems.",
+      "products": [
+        { "id": "lvmdp", "name": "Low Voltage Main Distribution Panel (LVMDP)" },
+        { "id": "mdp", "name": "Main Distribution Panel (MDP)" },
+        { "id": "mcc", "name": "Motor Control Center (MCC)" },
+        { "id": "genset-sync-panel", "name": "Genset Synchronizing Panel" },
+        { "id": "ats-amf-panel", "name": "ATS/AMF Panel" },
+        { "id": "plc-instrument-panel", "name": "PLC Instrument Panel" },
+        { "id": "explosion-proof-panel", "name": "Explosion Proof Panel" },
+        { "id": "switchgear", "name": "Switchgear" },
+        { "id": "ups", "name": "UPS" },
+        { "id": "power-cable-tray", "name": "Power Cable & Tray/Ladder" }
+      ]
+    },
+    {
+      "id": "mechanical",
+      "name": "Mechanical",
+      "description": "Fire fighting and piping systems for industrial and power plant facilities.",
+      "products": [
+        { "id": "sprinkler-system", "name": "Sprinkler System" },
+        { "id": "fire-alarm-system", "name": "Fire Alarm System" },
+        { "id": "co2-system", "name": "CO2 System" },
+        { "id": "underground-hdpe-pipe", "name": "Underground HDPE Pipe" }
+      ]
+    },
+    {
+      "id": "cathodic-protection",
+      "name": "Cathodic Protection System",
+      "description": "Supply & Installation of Transformer Rectifier (CPS product), Junction Box, Test Point, maintenance/repair of Transformer Rectifier, installation/repair of Cathodic Protection System, and Closed Interval Potential Survey (CIPS).",
+      "products": [
+        { "id": "transformer-rectifier", "name": "Transformer Rectifier (CPS Product)" },
+        { "id": "explosion-proof-transformer-rectifier", "name": "Explosion Proof Transformer Rectifier" },
+        { "id": "junction-box", "name": "Junction Box / Test Point" },
+        { "id": "dc-dc-converter-installation", "name": "Installation DC/DC Converter" },
+        { "id": "cips", "name": "Closed Interval Potential Survey (CIPS)" },
+        { "id": "anode-installation-jetty", "name": "Anode Installation at Jetty/Dermaga" },
+        { "id": "mmo-anode-ship-hull", "name": "MMO Anode Installation on Ship Hull" },
+        { "id": "mgps-anode", "name": "MGPS Anode for Ship Pipe" },
+        { "id": "anode-testing", "name": "Anode Testing" }
+      ]
+    },
+    {
+      "id": "load-bank",
+      "name": "Load Bank / Dummy Load",
+      "description": "Load Bank DC for battery load testing and Load Bank AC for genset load testing.",
+      "products": [
+        { "id": "load-bank-dc", "name": "Load Bank DC", "spec": "10 - 1000 Ampere, for Battery Load Test" },
+        { "id": "load-bank-ac-indoor", "name": "Load Bank AC (Indoor Type)", "spec": "10 - 2500 MW, for Genset Load Test" },
+        { "id": "load-bank-ac-mobile", "name": "Load Bank AC (Mobile Type)", "spec": "10 - 2500 MW, for Genset Load Test" }
+      ]
+    }
+  ],
+
+  "gallery": [
+    { "id": "img-001", "category": "electrical", "caption": "Switchgear", "project": "SP Niru, Prabumulih - Pertamina EP" },
+    { "id": "img-002", "category": "electrical", "caption": "MCC" },
+    { "id": "img-003", "category": "electrical", "caption": "Power Cable & Tray/Ladder" },
+    { "id": "img-004", "category": "electrical", "caption": "UPS" },
+    { "id": "img-005", "category": "electrical", "caption": "LVMDP - Data Center Cyber 2" },
+    { "id": "img-006", "category": "electrical", "caption": "LVMDP MSC Ciledug - BTEL" },
+    { "id": "img-007", "category": "electrical", "caption": "LVMDP - Data Center Cyber 2 (alternate view)" },
+    { "id": "img-008", "category": "electrical", "caption": "Explosion Proof Panel" },
+    { "id": "img-009", "category": "electrical", "caption": "Load Bank Mobile / Fixed" },
+    { "id": "img-010", "category": "electrical", "caption": "ATS-AMF & Genset Synchronizing Panel" },
+    { "id": "img-011", "category": "electrical", "caption": "Assembling BTS Panel" },
+    { "id": "img-012", "category": "mechanical", "caption": "Sprinkler System - Fire Fighting System for PLTU #3 Babel" },
+    { "id": "img-013", "category": "mechanical", "caption": "Underground HDPE Pipe" },
+    { "id": "img-014", "category": "mechanical", "caption": "Power Plant (PLTU)" },
+    { "id": "img-015", "category": "mechanical", "caption": "Fire Alarm System" },
+    { "id": "img-016", "category": "mechanical", "caption": "CO2 System" },
+    { "id": "img-017", "category": "cathodic-protection", "caption": "Explosion Proof Transformer Rectifier" },
+    { "id": "img-018", "category": "cathodic-protection", "caption": "Installation DC/DC Converter" },
+    { "id": "img-019", "category": "cathodic-protection", "caption": "Closed Interval Potential Survey (CIPS)" },
+    { "id": "img-020", "category": "cathodic-protection", "caption": "Repair Transformer Rectifier" },
+    { "id": "img-021", "category": "cathodic-protection", "caption": "Install Anode di Dermaga - PLTU Soma Karimun" },
+    { "id": "img-022", "category": "cathodic-protection", "caption": "Check Anode" },
+    { "id": "img-023", "category": "cathodic-protection", "caption": "Pasang Kabel di Bawah Dermaga" },
+    { "id": "img-024", "category": "cathodic-protection", "caption": "Penyelaman Anode (Anode Diving Installation)" },
+    { "id": "img-025", "category": "cathodic-protection", "caption": "Install MMO Anode di Lambung Kapal - PELNI PT. PAL Surabaya" },
+    { "id": "img-026", "category": "cathodic-protection", "caption": "Anode Terpasang" },
+    { "id": "img-027", "category": "cathodic-protection", "caption": "Anode MGPS untuk Pipa Kapal" },
+    { "id": "img-028", "category": "cathodic-protection", "caption": "Test Anode" },
+    { "id": "img-029", "category": "load-bank", "caption": "Load Bank AC Indoor Type" },
+    { "id": "img-030", "category": "load-bank", "caption": "Load Bank AC Mobile Type" }
+  ],
+
+  "projectReferences": {
+    "cme": [
+      { "no": 1, "client": "PT. Inti Karya Persada Tehnik", "user": "Pertamina Sumbagsel", "project": "Sub Distribution Panel, COS Panel" },
+      { "no": 2, "client": "PT. Inti Karya Persada Tehnik", "user": "PT. Chandra Asih Petro Chemical", "project": "MOV Distribution Panel" },
+      { "no": 3, "client": "Conoco Philips", "user": "Conoco Phillips (Grissik) Ltd", "project": "Modifikasi Drawer MCC 150" },
+      { "no": 4, "client": "PT. Konverta Mitra Abadi", "user": "Konverta Mitra Abadi", "project": "Syncronizing genset" },
+      { "no": 5, "client": "PT. Bina Niaga Multi Usaha", "user": "PT. Bina Niaga Multi Usaha", "project": "Modifikasi Panel Capacitor Bank" },
+      { "no": 6, "client": "PT. Catur Mukti Pratama", "user": "PT. Telkomsel", "project": "Panel Distribusi & kWH for BTS, ATS AMF" },
+      { "no": 6, "client": "PT. Catur Mukti Pratama", "user": "PT. Excelcomindo", "project": "Panel Distribusi & kWH for BTS, ATS AMF" },
+      { "no": 6, "client": "PT. Catur Mukti Pratama", "user": "PT. Indosat", "project": "Panel Distribusi & kWH for BTS, ATS AMF" },
+      { "no": 7, "client": "PT. Cerah Sempurna", "user": "PT. Mobile 8 Telecom", "project": "CME Work BTS" },
+      { "no": 8, "client": "PT. Intisel Prodaktifakom", "user": "PT. Excelcomindo", "project": "Panel Distribusi & kWH for BTS" },
+      { "no": 9, "client": "PT. Cyberindo Aditama", "user": "PT. Cyberindo Aditama", "project": "Supply & Install Panel UPS 120 KVA" },
+      { "no": 9, "client": "PT. Cyberindo Aditama", "user": "PT. Cyberindo Aditama", "project": "Supply & Install Electrical Panel System Cyber 2 Tahap 1" },
+      { "no": 10, "client": "PT. Cyberindo Nusantara", "user": "PT. Cyberindo Nusantara", "project": "Supply & Install Electrical Panel System Cyber 2 Tahap 2" },
+      { "no": 11, "client": "PT. Multidaya Eka Sarana", "user": "Telkom Datel Purwokerto", "project": "Dummy Load DC 300A" },
+      { "no": 12, "client": "PT. Media Karya Sentosa", "user": "PLN PJB Muara Tawar", "project": "24VDC Power Supply, Motor Control Center Panel" },
+      { "no": 13, "client": "PT. Petrochina International (Bermuda)", "user": "PT. Petrochina International (Bermuda)", "project": "24VDC Power Supply, Motor Control Center Panel" },
+      { "no": 14, "client": "PEMDA Maluku Utara", "user": "PEMDA Maluku Utara", "project": "LVMDP & Capasitor Bank 500kVAR" },
+      { "no": 15, "client": "PT. Bina Pertiwi", "user": "PT. Indosat", "project": "ATS MF Panel" },
+      { "no": 16, "client": "PT. Koin Pratama", "user": "PLN PJB Muara Karang", "project": "24VDC Power Supply, Motor Control Center Panel" },
+      { "no": 17, "client": "PT. Wijaya Karya", "user": "PLTU Amurang Manado", "project": "MOV Panel Switchboard" },
+      { "no": 18, "client": "PT. Truba Manunggal Engineering", "user": "PLTU 3 CFSPP 2x30MW Bangka Belitung", "project": "Civil Work Grounding" },
+      { "no": 18, "client": "PT. Truba Manunggal Engineering", "user": "PLTU 3 CFSPP 2x30MW Bangka Belitung", "project": "Fire Fighting Erection" },
+      { "no": 18, "client": "PT. Truba Manunggal Engineering", "user": "PLTU 3 CFSPP 2x30MW Bangka Belitung", "project": "Fire Alarm System" },
+      { "no": 18, "client": "PT. Truba Manunggal Engineering", "user": "PLTU 3 CFSPP 2x30MW Bangka Belitung", "project": "HDPE Work" },
+      { "no": 19, "client": "PT. Bakrie Telecom", "user": "PT. Bakrie Telecom", "project": "CME Work National Area" },
+      { "no": 20, "client": "PT. Protelindo", "user": "PT. Protelindo", "project": "CME Work Kalimantan Area" },
+      { "no": 21, "client": "PT. Solusi Tunas Pratama", "user": "PT. Sekawan Abadi Prima", "project": "CME Work Jabodetabek Area" },
+      { "no": 22, "client": "CV. Kiat Tehnik", "user": "Pertamina UP Balikpapan", "project": "DOL Motor Control" },
+      { "no": 23, "client": "PT. Krakatau Engineering", "user": "Pertamina EP - Unit Bisnis Pertamina EP Limau", "project": "Electrical & Instrument Work - SP Niru di Struktur Niru" },
+      { "no": 24, "client": "PT. CBN Nusantara", "user": "PT. CBN Nusantara - Cyber Data Center", "project": "Electrical Work (Panel, Cable Power, etc)" },
+      { "no": 24, "client": "PT. CBN Nusantara", "user": "PT. CBN Nusantara - Cyber Data Center", "project": "UPS Distribution Cage Detik" },
+      { "no": 24, "client": "PT. CBN Nusantara", "user": "PT. CBN Nusantara - Cyber Data Center", "project": "Load Bank 7 kW" },
+      { "no": 25, "client": "PT. Paragon Technology and Innovation", "user": "PT. Paragon Technology and Innovation", "project": "Main Distribution Panel 300kVA" },
+      { "no": 25, "client": "PT. Paragon Technology and Innovation", "user": "PT. Paragon Technology and Innovation", "project": "Lightning Protection System (Office)" },
+      { "no": 25, "client": "PT. Paragon Technology and Innovation", "user": "PT. Paragon Technology and Innovation", "project": "Grounding System (Office)" },
+      { "no": 26, "client": "KSO Senayan Golf", "user": "KSO Senayan Golf", "project": "Main Distribution Panel" },
+      { "no": 26, "client": "KSO Senayan Golf", "user": "KSO Senayan Golf", "project": "Flood Lighting Golf Area" },
+      { "no": 26, "client": "KSO Senayan Golf", "user": "KSO Senayan Golf", "project": "CME Work (Renovasi R. Maintenance, Caddy & Operasional)" },
+      { "no": 27, "client": "PT. Visual Utama Mandiri", "user": "PT. Visual Utama Mandiri", "project": "MDP & Capasitor Bank 105kVA" },
+      { "no": 28, "client": "PT. Patra Energy Swadaya Engineering", "user": "PT. Star Energy Geothermal", "project": "Panel Control Solar Cell for Seismic Panel" },
+      { "no": 29, "client": "PT. Adiprotek Enviro Dunia", "user": "PT. Adiprotek Enviro Dunia", "project": "Re Engineering Electrical & Instrument Work - CNG Plant Batam" },
+      { "no": 29, "client": "PT. Adiprotek Enviro Dunia", "user": "PT. Adiprotek Enviro Dunia", "project": "MDP, ATS MF, MCC & Small Power Distribution Panel" },
+      { "no": 30, "client": "CV. Metal Inti Presisi", "user": "PT. Red Solusi Indonesia", "project": "Solar Cell Panel" },
+      { "no": 31, "client": "PT. Sebuku Iron Lateritic Ores", "user": "PT. Sebuku Iron Lateritic Ores", "project": "Lightning Protection System For Dry Kiln Rotary Project" },
+      { "no": 32, "client": "PT. Adaro Indonesia", "user": "PT. Adaro Indonesia", "project": "Mobile Load Bank 2.5MW" },
+      { "no": 33, "client": "CV. Prabu Jaya", "user": "Pertamina EP Limau", "project": "Load Bank 300kW" },
+      { "no": 34, "client": "PT. Bina Pertiwi", "user": "PT. Bina Pertiwi", "project": "MDP 150A" },
+      { "no": 35, "client": "Camar Resources Canada Inc.", "user": "Camar Resources Canada Inc.", "project": "Filter Harmonic 3 set" },
+      { "no": 35, "client": "Camar Resources Canada Inc.", "user": "Camar Resources Canada Inc.", "project": "Upgrading Electrical System, WPP Bawean" },
+      { "no": 36, "client": "PT. Balfour Beatty Sakti", "user": "IKEA Alam Sutera", "project": "Instalation of Floor Drain at 1st Floor, GF and Basement" },
+      { "no": 37, "client": "PT. Adiprotek Enviro Dunia", "user": "CNOOC", "project": "Supply & Install Inverter 90kW" },
+      { "no": 38, "client": "PT. Rafa Karya Indonesia", "user": "PDAM Pontianak", "project": "Supply panel LVMDP dan Cap Bank" },
+      { "no": 39, "client": "PT. Indoturbin Nusantara", "user": "Turbin & Propulsi", "project": "Supply Loadbank 2 x 500 kW" }
+    ],
+
+    "cathodicProtection": [
+      { "no": 1, "client": "PT. Logitech", "user": "EMP Kangean", "year": 2006, "project": "Modification Transformer Rectifier 200A 30VDC from 380VAC to 480VAC" },
+      { "no": 2, "client": "PT. Citra Buana Mekar Mandiri", "user": "PDAM Bogor", "year": 2006, "project": "Repaired Transformer Rectifier 48V-25 ADC, air cooled, single phase (manufactured by SPE Don, Rusia)" },
+      { "no": 3, "client": "PT. Irvana Utama Engineering", "user": "Sembarah Oil Company (SEMCO), Samarinda - Kaltim", "year": 2007, "project": "Supply Transformer Rectifier 48V-25ADC, air cooled, single phase" },
+      { "no": 4, "client": "PT. Farel Internusa P", "user": "Pertamina Sumbagsel", "year": 2007, "project": "Repaired Transformer Rectifier 60A 30VDC, 4 unit Cathodic Protection System" },
+      { "no": 5, "client": "PT. Citra Buana Mekar Mandiri", "user": "PDAM Bogor", "year": 2008, "project": "Supply Transformer Rectifier 48V - 25 ADC, air cooled, single phase" },
+      { "no": 6, "client": "Kopersemar", "user": "PT. Indonesia Power UBP Semarang", "year": 2008, "project": "Repaired Transformer Rectifier 18V-65ADC, air cooled, three phase (manufactured by EE & ME, Singapore)" },
+      { "no": 7, "client": "PT. Fransasia Sejahtera", "user": "Pertamina Cilacap", "year": 2008, "project": "Supply Transformer Rectifier 60VDC 200A" },
+      { "no": 8, "client": "PT. Rekacipta Citra Buana", "user": "Pertamina Pekanbaru", "year": 2008, "project": "Repaired Transformer Rectifier 30VDC 30A tap setting natural type" },
+      { "no": 9, "client": "PT. Fransasia Sejahtera", "user": "Pertamina Cilacap", "year": 2009, "project": "Supply Transformer Rectifier 2x20A 40VDC dual output variac oil type" },
+      { "no": 10, "client": "PT. Southern Tristar", "user": "Total E&P", "year": 2009, "project": "Supply Transformer Rectifier 60A 50V variac air forced type" },
+      { "no": 11, "client": "PT. Fransasia Sejahtera", "user": "PJB Muara Karang", "year": 2009, "project": "Repair CPTR 9 unit 18VDC 125A manual oil cooled" },
+      { "no": 12, "client": "PT. Isoku Protection", "user": "Petrochina KMT Papua", "year": 2009, "project": "Repaired Transformer Rectifier 12VDC 200A variac oil type" },
+      { "no": 13, "client": "PT. Penta Petrocor", "user": "Pertamina Prabumulih", "year": 2009, "project": "Supply Transformer Rectifier 60VDC 60A oil cooled type" },
+      { "no": 14, "client": "PT. Fransasia Sejahtera", "user": "PT. Sumatra Synergy", "year": 2010, "project": "Supply Transformer Rectifier 45A 90VDC variac control oil cooled type, additional blower for CPTR" },
+      { "no": 15, "client": "PT. Southern Tristar", "user": "Total E&P", "year": 2010, "project": "Spare part Transformer Rectifier" },
+      { "no": 16, "client": "PT. Triguna Mulia Mandiri", "user": "VICO Indonesia - Muara Badak", "year": 2010, "project": "TR Panel 1 unit: 50V 60A natural cooled" },
+      { "no": 17, "client": "PT. Southern Tristar", "user": "Petrochina Jabung", "year": 2010, "project": "TR Panel 1 unit: 30VDC 60A oil cooled" },
+      { "no": 18, "client": "PT. Estika Gunaprima", "user": "Pertamina Sumbagsel", "year": 2010, "project": "TR Panel 1 unit: 100VDC 80A oil cooled" },
+      { "no": 19, "client": "PT. Isoku Protection", "user": "Pertagas Sumatera", "year": 2010, "project": "TR Panel 1 unit: 60VDC 30A oil cooled" },
+      { "no": 20, "client": "PT. Estika Gunaprima", "user": "Pertamina Sumbagsel", "year": 2010, "project": "Maintenance & repair CPTR Sumbagsel area" },
+      { "no": 21, "client": "PT. Isoku Protection", "user": "Pertamina Sumbagsel", "year": 2011, "project": "TR Panel 1 unit: 50VDC 30A oil cooled" },
+      { "no": 22, "client": "PT. Adiprotek Envirodunia", "user": "PT. PDPDE Gas Jambi", "year": 2011, "project": "Impressed Current Cathodic Protection System for burried pipeline dia. 6\" x 52 km, Jambi" },
+      { "no": 23, "client": "PT. Lasarez Dinamika", "user": "VICO Indonesia", "year": 2011, "project": "TR Panel 3 unit: 80VDC 180A (2 unit) & 80VDC 100A (1 unit) natural cooled" },
+      { "no": 24, "client": "PT. Pelinkar Iso Mandiri", "user": "PT. Pertamina Sumbagsel", "year": 2011, "project": "Transformer Rectifier 50VDC 30A 1 unit; Transformer Rectifier 60VDC 50A 2 unit; Positive Junction Box 2 unit; Negative Junction Box 2 unit" },
+      { "no": 25, "client": "PT. Truba Manunggal Engineering", "user": "PLTU Babel", "year": 2011, "project": "Installation Cathodic Protection untuk CW Pipe" },
+      { "no": 26, "client": "PT. Adiprotek Envirodunia", "user": "PT. Kalila (Bentu) Ltd", "year": 2012, "project": "Impressed Current Cathodic Protection System for gas pipeline dia. 12\" x 47 km" },
+      { "no": 27, "client": "PT. Southern Tristar", "user": "IKPT - PKT Bontang", "year": 2012, "project": "Transformer Rectifier 50VDC 30A 1 unit; Positive Junction Box 3 unit; Negative Junction Box 2 unit" },
+      { "no": 28, "client": "PT. Mekar Perdana", "user": "PT. Pertamina", "year": 2012, "project": "Modifikasi Transformer Rectifier 70VDC 170A, air cooled, 2 unit" },
+      { "no": 29, "client": "PT. Transworld Solution", "user": "PT. Transworld Solution", "year": 2012, "project": "Positive Junction Box 1 unit; Negative Junction Box 1 unit" },
+      { "no": 30, "client": "PT. Menamas", "user": "PJB Muara Karang", "year": null, "project": "Repair CPTR" },
+      { "no": 31, "client": "PT. Southern Tristar", "user": "PKT Bontang", "year": null, "project": "CPTR 50VDC 30A" },
+      { "no": 32, "client": "CV. Edcor Engineering", "user": "PT. Adiprotek Envirodunia", "year": null, "project": "CPTR 60VDC 20A, PJB & NJB" },
+      { "no": 33, "client": "PT. Esa Putra Sejahtera", "user": "VICO Indonesia Ltd", "year": null, "project": "CPTR 50VDC 60A" },
+      { "no": 34, "client": "PJB Muara Karang", "user": "PJB Muara Karang", "year": null, "project": "IRI Selenium Rectifier Bridge" },
+      { "no": 35, "client": "PT. Mekar Perdana", "user": "Pertamina Kalimantan", "year": null, "project": "Positive Junction Box" },
+      { "no": 36, "client": "PT. Southern Tristar", "user": "Pertamina Cilacap", "year": null, "project": "CPTR 50VDC 30A (3 unit), 30VDC 10A (6 unit), AJB, PJB & NJB" },
+      { "no": 37, "client": "PT. Southern Tristar", "user": "PKT Bontang", "year": null, "project": "CPTR 50VDC 50A" },
+      { "no": 38, "client": "EMP Bentu Limited", "user": "EMP Bentu Limited", "year": null, "project": "Upgrading ICCP System Teluk Lembu Delivery Station" },
+      { "no": 39, "client": "PT. Pelinkar Iso Mandiri", "user": "PT. Pelinkar Iso Mandiri", "year": null, "project": "PJB & NJB" },
+      { "no": 40, "client": "PT. Mekar Perdana", "user": "Pertamina Kalimantan", "year": null, "project": "Positive Junction Box 1 set" },
+      { "no": 41, "client": "PT. Kepri Indo Sukses", "user": "PLTU Soma Tanjungbalai KRM", "year": null, "project": "ICCP System Jetty" }
+    ]
+  }
+}
