@@ -22,13 +22,15 @@ interface TextFieldProps {
     type?: string;
     required?: boolean;
     placeholder?: string;
+    hint?: string;
 }
 
-export function TextField({ id, label, value, onChange, error, type = 'text', required, placeholder }: TextFieldProps) {
+export function TextField({ id, label, value, onChange, error, type = 'text', required, placeholder, hint }: TextFieldProps) {
     return (
         <div className="grid gap-2">
             <Label htmlFor={id}>{label}</Label>
             <Input id={id} type={type} value={value} onChange={(e) => onChange(e.target.value)} required={required} placeholder={placeholder} />
+            {hint && <p className="text-muted-foreground text-xs">{hint}</p>}
             <InputError message={error} />
         </div>
     );

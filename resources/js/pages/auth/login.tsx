@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import type { SharedData } from '@/types';
 
 interface LoginForm {
+    [key: string]: string | boolean;
     email: string;
     password: string;
     remember: boolean;

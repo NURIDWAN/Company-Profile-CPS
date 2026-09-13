@@ -82,7 +82,7 @@ export default function ArticlesIndex({ articles }: { articles: PaginatedRespons
 
                     {articles.last_page > 1 && (
                         <nav className="mt-12 flex justify-center gap-2" aria-label="Articles pagination">
-                            {articles.links.map((link, index) => (
+                            {articles.links?.map((link, index) => (
                                 <Link
                                     key={index}
                                     href={link.url ?? '#'}

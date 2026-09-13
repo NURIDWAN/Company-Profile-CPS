@@ -5,10 +5,10 @@ interface SeoHeadProps {
     title: string;
     description: string;
     ogImage?: string | null;
-    ogType?: 'website' | 'article';
+    ogType?: 'website' | 'article' | 'product';
     canonicalUrl?: string;
     schema?: Record<string, unknown> | Record<string, unknown>[];
-    preloadImage?: string;
+    preloadImage?: string | null;
 }
 
 function absoluteUrl(value?: string | null): string | undefined {

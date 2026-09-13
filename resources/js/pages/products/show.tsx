@@ -27,7 +27,7 @@ export default function ProductShow({ product, related, schemas }: ShowProps) {
             <SeoHead
                 title={product.name}
                 description={product.spec ?? 'Product detail'}
-                ogType="website"
+                ogType="product"
                 schema={schemas}
                 preloadImage={product.image_url}
             />

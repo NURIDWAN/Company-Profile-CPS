@@ -230,7 +230,7 @@ export default function Content({
                                             const value = contentForm.data.contents[key] ?? '';
                                             const isLongText =
                                                 item.field_key === 'description' || item.field_key === 'success_message' || value.length > 120;
-                                            const error = contentForm.errors[`contents.${key}`];
+                                            const error = (contentForm.errors as Record<string, string | undefined>)[`contents.${key}`];
 
                                             return (
                                                 <div key={key} className={isLongText ? 'md:col-span-2' : ''}>
