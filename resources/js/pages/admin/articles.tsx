@@ -31,7 +31,7 @@ export interface AdminArticle {
 
 function formatDate(value: string | null): string {
     if (!value) return '—';
-    return new Intl.DateTimeFormat('en', { dateStyle: 'medium' }).format(new Date(value));
+    return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(value));
 }
 
 function CharCounter({ value, max }: { value: string; max: number }) {

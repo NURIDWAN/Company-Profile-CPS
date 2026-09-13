@@ -16,7 +16,7 @@ const projectTypeLabels: Record<string, string> = {
 };
 
 function formatDate(value: string): string {
-    return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value));
+    return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(new Date(value));
 }
 
 function statusVariant(status: ContactMessage['status']): 'default' | 'secondary' | 'outline' {

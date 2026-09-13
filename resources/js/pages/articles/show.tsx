@@ -25,7 +25,7 @@ interface ShowProps {
 
 function formatDate(value: string | null): string {
     if (!value) return '';
-    return new Intl.DateTimeFormat('en', { dateStyle: 'long' }).format(new Date(value));
+    return new Intl.DateTimeFormat('en', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(value));
 }
 
 export default function ArticleShow({ article, schemas }: ShowProps) {
