@@ -1,4 +1,5 @@
 import { SeoHead } from '@/components/SeoHead';
+import { ContactInfoCards } from '@/components/public/contact-info-cards';
 import PublicLayout from '@/layouts/public-layout';
 import { usePublicContent } from '@/lib/public-content';
 import { usePublicSiteData } from '@/lib/public-data';
@@ -19,9 +20,6 @@ const PROJECT_TYPES = [
 const inputClass =
     'h-14 w-full border border-white/10 bg-panel px-4 text-sm text-white outline-none transition placeholder:text-dim/60 focus:border-cyan focus:shadow-[0_0_20px_rgba(0,217,255,.08)]';
 
-const cardClass =
-    'group border border-white/10 border-t-cyan bg-panel p-6 transition duration-300 hover:-translate-y-0.5 hover:border-cyan/60 hover:shadow-[0_0_35px_rgba(0,217,255,.07)]';
-
 export default function Contact() {
     const { company } = usePublicSiteData();
     const { content, media } = usePublicContent('contact');
@@ -35,11 +33,6 @@ export default function Contact() {
         project_type: '',
         message: '',
     });
-    const addressLines = [
-        company.address.line1,
-        `${company.address.city}, ${company.address.province} ${company.address.postalCode}`,
-        company.address.country,
-    ];
     const localBusinessSchema = {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
@@ -254,7 +247,7 @@ export default function Contact() {
                                     type="submit"
                                     disabled={processing}
                                     className={`inline-flex h-14 w-full items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition sm:w-auto ${
-                                        sent ? 'text-ink bg-white' : 'bg-cyan text-ink hover:bg-white'
+                                        sent ? 'text-ink-foreground bg-white' : 'bg-cyan text-ink-foreground hover:bg-white'
                                     }`}
                                 >
                                     {processing ? (
@@ -272,41 +265,8 @@ export default function Contact() {
                             </form>
                         </div>
 
-                        <aside className="space-y-4" aria-label="CPS contact information">
-                            <div className={cardClass}>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.18em] uppercase">Office</p>
-                                <h3 className="mt-6 text-base font-semibold text-white">{company.name}</h3>
-                                <p className="text-soft mt-3 text-sm leading-7 whitespace-pre-line">{addressLines.join('\n')}</p>
-                            </div>
-
-                            <div className={cardClass}>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.18em] uppercase">Phone</p>
-                                <a
-                                    href={`tel:${company.contact.phones[0] ?? ''}`}
-                                    className="hover:text-cyan mt-6 block text-sm text-white transition"
-                                >
-                                    {company.contact.phones[0] ?? '—'}
-                                </a>
-                            </div>
-
-                            <div className={cardClass}>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.18em] uppercase">Mobile / WhatsApp</p>
-                                <a
-                                    href={`https://wa.me/${(company.contact.phones[1] ?? '').replace(/\D/g, '')}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="hover:text-cyan mt-6 block text-sm text-white transition"
-                                >
-                                    {company.contact.phones[1] ?? '—'}
-                                </a>
-                            </div>
-
-                            <div className={cardClass}>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.18em] uppercase">E-mail</p>
-                                <a href={`mailto:${company.contact.email}`} className="hover:text-cyan mt-6 block text-sm text-white transition">
-                                    {company.contact.email}
-                                </a>
-                            </div>
+                        <aside aria-label="CPS contact information">
+                            <ContactInfoCards company={company} />
                         </aside>
                     </div>
                 </section>

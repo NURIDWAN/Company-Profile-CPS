@@ -43,7 +43,7 @@ export function WhatsappPopup({ settings }: { settings?: SiteSetting | null }) {
     return (
         <div className="fixed right-5 bottom-5 z-50 flex flex-col items-end gap-3 sm:right-8 sm:bottom-8">
             {open && (
-                <div className="w-[min(20rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-white/10 bg-[#111c1b] text-white shadow-2xl shadow-black/30">
+                <div className="border-public-border bg-public-panel text-public-foreground w-[min(20rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border shadow-2xl shadow-black/30 dark:border-white/10 dark:bg-[#111c1b] dark:text-white">
                     <div className="flex items-center justify-between bg-[#128c7e] px-4 py-3">
                         <div className="flex items-center gap-3">
                             <WhatsAppIcon className="h-5 w-5" />
@@ -62,7 +62,7 @@ export function WhatsappPopup({ settings }: { settings?: SiteSetting | null }) {
                         </button>
                     </div>
                     <div className="p-4">
-                        <p className="text-sm leading-6 text-white/75">
+                        <p className="text-public-foreground/75 text-sm leading-6 dark:text-white/75">
                             Have a question about our engineering services? Send us a message on WhatsApp.
                         </p>
                         <a

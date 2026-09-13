@@ -409,30 +409,30 @@ export default function About() {
                 </section>
 
                 {/* CTA Section */}
-                <section className="bg-cyan text-ink relative overflow-hidden py-24 lg:py-32">
+                <section className="bg-cyan text-ink-foreground relative overflow-hidden py-24 lg:py-32">
                     <div className="absolute top-0 right-0 h-full w-1/3 opacity-20">
                         <div className="grid-bg h-full" />
                     </div>
                     <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-6 lg:flex-row lg:items-end lg:px-8">
                         <div>
-                            <p className="text-ink/60 font-mono text-[11px] tracking-[.2em] uppercase">Next step / 10</p>
+                            <p className="text-ink-foreground/60 font-mono text-[11px] tracking-[.2em] uppercase">Next step / 10</p>
                             <h2 className="mt-5 max-w-3xl text-5xl leading-[.95] font-semibold tracking-[-.06em] sm:text-7xl">
                                 Ready to partner
                                 <br />
                                 with CPS?
                             </h2>
-                            <p className="text-ink/70 mt-7 text-lg">Let's discuss your engineering challenges.</p>
+                            <p className="text-ink-foreground/70 mt-7 text-lg">Let's discuss your engineering challenges.</p>
                         </div>
                         <div className="flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href="/contact"
-                                className="bg-ink hover:text-ink inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] text-white uppercase transition hover:bg-white"
+                                className="bg-ink hover:text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] text-white uppercase transition hover:bg-white"
                             >
                                 Start a Project <Icon icon="lucide:arrow-up-right" />
                             </Link>
                             <Link
                                 href="/consultation"
-                                className="border-ink/40 text-ink hover:bg-ink inline-flex h-14 items-center justify-center gap-3 border px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:text-white"
+                                className="border-ink/40 text-ink-foreground hover:bg-ink inline-flex h-14 items-center justify-center gap-3 border px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:text-white"
                             >
                                 Request Consultation <Icon icon="lucide:arrow-up-right" />
                             </Link>

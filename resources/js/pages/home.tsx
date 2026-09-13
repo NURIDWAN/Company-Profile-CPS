@@ -1,3 +1,4 @@
+import { ContactInfoCards } from '@/components/public/contact-info-cards';
 import { RichText } from '@/components/public/rich-text';
 import PublicLayout from '@/layouts/public-layout';
 import { usePublicContent } from '@/lib/public-content';
@@ -95,7 +96,7 @@ export default function Home() {
                             <div className="reveal mt-10 flex flex-col gap-3 delay-3 sm:flex-row">
                                 <Link
                                     href="/services"
-                                    className="bg-cyan text-ink inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
+                                    className="bg-cyan text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
                                 >
                                     Explore Services <Icon icon="lucide:arrow-down-right" className="text-base" />
                                 </Link>
@@ -231,31 +232,14 @@ export default function Home() {
                             <p className="text-soft mt-8 text-lg">Let's discuss your technical requirements.</p>
                             <Link
                                 href="/contact"
-                                className="bg-cyan text-ink mt-10 inline-flex h-14 items-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white"
+                                className="bg-cyan text-ink-foreground mt-10 inline-flex h-14 items-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white"
                             >
                                 Contact CPS <Icon icon="lucide:arrow-up-right" className="text-base" />
                             </Link>
                         </div>
-                        <address className="text-soft border-t border-white/10 pt-7 text-sm leading-8 not-italic">
-                            <strong className="block text-sm font-semibold tracking-[.08em] text-white uppercase">{company.name}</strong>
-                            <p className="mt-5">{company.address.full}</p>
-                            <div className="mt-7 border-t border-white/10 pt-6">
-                                {company.contact.phones.map((phone) => (
-                                    <p key={phone}>{phone}</p>
-                                ))}
-                            </div>
-                            <a href={`mailto:${company.contact.email}`} className="text-cyan mt-6 block transition hover:text-white">
-                                {company.contact.email}
-                            </a>
-                            <a
-                                href={company.contact.website}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-cyan block transition hover:text-white"
-                            >
-                                {company.contact.website.replace(/^https?:\/\//, '')}
-                            </a>
-                        </address>
+                        <div>
+                            <ContactInfoCards company={company} />
+                        </div>
                     </div>
                 </section>
             </>

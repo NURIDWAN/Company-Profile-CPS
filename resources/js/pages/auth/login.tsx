@@ -46,7 +46,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 <div className="bg-night relative overflow-hidden border border-white/10 shadow-2xl shadow-black/30">
                     <div className="border-cyan/50 border-b-2 px-8 py-7 sm:px-10">
                         <div className="flex items-center gap-4">
-                            <div className="border-cyan bg-cyan text-ink flex h-12 w-12 items-center justify-center overflow-hidden border text-lg font-bold tracking-[-.08em]">
+                            <div className="border-cyan bg-cyan text-ink-foreground flex h-12 w-12 items-center justify-center overflow-hidden border text-lg font-bold tracking-[-.08em]">
                                 {logoUrl ? (
                                     <img src={logoUrl} alt={siteName} width="48" height="48" className="h-full w-full object-contain" />
                                 ) : (
@@ -124,7 +124,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                     checked={data.remember}
                                     onCheckedChange={(checked) => setData('remember', checked === true)}
                                     disabled={processing}
-                                    className="data-[state=checked]:border-cyan data-[state=checked]:bg-cyan data-[state=checked]:text-ink border-white/30"
+                                    className="data-[state=checked]:border-cyan data-[state=checked]:bg-cyan data-[state=checked]:text-ink-foreground border-white/30"
                                 />
                                 <Label htmlFor="remember" className="text-soft text-sm">
                                     Keep me signed in
@@ -134,7 +134,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             <Button
                                 type="submit"
                                 disabled={processing}
-                                className="bg-cyan text-ink mt-3 h-12 w-full rounded-none font-bold tracking-[.14em] uppercase hover:bg-white"
+                                className="bg-cyan text-ink-foreground mt-3 h-12 w-full rounded-none font-bold tracking-[.14em] uppercase hover:bg-white"
                             >
                                 {processing ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ArrowRight className="h-4 w-4" />}
                                 {processing ? 'Signing in...' : 'Sign in to admin'}

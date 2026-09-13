@@ -9,7 +9,7 @@ function escapeHtml(value: string): string {
 
 export function richTextHtml(value: string | null | undefined): string {
     if (!value) return '';
-    if (/<(p|br|strong|b|em|i|u|ul|ol|li|a)(\s|>)/i.test(value)) return value;
+    if (/<(p|br|strong|b|em|i|u|ul|ol|li|a|h2|h3|blockquote|img)(\s|>)/i.test(value)) return value;
     return value
         .split(/\r?\n\r?\n/)
         .map((paragraph) => `<p>${escapeHtml(paragraph).replace(/\r?\n/g, '<br />')}</p>`)

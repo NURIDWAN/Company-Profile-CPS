@@ -355,7 +355,7 @@ export default function Consultation() {
                                             </a>
                                             <button
                                                 type="submit"
-                                                className="bg-cyan text-ink focus:ring-cyan focus:ring-offset-panel inline-flex min-h-14 items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
+                                                className="bg-cyan text-ink-foreground focus:ring-cyan focus:ring-offset-panel inline-flex min-h-14 items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
                                             >
                                                 Submit Request
                                                 <Icon icon="lucide:arrow-up-right" className="text-base" />

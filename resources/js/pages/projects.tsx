@@ -156,7 +156,7 @@ export default function Projects() {
                                         aria-pressed={activeFilter === filter}
                                         className={`border px-4 py-2 font-mono text-[10px] tracking-[.12em] uppercase transition ${
                                             activeFilter === filter
-                                                ? 'border-cyan bg-cyan text-ink hover:bg-white'
+                                                ? 'border-cyan bg-cyan text-ink-foreground hover:bg-white'
                                                 : 'text-dim hover:border-cyan hover:text-cyan border-white/10'
                                         }`}
                                     >
@@ -180,7 +180,7 @@ export default function Projects() {
                                                 alt={project.alt}
                                                 loading="lazy"
                                             />
-                                            <span className="bg-cyan text-ink absolute top-5 left-5 px-3 py-2 font-mono text-[10px] uppercase">
+                                            <span className="bg-cyan text-ink-foreground absolute top-5 left-5 px-3 py-2 font-mono text-[10px] uppercase">
                                                 {project.category}
                                             </span>
                                         </div>
@@ -251,7 +251,7 @@ export default function Projects() {
                                 <div className="shrink-0">
                                     <a
                                         href={`mailto:${company.contact.email}?subject=Request%20a%20Consultation`}
-                                        className="bg-cyan text-ink inline-flex h-14 items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
+                                        className="bg-cyan text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
                                     >
                                         Request a Consultation
                                         <Icon icon="lucide:arrow-up-right" className="text-base" />

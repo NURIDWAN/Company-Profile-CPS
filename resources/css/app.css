@@ -6,14 +6,17 @@
 
 /* CPS (PT. Citra Protecta Semesta) — public site theme */
 @theme {
-    --color-ink: #07090c;
-    --color-night: #0b0f14;
-    --color-steel: #10151b;
-    --color-panel: #111820;
-    --color-surface: #151d26;
-    --color-cyan: #00d9ff;
-    --color-soft: #a7b0ba;
-    --color-dim: #6f7a85;
+    --color-ink: var(--public-ink);
+    --color-ink-foreground: var(--public-ink-foreground);
+    --color-night: var(--public-night);
+    --color-steel: var(--public-steel);
+    --color-panel: var(--public-panel);
+    --color-surface: var(--public-surface);
+    --color-cyan: var(--public-cyan);
+    --color-soft: var(--public-soft);
+    --color-dim: var(--public-dim);
+    --color-public-border: var(--public-border);
+    --color-public-foreground: var(--public-foreground);
 
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -83,12 +86,12 @@ html {
 
 .grid-bg {
     background-image:
-        linear-gradient(rgba(0, 217, 255, 0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 217, 255, 0.055) 1px, transparent 1px);
+        linear-gradient(var(--public-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--public-grid-line) 1px, transparent 1px);
     background-size: 56px 56px;
 }
 
 .hero-overlay {
-    background: linear-gradient(90deg, rgba(7, 9, 12, 0.98) 0%, rgba(7, 9, 12, 0.82) 43%, rgba(7, 9, 12, 0.28) 100%);
+    background: var(--public-overlay);
 }
 
 .grain::after {
@@ -342,6 +345,20 @@ html {
 }
 
 :root {
+    --public-ink: #f7fafc;
+    --public-ink-foreground: #10202d;
+    --public-night: #eef3f7;
+    --public-steel: #e5edf3;
+    --public-panel: #ffffff;
+    --public-surface: #f8fbfd;
+    --public-cyan: #007f99;
+    --public-soft: #425466;
+    --public-dim: #647789;
+    --public-foreground: #10202d;
+    --public-border: rgba(15, 35, 50, 0.14);
+    --public-border-strong: rgba(15, 35, 50, 0.22);
+    --public-overlay: linear-gradient(90deg, rgba(247, 250, 252, 0.98) 0%, rgba(247, 250, 252, 0.82) 43%, rgba(247, 250, 252, 0.2) 100%);
+    --public-grid-line: rgba(0, 127, 153, 0.09);
     --background: hsl(0, 0%, 100%);
     --foreground: hsl(0, 0%, 3.9%);
     --card: hsl(0, 0%, 100%);
@@ -378,6 +395,20 @@ html {
 }
 
 .dark {
+    --public-ink: #07090c;
+    --public-ink-foreground: #f5f7fa;
+    --public-night: #0b0f14;
+    --public-steel: #10151b;
+    --public-panel: #111820;
+    --public-surface: #151d26;
+    --public-cyan: #00d9ff;
+    --public-soft: #a7b0ba;
+    --public-dim: #6f7a85;
+    --public-foreground: #f5f7fa;
+    --public-border: rgba(255, 255, 255, 0.1);
+    --public-border-strong: rgba(255, 255, 255, 0.2);
+    --public-overlay: linear-gradient(90deg, rgba(7, 9, 12, 0.98) 0%, rgba(7, 9, 12, 0.82) 43%, rgba(7, 9, 12, 0.28) 100%);
+    --public-grid-line: rgba(0, 217, 255, 0.055);
     --background: hsl(0, 0%, 3.9%);
     --foreground: hsl(0, 0%, 98%);
     --card: hsl(0, 0%, 3.9%);
@@ -419,6 +450,109 @@ html {
 
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@layer utilities {
+    .public-site {
+        color: var(--public-foreground);
+    }
+
+    .public-site h1,
+    .public-site h2,
+    .public-site h3 {
+        color: var(--public-foreground);
+    }
+
+    .public-site .text-ink {
+        color: var(--public-ink-foreground);
+    }
+
+    .public-site .text-soft {
+        color: var(--public-soft);
+    }
+
+    .public-site .text-dim {
+        color: var(--public-dim);
+    }
+
+    .public-site .text-cyan {
+        color: var(--public-cyan);
+    }
+
+    .public-site .bg-cyan {
+        background-color: var(--public-cyan);
+    }
+
+    .public-site .text-white {
+        color: var(--public-foreground);
+    }
+
+    .public-site .text-white\/30 {
+        color: color-mix(in srgb, var(--public-foreground) 30%, transparent);
+    }
+
+    .public-site .text-white\/75 {
+        color: color-mix(in srgb, var(--public-foreground) 75%, transparent);
+    }
+
+    .public-site .placeholder\:text-white\/30::placeholder {
+        color: color-mix(in srgb, var(--public-foreground) 30%, transparent);
+    }
+
+    .public-site .border-white\/30 {
+        border-color: var(--public-border-strong);
+    }
+
+    .public-site .border-white\/10 {
+        border-color: var(--public-border);
+    }
+
+    .public-site .border-white\/15,
+    .public-site .border-white\/20 {
+        border-color: var(--public-border-strong);
+    }
+
+    .public-site .hover\:text-white:hover {
+        color: var(--public-foreground);
+    }
+
+    .public-site header {
+        color: var(--public-foreground);
+    }
+
+    .public-site header .text-white {
+        color: var(--public-foreground);
+    }
+
+    .public-site header .border-white\/10,
+    .public-site header .border-white\/20 {
+        border-color: var(--public-border);
+    }
+
+    .public-site header .bg-night\/95 {
+        background-color: color-mix(in srgb, var(--public-night) 95%, transparent);
+    }
+
+    .public-site .bg-white {
+        background-color: var(--public-panel);
+    }
+
+    .public-site .hover\:bg-white:hover {
+        background-color: var(--public-panel);
+    }
+
+    .public-site .hero-overlay {
+        background: var(--public-overlay);
+    }
+
+    .dark .public-site .text-white,
+    .dark .public-site .hover\:text-white:hover {
+        color: #f5f7fa;
+    }
+
+    .dark .public-site .bg-white {
+        background-color: #ffffff;
     }
 }
 

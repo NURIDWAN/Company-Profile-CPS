@@ -225,7 +225,7 @@ export default function Services() {
                         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                             <Link
                                 href="/consultation"
-                                className="bg-cyan text-ink inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
+                                className="bg-cyan text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
                             >
                                 Request Consultation
                                 <Icon icon="lucide:arrow-up-right" className="text-base" />

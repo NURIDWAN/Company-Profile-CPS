@@ -3,7 +3,10 @@ import { WhatsappPopup } from '@/components/whatsapp-popup';
 import type { SharedData } from '@/types';
 import { Icon } from '@iconify/react';
 import { Link, usePage } from '@inertiajs/react';
+import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
+import { useAppearance } from '@/hooks/use-appearance';
 
 const NAV_ITEMS = [
     { label: 'Home', href: '/' },
@@ -11,8 +14,29 @@ const NAV_ITEMS = [
     { label: 'Services', href: '/services' },
     { label: 'Industries', href: '/industries' },
     { label: 'Projects', href: '/projects' },
+    { label: 'Articles', href: '/articles' },
     { label: 'Contact', href: '/contact' },
 ];
+
+function ThemeToggle() {
+    const { appearance, resolvedAppearance, updateAppearance } = useAppearance();
+
+    const toggle = () => updateAppearance(resolvedAppearance === 'dark' ? 'light' : 'dark');
+    const isDark = resolvedAppearance === 'dark';
+
+    return (
+        <button
+            type="button"
+            onClick={toggle}
+            aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+            title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+            className="border-public-border bg-public-panel text-public-foreground hover:border-cyan hover:text-cyan flex h-11 w-11 items-center justify-center border transition"
+        >
+            {isDark ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
+            <span className="sr-only">{appearance === 'system' ? 'Theme (system)' : isDark ? 'Dark theme' : 'Light theme'}</span>
+        </button>
+    );
+}
 
 export default function PublicLayout({ children, preloadImage }: { children: React.ReactNode; preloadImage?: string }) {
     const { props } = usePage<SharedData>();
@@ -62,7 +86,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                 schema={organizationSchema}
                 preloadImage={preloadImage}
             />
-            <div className="bg-ink min-h-screen overflow-hidden font-sans text-[#F5F7FA]">
+            <div className="public-site bg-ink text-public-foreground min-h-screen overflow-hidden font-sans">
                 <header
                     className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
                         scrolled ? 'bg-night/95 border-white/10 backdrop-blur-md' : 'border-transparent'
@@ -76,37 +100,38 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                                     alt={siteSettings.site_name}
                                     width="40"
                                     height="40"
-                                    className="h-10 w-auto max-w-40 object-contain"
+                                    className="h-9 w-auto max-w-32 object-contain"
                                 />
                             ) : (
                                 <span className="border-cyan/60 text-cyan flex h-10 w-10 items-center justify-center border text-lg font-bold tracking-[-.08em]">
                                     CPS
                                 </span>
                             )}
-                            <span className="hidden text-[11px] font-semibold tracking-[.24em] text-white uppercase sm:block">
+                            <span className="hidden text-[10px] font-semibold tracking-[.2em] text-white uppercase sm:block xl:text-[11px] xl:tracking-[.24em]">
                                 {siteSettings?.site_name ?? 'Citra Protecta'}
                             </span>
                         </Link>
 
-                        <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
+                        <nav className="hidden items-center gap-5 lg:flex xl:gap-6" aria-label="Main navigation">
                             {NAV_ITEMS.map((item) => (
                                 <Link
                                     key={item.label}
                                     href={item.href}
-                                    className="public-nav-link text-soft hover:text-cyan text-xs tracking-[.16em] uppercase transition"
+                                    className="public-nav-link text-soft hover:text-cyan text-[11px] tracking-[.1em] uppercase transition xl:text-xs xl:tracking-[.14em]"
                                 >
                                     {item.label}
                                 </Link>
                             ))}
                         </nav>
 
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 lg:gap-3">
+                            <ThemeToggle />
                             <Link
                                 href="/contact"
-                                className="public-cta border-cyan bg-cyan text-ink hover:text-cyan hidden items-center gap-3 border px-4 py-3 text-[10px] font-bold tracking-[.14em] uppercase transition hover:bg-transparent sm:flex"
+                                className="public-cta border-cyan bg-cyan text-ink-foreground hover:text-cyan hidden items-center gap-2 border px-3 py-2.5 text-[9px] font-bold tracking-[.1em] uppercase transition hover:bg-transparent sm:flex xl:px-4 xl:py-3 xl:text-[10px] xl:tracking-[.14em]"
                             >
-                                Request a Consultation
-                                <Icon icon="lucide:arrow-up-right" className="text-base" />
+                                Consultation
+                                <Icon icon="lucide:arrow-up-right" className="text-sm xl:text-base" />
                             </Link>
                             <button
                                 type="button"
@@ -121,7 +146,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                     </div>
 
                     {menuOpen && (
-                        <div className="public-mobile-menu bg-night border-t border-white/10 px-6 py-5 lg:hidden">
+                        <div className="public-mobile-menu bg-night border-public-border border-t px-6 py-5 lg:hidden">
                             <nav className="flex flex-col gap-5" aria-label="Mobile navigation">
                                 {NAV_ITEMS.map((item) => (
                                     <Link key={item.label} href={item.href} className="public-nav-link text-soft text-xs tracking-[.16em] uppercase">
