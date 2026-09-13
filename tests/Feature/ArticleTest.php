@@ -117,10 +117,63 @@ class ArticleTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->post('/admin/articles', $this->validPayload());
-        $this->post('/admin/articles', $this->validPayload(['title' => 'Understanding Cathodic Protection Systems!']));
+        $this->post('/admin/articles', $this->validPayload());
 
         $slugs = Article::query()->pluck('slug')->sort()->values();
         $this->assertSame(['understanding-cathodic-protection-systems', 'understanding-cathodic-protection-systems-2'], $slugs->all());
+    }
+
+    public function test_custom_slug_is_sanitized_and_saved(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/admin/articles', $this->validPayload(['slug' => 'My Custom Slug!']))->assertRedirect();
+
+        $article = Article::query()->sole();
+        $this->assertSame('my-custom-slug', $article->slug);
+    }
+
+    public function test_custom_slug_conflict_gets_unique_suffix(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/admin/articles', $this->validPayload(['slug' => 'pipeline-guide']));
+        $this->post('/admin/articles', $this->validPayload(['slug' => 'Pipeline Guide']));
+
+        $slugs = Article::query()->orderBy('id')->pluck('slug')->values();
+        $this->assertSame('pipeline-guide', $slugs[0]);
+        $this->assertSame('pipeline-guide-2', $slugs[1]);
+    }
+
+    public function test_messy_slug_is_sanitized_not_rejected(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/admin/articles', $this->validPayload(['slug' => 'Not Valid!']))->assertRedirect();
+
+        $this->assertSame('not-valid', Article::query()->sole()->slug);
+    }
+
+    public function test_symbol_only_slug_falls_back_to_title_slug(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $this->post('/admin/articles', $this->validPayload(['slug' => '!!!']))->assertRedirect();
+
+        $article = Article::query()->sole();
+        $this->assertSame('understanding-cathodic-protection-systems', $article->slug);
+    }
+
+    public function test_custom_slug_can_be_changed_on_update(): void
+    {
+        $this->actingAs(User::factory()->create());
+        $article = Article::create($this->validPayload());
+
+        $this->put("/admin/articles/{$article->id}", $this->validPayload(['slug' => 'revised-url']))
+            ->assertRedirect();
+
+        $article->refresh();
+        $this->assertSame('revised-url', $article->slug);
     }
 
     public function test_seo_fields_are_generated_when_left_empty(): void

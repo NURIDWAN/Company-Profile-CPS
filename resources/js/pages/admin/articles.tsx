@@ -45,6 +45,7 @@ function CharCounter({ value, max }: { value: string; max: number }) {
 
 const emptyForm = {
     title: '',
+    slug: '',
     excerpt: '',
     content: '',
     cover: null as File | null,
@@ -54,8 +55,16 @@ const emptyForm = {
     seo_title: '',
     seo_description: '',
     seo_keywords: '',
-    regenerate_slug: false as boolean,
 };
+
+const slugify = (value: string): string =>
+    value
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 100);
 
 export default function Articles({ articles }: { articles: AdminArticle[] }) {
     const { flash } = usePage<SharedData>().props;
@@ -75,6 +84,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
         setData({
             ...emptyForm,
             title: article.title,
+            slug: article.slug,
             status: article.status,
             published_at: article.published_at ? article.published_at.slice(0, 10) : '',
         });
@@ -110,6 +120,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
     const submit: FormEventHandler = (event) => {
         event.preventDefault();
         clearErrors();
+        setData('slug', slugify(data.slug));
 
         if (editing) {
             post(route('admin.articles.update', editing.id), { forceFormData: true, onSuccess: () => setOpen(false) });
@@ -153,6 +164,33 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                         error={errors.title}
                                         required
                                     />
+
+                                    <div className="grid gap-2">
+                                        <div className="flex items-center justify-between">
+                                            <Label htmlFor="slug">Slug (URL)</Label>
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                size="sm"
+                                                className="h-7 px-2 text-xs"
+                                                onClick={() => setData('slug', slugify(data.title))}
+                                                disabled={!data.title}
+                                            >
+                                                Generate from title
+                                            </Button>
+                                        </div>
+                                        <Input
+                                            id="slug"
+                                            value={data.slug}
+                                            onChange={(e) => setData('slug', e.target.value)}
+                                            placeholder="auto-generated-from-title"
+                                            maxLength={255}
+                                        />
+                                        <p className="text-muted-foreground text-xs">
+                                            URL: /articles/{data.slug ? slugify(data.slug) : '…'} — leave empty to auto-generate from the title.
+                                        </p>
+                                        <InputError message={errors.slug} />
+                                    </div>
 
                                     <div className="grid gap-2">
                                         <Label htmlFor="excerpt">Excerpt</Label>
@@ -281,16 +319,6 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                 />
                                                 <InputError message={errors.seo_keywords} />
                                             </div>
-                                            {editing && (
-                                                <label className="flex items-center gap-2 text-sm">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={data.regenerate_slug}
-                                                        onChange={(e) => setData('regenerate_slug', e.target.checked)}
-                                                    />
-                                                    Regenerate URL slug from title
-                                                </label>
-                                            )}
                                         </div>
                                     </div>
                                 </div>

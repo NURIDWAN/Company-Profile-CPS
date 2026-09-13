@@ -9,6 +9,7 @@ use App\Support\Seo;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -49,12 +50,7 @@ class ArticleController extends Controller
     {
         $validated = $this->validatePayload($request);
 
-        $attributes = $this->attributes($request, $validated, $article);
-        if ($request->boolean('regenerate_slug')) {
-            $attributes['slug'] = Seo::slugFrom($validated['title'], $article->id);
-        }
-
-        $article->update($attributes);
+        $article->update($this->attributes($request, $validated, $article));
 
         return back()->with('success', 'Article updated.');
     }
@@ -100,6 +96,7 @@ class ArticleController extends Controller
     {
         return $request->validate([
             'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255'],
             'excerpt' => ['nullable', 'string', 'max:500'],
             'content' => ['required', 'string', 'max:200000'],
             'cover' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:5120'],
@@ -122,7 +119,21 @@ class ArticleController extends Controller
             Storage::disk('public')->delete($existing->cover_image_path);
         }
 
-        return [
+        $slug = isset($validated['slug']) && $validated['slug'] !== ''
+            ? Str::slug($validated['slug']) ?: null
+            : null;
+
+        if ($slug && $slug !== $existing?->slug) {
+            $conflict = Article::query()
+                ->when($existing, fn ($query) => $query->where('id', '!=', $existing->id))
+                ->where('slug', $slug)
+                ->exists();
+            if ($conflict) {
+                $slug = Seo::slugFrom($slug, $existing?->id);
+            }
+        }
+
+        $attributes = [
             'title' => $validated['title'],
             'excerpt' => $validated['excerpt'] ?? null,
             'content' => RichText::sanitize($validated['content']) ?? '',
@@ -134,5 +145,11 @@ class ArticleController extends Controller
             'seo_description' => $validated['seo_description'] ?? null,
             'seo_keywords' => $validated['seo_keywords'] ?? null,
         ];
+
+        if ($slug !== null) {
+            $attributes['slug'] = $slug;
+        }
+
+        return $attributes;
     }
 }
