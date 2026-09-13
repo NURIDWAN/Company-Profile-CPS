@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface RichTextEditorProps {
     id: string;
@@ -10,19 +10,29 @@ interface RichTextEditorProps {
     error?: string;
     rows?: number;
     hint?: string;
+    uploadUrl?: string;
 }
 
-const toolbar = [
+const toolbar: { command: string; label: string; title: string; block?: string }[] = [
     { command: 'bold', label: 'B', title: 'Bold' },
     { command: 'italic', label: 'I', title: 'Italic' },
     { command: 'underline', label: 'U', title: 'Underline' },
     { command: 'insertUnorderedList', label: '• List', title: 'Bulleted list' },
     { command: 'insertOrderedList', label: '1. List', title: 'Numbered list' },
+    { command: 'formatBlock', label: 'H2', title: 'Heading 2', block: 'h2' },
+    { command: 'formatBlock', label: 'H3', title: 'Heading 3', block: 'h3' },
+    { command: 'formatBlock', label: 'Quote', title: 'Blockquote', block: 'blockquote' },
+    { command: 'formatBlock', label: '¶', title: 'Paragraph', block: 'p' },
+    { command: 'removeFormat', label: 'Clear', title: 'Clear formatting' },
 ];
 
-export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hint }: RichTextEditorProps) {
+export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hint, uploadUrl }: RichTextEditorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const selectionRef = useRef<Range | null>(null);
     const lastValueRef = useRef(value);
+    const [uploading, setUploading] = useState(false);
+    const [uploadError, setUploadError] = useState<string | null>(null);
 
     useEffect(() => {
         if (editorRef.current && editorRef.current.innerHTML !== value) {
@@ -31,9 +41,9 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
         lastValueRef.current = value;
     }, [value]);
 
-    const execute = (command: string) => {
+    const execute = (command: string, block?: string) => {
         editorRef.current?.focus();
-        document.execCommand(command, false);
+        document.execCommand(command, false, block);
         const html = editorRef.current?.innerHTML ?? '';
         lastValueRef.current = html;
         onChange(html);
@@ -45,6 +55,48 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
         onChange(html);
     };
 
+    const handleImageButton = () => {
+        const selection = window.getSelection();
+        selectionRef.current = selection && selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
+        fileInputRef.current?.click();
+    };
+
+    const restoreSelection = () => {
+        editorRef.current?.focus();
+        const selection = window.getSelection();
+        if (selection && selectionRef.current) {
+            selection.removeAllRanges();
+            selection.addRange(selectionRef.current);
+        }
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        event.target.value = '';
+        if (!file || !uploadUrl) return;
+
+        setUploading(true);
+        setUploadError(null);
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('_token', document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '');
+
+        fetch(uploadUrl, { method: 'POST', body: formData, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+            .then((payload: { url?: string }) => {
+                if (!payload.url) throw new Error('no-url');
+                restoreSelection();
+                document.execCommand('insertImage', false, payload.url);
+                const html = editorRef.current?.innerHTML ?? '';
+                lastValueRef.current = html;
+                onChange(html);
+            })
+            .catch(() => {
+                setUploadError('Image upload failed. Please try again.');
+            })
+            .finally(() => setUploading(false));
+    };
+
     return (
         <div>
             <Label htmlFor={id} className="mb-2 block">
@@ -54,18 +106,32 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                 <div className="bg-muted/40 flex flex-wrap gap-1 border-b p-1.5">
                     {toolbar.map((item) => (
                         <Button
-                            key={item.command}
+                            key={item.label}
                             type="button"
                             variant="ghost"
                             size="sm"
                             title={item.title}
                             className="h-8 px-2 text-xs"
                             onMouseDown={(event) => event.preventDefault()}
-                            onClick={() => execute(item.command)}
+                            onClick={() => execute(item.command, item.block)}
                         >
                             {item.label}
                         </Button>
                     ))}
+                    {uploadUrl && (
+                        <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            title="Insert image"
+                            disabled={uploading}
+                            className="h-8 px-2 text-xs"
+                            onMouseDown={(event) => event.preventDefault()}
+                            onClick={handleImageButton}
+                        >
+                            {uploading ? 'Uploading…' : 'Image'}
+                        </Button>
+                    )}
                 </div>
                 <div
                     id={id}
@@ -76,13 +142,14 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                     aria-multiline="true"
                     aria-invalid={Boolean(error)}
                     onInput={handleInput}
-                    className="prose prose-sm dark:prose-invert min-h-32 max-w-none px-3 py-2 text-sm outline-none"
+                    className="prose prose-sm dark:prose-invert min-h-32 max-w-none px-3 py-2 text-sm outline-none [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-md"
                     style={{ minHeight: `${rows * 1.5}rem` }}
                 />
+                <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleFileChange} />
             </div>
             <div className="mt-1 flex justify-between gap-3">
                 <p className="text-muted-foreground text-xs">{hint ?? 'Basic formatting is supported.'}</p>
-                {error && <p className="text-destructive text-xs">{error}</p>}
+                {(error || uploadError) && <p className="text-destructive text-xs">{error ?? uploadError}</p>}
             </div>
         </div>
     );

@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        config([
+            'inertia.page_paths' => [resource_path('js/pages')],
+            'inertia.testing.page_paths' => [resource_path('js/pages')],
+        ]);
     }
 
     /**

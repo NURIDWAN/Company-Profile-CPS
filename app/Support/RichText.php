@@ -8,7 +8,9 @@ use DOMNode;
 
 final class RichText
 {
-    private const ALLOWED_TAGS = ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'ul', 'ol', 'li', 'a'];
+    private const ALLOWED_TAGS = ['p', 'br', 'strong', 'b', 'em', 'i', 'u', 'ul', 'ol', 'li', 'a', 'h2', 'h3', 'blockquote', 'img'];
+
+    private const IMG_ALLOWED_ATTRIBUTES = ['src', 'alt'];
 
     public static function sanitize(?string $html): ?string
     {
@@ -40,6 +42,15 @@ final class RichText
         return $result !== '' ? $result : null;
     }
 
+    private static function isSafeImageSrc(string $src): bool
+    {
+        if (preg_match('#^/storage/#', $src) || preg_match('#^storage/#', $src)) {
+            return true;
+        }
+
+        return (bool) preg_match('#^https://[^\s"<>\']+$#i', $src);
+    }
+
     private static function cleanChildren(DOMNode $parent): void
     {
         for ($index = $parent->childNodes->length - 1; $index >= 0; $index--) {
@@ -61,9 +72,24 @@ final class RichText
                         continue;
                     }
 
-                    if ($tag !== 'a' || $attribute->name !== 'href' || ! preg_match('/^https?:\/\//i', $attribute->value)) {
+                    $keep = false;
+
+                    if ($tag === 'a' && $attribute->name === 'href' && preg_match('/^https?:\/\//i', $attribute->value)) {
+                        $keep = true;
+                    } elseif ($tag === 'img' && in_array($attribute->name, self::IMG_ALLOWED_ATTRIBUTES, true)) {
+                        $keep = $attribute->name === 'src'
+                            ? self::isSafeImageSrc($attribute->value)
+                            : $attribute->value !== '';
+                    }
+
+                    if (! $keep) {
                         $node->removeAttribute($attribute->name);
                     }
+                }
+
+                if ($tag === 'img' && ! $node->attributes->getNamedItem('src')) {
+                    $parent->removeChild($node);
+                    continue;
                 }
             }
 

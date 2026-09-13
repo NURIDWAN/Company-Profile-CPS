@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\Admin\CrmController;
 use App\Http\Controllers\Admin\DivisionController;
 use App\Http\Controllers\Admin\GalleryItemController;
@@ -10,7 +11,9 @@ use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\PublicPageController;
+use App\Models\Article;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,9 +24,26 @@ Route::get('robots.txt', function () {
 });
 
 Route::get('sitemap.xml', function () {
-    abort_unless(file_exists(public_path('sitemap.xml')), 404);
+    $pages = ['/', '/about', '/services', '/industries', '/projects', '/consultation', '/contact', '/articles'];
+    $articleUrls = Article::query()
+        ->published()
+        ->orderByDesc('published_at')
+        ->get()
+        ->map(fn (Article $article) => [
+            'loc' => url('/articles/'.$article->slug),
+            'lastmod' => $article->updated_at->toAtomString(),
+        ]);
 
-    return response()->file(public_path('sitemap.xml'), ['Content-Type' => 'application/xml']);
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
+    foreach ($pages as $page) {
+        $xml .= "    <url><loc>".url($page).'</loc></url>'."\n";
+    }
+    foreach ($articleUrls as $articleUrl) {
+        $xml .= '    <url><loc>'.$articleUrl['loc'].'</loc><lastmod>'.$articleUrl['lastmod'].'</lastmod></url>'."\n";
+    }
+    $xml .= '</urlset>'."\n";
+
+    return response($xml, 200, ['Content-Type' => 'application/xml']);
 });
 
 // Public company profile pages
@@ -47,6 +67,10 @@ Route::post('contact/messages', [ContactMessageController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.messages.store');
 
+// Public articles
+Route::get('articles', [PublicArticleController::class, 'index'])->name('articles.index');
+Route::get('articles/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
@@ -69,6 +93,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('projects/{reference}', [ProjectReferenceController::class, 'destroy'])->name('projects.destroy');
 
         Route::resource('gallery', GalleryItemController::class)->except('show')->parameters(['gallery' => 'item']);
+
+        Route::post('articles/seo-preview', [ArticleController::class, 'seoPreview'])->name('articles.seo-preview');
+        Route::post('articles/upload-image', [ArticleController::class, 'uploadImage'])->name('articles.upload-image');
+        Route::resource('articles', ArticleController::class)->except('show');
+
         Route::get('content', [PageContentController::class, 'index'])->name('content.index');
         Route::put('content', [PageContentController::class, 'updateContent'])->name('content.update');
         Route::post('content/media', [PageContentController::class, 'updateMedia'])->name('content.media.update');
