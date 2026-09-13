@@ -115,8 +115,12 @@ export interface Division {
 export interface Product {
     id: number;
     product_category_id: number;
+    slug: string | null;
     name: string;
     spec: string | null;
+    description: string | null;
+    image_path: string | null;
+    image_url?: string;
     sort_order: number;
 }
 

@@ -12,16 +12,17 @@ final class Seo
         'your', 'their', 'its', 'can', 'will', 'into', 'onto', 'per', 'via', 'about', 'more', 'than', 'then', 'them', 'they',
     ];
 
-    public static function slugFrom(string $title, ?int $ignoreId = null): string
+    public static function slugFrom(string $title, ?int $ignoreId = null, ?\Illuminate\Database\Eloquent\Builder $query = null): string
     {
         $base = Str::slug($title) ?: 'article';
         $slug = $base;
         $suffix = 2;
 
-        $query = Str::of($base)->replace('-', '%');
-        $existing = \App\Models\Article::query()
+        $lookup = $query ?? \App\Models\Article::query();
+        $pattern = Str::of($base)->replace('-', '%');
+        $existing = $lookup
             ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
-            ->whereRaw('slug LIKE ?', ['%'.$query.'%'])
+            ->whereRaw('slug LIKE ?', ['%'.$pattern.'%'])
             ->pluck('slug');
 
         while ($existing->contains($slug)) {

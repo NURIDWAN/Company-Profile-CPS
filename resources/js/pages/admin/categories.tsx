@@ -4,7 +4,7 @@ import { RichText } from '@/components/public/rich-text';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import AppLayout from '@/layouts/app-layout';
-import { type BreadcrumbItem, type ProductCategory, type SharedData } from '@/types';
+import { type BreadcrumbItem, type Product, type ProductCategory, type SharedData } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useState } from 'react';
 
@@ -20,11 +20,11 @@ export default function Categories({ categories }: { categories: ProductCategory
     const [editingCategory, setEditingCategory] = useState<ProductCategory | null>(null);
 
     const [productTarget, setProductTarget] = useState<ProductCategory | null>(null);
-    const [editingProduct, setEditingProduct] = useState<{ id: number; name: string; spec: string | null } | null>(null);
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [productOpen, setProductOpen] = useState(false);
 
     const categoryForm = useForm<{ name: string; description: string }>({ name: '', description: '' });
-    const productForm = useForm<{ name: string; spec: string }>({ name: '', spec: '' });
+    const productForm = useForm<{ name: string; spec: string; description: string }>({ name: '', spec: '', description: '' });
 
     const openCategoryCreate = () => {
         setEditingCategory(null);
@@ -56,10 +56,10 @@ export default function Categories({ categories }: { categories: ProductCategory
         setProductOpen(true);
     };
 
-    const openProductEdit = (category: ProductCategory, product: { id: number; name: string; spec: string | null }) => {
+    const openProductEdit = (category: ProductCategory, product: Product) => {
         setProductTarget(category);
         setEditingProduct(product);
-        productForm.setData({ name: product.name, spec: product.spec ?? '' });
+        productForm.setData({ name: product.name, spec: product.spec ?? '', description: product.description ?? '' });
         setProductOpen(true);
     };
 
@@ -211,6 +211,16 @@ export default function Categories({ categories }: { categories: ProductCategory
                             value={productForm.data.spec}
                             onChange={(v) => productForm.setData('spec', v)}
                             error={productForm.errors.spec}
+                        />
+                        <RichTextEditor
+                            id="product-description"
+                            label="Description"
+                            value={productForm.data.description}
+                            onChange={(value) => productForm.setData('description', value)}
+                            error={productForm.errors.description}
+                            rows={8}
+                            uploadUrl={route('admin.products.upload-image')}
+                            hint="You can insert images into the description."
                         />
                         <DialogFooter>
                             <Button type="submit" disabled={productForm.processing}>

@@ -13,7 +13,9 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\PublicProductController;
 use App\Models\Article;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,7 +26,7 @@ Route::get('robots.txt', function () {
 });
 
 Route::get('sitemap.xml', function () {
-    $pages = ['/', '/about', '/services', '/industries', '/projects', '/consultation', '/contact', '/articles'];
+    $pages = ['/', '/about', '/services', '/industries', '/projects', '/consultation', '/contact', '/articles', '/products'];
     $articleUrls = Article::query()
         ->published()
         ->orderByDesc('published_at')
@@ -33,13 +35,20 @@ Route::get('sitemap.xml', function () {
             'loc' => url('/articles/'.$article->slug),
             'lastmod' => $article->updated_at->toAtomString(),
         ]);
+    $productUrls = Product::query()
+        ->orderBy('id')
+        ->get()
+        ->map(fn (Product $product) => [
+            'loc' => url('/products/'.$product->slug),
+            'lastmod' => $product->updated_at->toAtomString(),
+        ]);
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
     foreach ($pages as $page) {
         $xml .= "    <url><loc>".url($page).'</loc></url>'."\n";
     }
-    foreach ($articleUrls as $articleUrl) {
-        $xml .= '    <url><loc>'.$articleUrl['loc'].'</loc><lastmod>'.$articleUrl['lastmod'].'</lastmod></url>'."\n";
+    foreach ([...$articleUrls, ...$productUrls] as $entry) {
+        $xml .= '    <url><loc>'.$entry['loc'].'</loc><lastmod>'.$entry['lastmod'].'</lastmod></url>'."\n";
     }
     $xml .= '</urlset>'."\n";
 
@@ -71,6 +80,10 @@ Route::post('contact/messages', [ContactMessageController::class, 'store'])
 Route::get('articles', [PublicArticleController::class, 'index'])->name('articles.index');
 Route::get('articles/{article:slug}', [PublicArticleController::class, 'show'])->name('articles.show');
 
+// Public products
+Route::get('products', [PublicProductController::class, 'index'])->name('products.index');
+Route::get('products/{product}', [PublicProductController::class, 'show'])->name('products.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
 
@@ -86,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
             ->name('categories.products.store');
         Route::put('products/{product}', [ProductCategoryController::class, 'updateProduct'])->name('products.update');
         Route::delete('products/{product}', [ProductCategoryController::class, 'destroyProduct'])->name('products.destroy');
+        Route::post('products/upload-image', [ProductCategoryController::class, 'uploadImage'])->name('products.upload-image');
 
         Route::get('projects', [ProjectReferenceController::class, 'index'])->name('projects.index');
         Route::post('projects', [ProjectReferenceController::class, 'store'])->name('projects.store');
