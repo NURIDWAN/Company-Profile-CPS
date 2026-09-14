@@ -6,6 +6,26 @@
 
 /* CPS (PT. Citra Protecta Semesta) — public site theme */
 @theme {
+    /* Semantic neutral tokens: utility classes resolve through the active theme. */
+    --color-neutral-100: var(--neutral-100);
+    --color-neutral-200: var(--neutral-200);
+    --color-neutral-300: var(--neutral-300);
+    --color-neutral-400: var(--neutral-400);
+    --color-dark-neutral-100: var(--dark-neutral-100);
+    --color-dark-neutral-200: var(--dark-neutral-200);
+    --color-dark-neutral-300: var(--dark-neutral-300);
+    --color-dark-neutral-400: var(--dark-neutral-400);
+    --color-surface-primary: var(--surface-primary);
+    --color-surface-secondary: var(--surface-secondary);
+    --color-surface-tertiary: var(--surface-tertiary);
+    --color-border-subtle: var(--border-subtle);
+    --color-border-strong: var(--border-strong);
+    --color-content-primary: var(--content-primary);
+    --color-content-secondary: var(--content-secondary);
+    --color-content-muted: var(--content-muted);
+    --color-accent-primary: var(--accent-primary);
+    --color-accent-foreground: var(--accent-foreground);
+
     --color-ink: var(--public-ink);
     --color-ink-foreground: var(--public-ink-foreground);
     --color-night: var(--public-night);
@@ -345,18 +365,42 @@ html {
 }
 
 :root {
-    --public-ink: #f7fafc;
-    --public-ink-foreground: #10202d;
-    --public-night: #eef3f7;
-    --public-steel: #e5edf3;
-    --public-panel: #ffffff;
-    --public-surface: #f8fbfd;
-    --public-cyan: #007f99;
-    --public-soft: #425466;
-    --public-dim: #647789;
-    --public-foreground: #10202d;
-    --public-border: rgba(15, 35, 50, 0.14);
-    --public-border-strong: rgba(15, 35, 50, 0.22);
+    /* Light neutral ramp */
+    --neutral-100: #f7fafc;
+    --neutral-200: #ffffff;
+    --neutral-300: #d9e2e8;
+    --neutral-400: #647789;
+
+    /* Dark neutral ramp: one-to-one semantic counterpart of the light ramp */
+    --dark-neutral-100: #07090c;
+    --dark-neutral-200: #111820;
+    --dark-neutral-300: #27323d;
+    --dark-neutral-400: #6f7a85;
+
+    --surface-primary: var(--neutral-100);
+    --surface-secondary: var(--neutral-200);
+    --surface-tertiary: var(--neutral-300);
+    --border-subtle: var(--neutral-300);
+    --border-strong: color-mix(in srgb, var(--neutral-400) 45%, var(--neutral-200));
+    --content-primary: #10202d;
+    --content-secondary: #425466;
+    --content-muted: var(--neutral-400);
+
+    --accent-primary: #007f99;
+    --accent-foreground: #ffffff;
+
+    --public-ink: var(--surface-primary);
+    --public-ink-foreground: var(--content-primary);
+    --public-night: var(--surface-tertiary);
+    --public-steel: var(--surface-tertiary);
+    --public-panel: var(--surface-secondary);
+    --public-surface: var(--surface-primary);
+    --public-cyan: var(--accent-primary);
+    --public-soft: var(--content-secondary);
+    --public-dim: var(--content-muted);
+    --public-foreground: var(--content-primary);
+    --public-border: var(--border-subtle);
+    --public-border-strong: var(--border-strong);
     --public-overlay: linear-gradient(90deg, rgba(247, 250, 252, 0.98) 0%, rgba(247, 250, 252, 0.82) 43%, rgba(247, 250, 252, 0.2) 100%);
     --public-grid-line: rgba(0, 127, 153, 0.09);
     --background: hsl(0, 0%, 100%);
@@ -395,18 +439,31 @@ html {
 }
 
 .dark {
-    --public-ink: #07090c;
-    --public-ink-foreground: #f5f7fa;
-    --public-night: #0b0f14;
-    --public-steel: #10151b;
-    --public-panel: #111820;
-    --public-surface: #151d26;
-    --public-cyan: #00d9ff;
-    --public-soft: #a7b0ba;
-    --public-dim: #6f7a85;
-    --public-foreground: #f5f7fa;
-    --public-border: rgba(255, 255, 255, 0.1);
-    --public-border-strong: rgba(255, 255, 255, 0.2);
+    /* Dark mode remaps the same semantic names to the dark neutral ramp. */
+    --surface-primary: var(--dark-neutral-100);
+    --surface-secondary: var(--dark-neutral-200);
+    --surface-tertiary: var(--dark-neutral-300);
+    --border-subtle: var(--dark-neutral-300);
+    --border-strong: color-mix(in srgb, var(--dark-neutral-400) 55%, var(--dark-neutral-200));
+    --content-primary: #f5f7fa;
+    --content-secondary: #a7b0ba;
+    --content-muted: var(--dark-neutral-400);
+
+    --accent-primary: #00d9ff;
+    --accent-foreground: #07090c;
+
+    --public-ink: var(--surface-primary);
+    --public-ink-foreground: var(--content-primary);
+    --public-night: var(--surface-tertiary);
+    --public-steel: var(--surface-tertiary);
+    --public-panel: var(--surface-secondary);
+    --public-surface: var(--surface-primary);
+    --public-cyan: var(--accent-primary);
+    --public-soft: var(--content-secondary);
+    --public-dim: var(--content-muted);
+    --public-foreground: var(--content-primary);
+    --public-border: var(--border-subtle);
+    --public-border-strong: var(--border-strong);
     --public-overlay: linear-gradient(90deg, rgba(7, 9, 12, 0.98) 0%, rgba(7, 9, 12, 0.82) 43%, rgba(7, 9, 12, 0.28) 100%);
     --public-grid-line: rgba(0, 217, 255, 0.055);
     --background: hsl(0, 0%, 3.9%);

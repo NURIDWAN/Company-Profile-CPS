@@ -36,7 +36,7 @@ class ProductCategoryController extends Controller
             'sort_order' => (int) ProductCategory::max('sort_order') + 1,
         ]);
 
-        return back()->with('success', 'Category created.');
+        return back()->with('success', __('Category created.'));
     }
 
     public function update(Request $request, ProductCategory $category): RedirectResponse
@@ -51,14 +51,14 @@ class ProductCategoryController extends Controller
             'description' => RichText::sanitize($validated['description'] ?? null),
         ]);
 
-        return back()->with('success', 'Category updated.');
+        return back()->with('success', __('Category updated.'));
     }
 
     public function destroy(ProductCategory $category): RedirectResponse
     {
         $category->delete();
 
-        return back()->with('success', 'Category deleted.');
+        return back()->with('success', __('Category deleted.'));
     }
 
     public function storeProduct(Request $request, ProductCategory $category): RedirectResponse
@@ -77,7 +77,7 @@ class ProductCategoryController extends Controller
             'sort_order' => (int) $category->products()->max('sort_order') + 1,
         ]);
 
-        return back()->with('success', 'Product created.');
+        return back()->with('success', __('Product created.'));
     }
 
     public function updateProduct(Request $request, Product $product): RedirectResponse
@@ -94,7 +94,7 @@ class ProductCategoryController extends Controller
             'description' => $validated['description'] ?? null,
         ]);
 
-        return back()->with('success', 'Product updated.');
+        return back()->with('success', __('Product updated.'));
     }
 
     public function destroyProduct(Product $product): RedirectResponse
@@ -105,7 +105,7 @@ class ProductCategoryController extends Controller
 
         $product->delete();
 
-        return back()->with('success', 'Product deleted.');
+        return back()->with('success', __('Product deleted.'));
     }
 
     public function uploadImage(Request $request): array

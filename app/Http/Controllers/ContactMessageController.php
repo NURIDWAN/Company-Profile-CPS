@@ -21,6 +21,6 @@ class ContactMessageController extends Controller
 
         ContactMessage::create($validated);
 
-        return back()->with('success', 'Thank you. Your inquiry has been sent to our team.');
+        return back()->with('success', __('Thank you. Your inquiry has been sent to our team.'));
     }
 }

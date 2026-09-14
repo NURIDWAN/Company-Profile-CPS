@@ -25,14 +25,9 @@ class PublicPageController extends Controller
             'description' => 'Explore CPS service, maintenance, design, manufacturing, trading, and construction engineering capabilities.',
             'path' => '/services',
         ],
-        'industries' => [
-            'title' => 'Engineering Solutions for Critical Industries',
-            'description' => 'CPS provides specialized electrical and electronic engineering solutions for demanding industrial environments.',
-            'path' => '/industries',
-        ],
         'projects' => [
-            'title' => 'Engineering Project References',
-            'description' => 'Review selected electrical, electronic, cathodic protection, telecommunications, and infrastructure projects delivered by CPS.',
+            'title' => 'Engineering Projects Across Critical Industries',
+            'description' => 'Review CPS project references, industry expertise, and electrical, electronic, cathodic protection, telecommunications, and infrastructure solutions.',
             'path' => '/projects',
         ],
         'consultation' => [
@@ -58,8 +53,8 @@ class PublicPageController extends Controller
 
         return Inertia::render($page, [
             'seo' => [
-                'title' => $page === 'home' && $settings?->seo_title ? $settings->seo_title : $definition['title'],
-                'description' => $page === 'home' && $settings?->seo_description ? $settings->seo_description : $definition['description'],
+                'title' => $page === 'home' && $settings?->seo_title ? $settings->seo_title : __($definition['title']),
+                'description' => $page === 'home' && $settings?->seo_description ? $settings->seo_description : __($definition['description']),
                 'canonical' => $canonical,
                 'ogImage' => $ogImage,
                 'ogType' => 'website',

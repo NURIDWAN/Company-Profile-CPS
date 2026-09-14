@@ -48,22 +48,22 @@ export function WhatsappPopup({ settings }: { settings?: SiteSetting | null }) {
                         <div className="flex items-center gap-3">
                             <WhatsAppIcon className="h-5 w-5" />
                             <div>
-                                <p className="text-sm font-semibold">Chat with us</p>
-                                <p className="text-xs text-white/75">We usually reply quickly</p>
+                                <p className="text-sm font-semibold">Hubungi kami</p>
+                                <p className="text-xs text-white/75">Kami biasanya membalas dengan cepat</p>
                             </div>
                         </div>
                         <button
                             type="button"
                             onClick={() => setOpen(false)}
                             className="rounded-full p-1 text-white/80 hover:bg-white/15 hover:text-white"
-                            aria-label="Close WhatsApp popup"
+                            aria-label="Tutup jendela WhatsApp"
                         >
                             <CloseIcon />
                         </button>
                     </div>
                     <div className="p-4">
                         <p className="text-public-foreground/75 text-sm leading-6 dark:text-white/75">
-                            Have a question about our engineering services? Send us a message on WhatsApp.
+                            Punya pertanyaan tentang layanan rekayasa kami? Kirim pesan melalui WhatsApp.
                         </p>
                         <a
                             href={url}
@@ -72,7 +72,7 @@ export function WhatsappPopup({ settings }: { settings?: SiteSetting | null }) {
                             className="mt-4 flex h-11 items-center justify-center gap-2 rounded-lg bg-[#25d366] px-4 text-sm font-semibold text-[#062e25] transition hover:bg-[#4be27f]"
                         >
                             <MessageIcon />
-                            Start WhatsApp chat
+                            Mulai chat WhatsApp
                         </a>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ export function WhatsappPopup({ settings }: { settings?: SiteSetting | null }) {
                 type="button"
                 onClick={() => setOpen((value) => !value)}
                 className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-[#062e25] shadow-lg shadow-black/25 transition hover:scale-105 hover:bg-[#4be27f]"
-                aria-label={open ? 'Close WhatsApp popup' : 'Open WhatsApp popup'}
+                aria-label={open ? 'Tutup jendela WhatsApp' : 'Buka jendela WhatsApp'}
                 aria-expanded={open}
             >
                 {open ? <CloseIcon /> : <WhatsAppIcon className="h-7 w-7" />}

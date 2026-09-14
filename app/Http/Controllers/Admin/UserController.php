@@ -33,7 +33,7 @@ class UserController extends Controller
         $user = User::create($validated);
         $user->forceFill(['email_verified_at' => Carbon::now()])->save();
 
-        return back()->with('success', 'User created successfully.');
+        return back()->with('success', __('User created successfully.'));
     }
 
     public function update(Request $request, User $user): RedirectResponse
@@ -50,15 +50,15 @@ class UserController extends Controller
 
         $user->update($validated);
 
-        return back()->with('success', 'User updated successfully.');
+        return back()->with('success', __('User updated successfully.'));
     }
 
     public function destroy(Request $request, User $user): RedirectResponse
     {
-        abort_if($request->user()->is($user), 422, 'You cannot delete your own account.');
+        abort_if($request->user()->is($user), 422, __('You cannot delete your own account.'));
 
         $user->delete();
 
-        return back()->with('success', 'User deleted successfully.');
+        return back()->with('success', __('User deleted successfully.'));
     }
 }

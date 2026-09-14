@@ -25,7 +25,7 @@ class CrmController extends Controller
             'replied_at' => $status === 'replied' ? ($message->replied_at ?? Carbon::now()) : null,
         ]);
 
-        return back()->with('success', 'Message status updated.');
+        return back()->with('success', __('Message status updated.'));
     }
 
     public function index(Request $request): Response

@@ -82,10 +82,10 @@ export default function Home() {
                     <div className="relative mx-auto w-full max-w-7xl px-6 pt-40 pb-24 lg:px-8 lg:pb-32">
                         <div className="max-w-4xl">
                             <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
-                                <span className="bg-cyan h-px w-10" /> {content('hero.eyebrow', 'Engineering & Power System')}
+                                <span className="bg-cyan h-px w-10" /> {content('hero.eyebrow', 'Rekayasa & Sistem Tenaga')}
                             </p>
                             <h1 className="reveal mt-7 max-w-4xl text-5xl delay-1 sm:text-6xl lg:text-7xl">
-                                {content('hero.title', 'Reliable Engineering For Critical Infrastructure')}
+                                {content('hero.title', 'Rekayasa Andal untuk Infrastruktur Kritis')}
                             </h1>
                             <p className="reveal text-soft mt-8 max-w-xl text-base leading-7 delay-2">
                                 {content(
@@ -98,25 +98,25 @@ export default function Home() {
                                     href="/services"
                                     className="bg-cyan text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
                                 >
-                                    Explore Services <Icon icon="lucide:arrow-down-right" className="text-base" />
+                                    Jelajahi Layanan <Icon icon="lucide:arrow-down-right" className="text-base" />
                                 </Link>
                                 <Link
                                     href="/projects"
                                     className="hover:border-cyan hover:text-cyan inline-flex h-14 items-center justify-center gap-3 border border-white/20 px-6 text-xs font-bold tracking-[.15em] text-white uppercase transition"
                                 >
-                                    View Projects <Icon icon="lucide:arrow-up-right" className="text-base" />
+                                    Lihat Proyek <Icon icon="lucide:arrow-up-right" className="text-base" />
                                 </Link>
                             </div>
                         </div>
                         <div className="text-dim mt-20 flex items-center gap-8 font-mono text-[10px] tracking-[.18em] uppercase">
                             <span>PT. CITRA PROTECTA SEMESTA</span>
                             <span className="bg-cyan/50 hidden h-px w-16 sm:block" />
-                            <span className="hidden sm:block">Electrical &amp; Electronic Engineering</span>
+                            <span className="hidden sm:block">Rekayasa Kelistrikan &amp; Elektronik</span>
                         </div>
                     </div>
                 </section>
 
-                {/* Company Section */}
+                {/* Bagian Perusahaan */}
                 <section id="company" className="bg-night relative py-24 lg:py-36">
                     <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_.95fr] lg:gap-24 lg:px-8">
                         <div className="relative min-h-[500px] overflow-hidden border border-white/10">
@@ -131,16 +131,18 @@ export default function Home() {
                             />
                             <div className="from-ink/75 to-cyan/10 absolute inset-0 bg-gradient-to-tr via-transparent" />
                             <div className="border-cyan absolute bottom-6 left-6 border-l pl-4 font-mono text-[10px] tracking-[.16em] text-white uppercase">
-                                Engineering division
+                                Divisi rekayasa
                                 <br />
                                 <span className="text-cyan">01 / CPS</span>
                             </div>
                         </div>
 
                         <div className="flex flex-col justify-center">
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">{content('company.eyebrow', 'Company / 01')}</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">
+                                {content('company.eyebrow', 'Perusahaan / 01')}
+                            </p>
                             <h2 className="mt-6 max-w-xl text-4xl leading-[1.03] font-semibold tracking-[-.05em] text-white sm:text-6xl">
-                                {content('company.title', 'Built around engineering expertise.')}
+                                {content('company.title', 'Dibangun atas keahlian rekayasa.')}
                             </h2>
                             <RichText
                                 value={content(
@@ -175,14 +177,14 @@ export default function Home() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Capabilities / 02</p>
-                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Engineering in action.</h2>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Kapabilitas / 02</p>
+                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Rekayasa dalam aksi.</h2>
                             </div>
                             <Link
                                 href="/services"
                                 className="text-cyan inline-flex items-center gap-2 text-sm font-semibold tracking-[.14em] uppercase hover:underline"
                             >
-                                View All Services Details <Icon icon="lucide:arrow-right" className="text-base" />
+                                Lihat Semua Detail Layanan <Icon icon="lucide:arrow-right" className="text-base" />
                             </Link>
                         </div>
 
@@ -223,18 +225,18 @@ export default function Home() {
                 <section id="contact" className="bg-night relative border-t border-white/10 py-24 lg:py-36">
                     <div className="mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
                         <div>
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Contact / 07</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Kontak / 07</p>
                             <h2 className="mt-6 max-w-2xl text-5xl leading-[.95] font-semibold tracking-[-.06em] sm:text-7xl">
-                                Have an engineering
+                                Memiliki kebutuhan
                                 <br />
-                                <span className="text-cyan">project in mind?</span>
+                                <span className="text-cyan">proyek rekayasa?</span>
                             </h2>
-                            <p className="text-soft mt-8 text-lg">Let's discuss your technical requirements.</p>
+                            <p className="text-soft mt-8 text-lg">Mari diskusikan kebutuhan teknis Anda.</p>
                             <Link
                                 href="/contact"
                                 className="bg-cyan text-ink-foreground mt-10 inline-flex h-14 items-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white"
                             >
-                                Contact CPS <Icon icon="lucide:arrow-up-right" className="text-base" />
+                                Hubungi CPS <Icon icon="lucide:arrow-up-right" className="text-base" />
                             </Link>
                         </div>
                         <div>

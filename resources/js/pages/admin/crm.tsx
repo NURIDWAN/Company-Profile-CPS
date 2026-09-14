@@ -7,20 +7,20 @@ import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'CRM Messages', href: '/admin/crm' },
+    { title: 'Pesan CRM', href: '/admin/crm' },
 ];
 
 const statusFilters = [
-    { value: 'all', label: 'All Messages' },
-    { value: 'new', label: 'New' },
-    { value: 'read', label: 'Read' },
-    { value: 'replied', label: 'Replied' },
+    { value: 'all', label: 'Semua Pesan' },
+    { value: 'new', label: 'Baru' },
+    { value: 'read', label: 'Dibaca' },
+    { value: 'replied', label: 'Dibalas' },
 ];
 
 const statusOptions = [
-    { value: 'new', label: 'New' },
-    { value: 'read', label: 'Read' },
-    { value: 'replied', label: 'Replied' },
+    { value: 'new', label: 'Baru' },
+    { value: 'read', label: 'Dibaca' },
+    { value: 'replied', label: 'Dibalas' },
 ];
 
 const projectTypeLabels: Record<string, string> = {
@@ -33,7 +33,11 @@ const projectTypeLabels: Record<string, string> = {
 };
 
 function formatDate(value: string): string {
-    return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(new Date(value));
+    return new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' }).format(new Date(value));
+}
+
+function statusLabel(status: ContactMessage['status']): string {
+    return { new: 'Baru', read: 'Dibaca', replied: 'Dibalas' }[status] ?? status;
 }
 
 function statusVariant(status: ContactMessage['status']): 'default' | 'secondary' | 'outline' {
@@ -61,12 +65,12 @@ export default function Crm({ messages, status }: { messages: PaginatedResponse<
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="CRM Messages" />
+            <Head title="Pesan CRM" />
             <div className="mx-auto flex w-full max-w-[1600px] min-w-0 flex-1 flex-col gap-6 p-4">
                 <div className="flex min-w-0 flex-wrap items-end justify-between gap-4">
                     <div>
-                        <h2 className="text-xl font-semibold">CRM Messages</h2>
-                        <p className="text-muted-foreground text-sm">Manage inquiries received from the website contact form.</p>
+                        <h2 className="text-xl font-semibold">Pesan CRM</h2>
+                        <p className="text-muted-foreground text-sm">Kelola pertanyaan yang diterima dari formulir kontak situs web.</p>
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {statusFilters.map((filter) => (
@@ -82,23 +86,23 @@ export default function Crm({ messages, status }: { messages: PaginatedResponse<
                 <section className="min-w-0 overflow-hidden rounded-xl border">
                     <div className="flex items-center justify-between border-b px-5 py-4">
                         <div>
-                            <h3 className="font-semibold">Contact Messages</h3>
+                            <h3 className="font-semibold">Pesan Kontak</h3>
                             <p className="text-muted-foreground mt-1 text-sm">{messages.total} total message(s)</p>
                         </div>
                     </div>
                     {messages.data.length === 0 ? (
-                        <div className="text-muted-foreground px-5 py-12 text-center text-sm">No messages found for this filter.</div>
+                        <div className="text-muted-foreground px-5 py-12 text-center text-sm">Tidak ada pesan untuk filter ini.</div>
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full min-w-[900px] text-sm">
                                 <thead className="bg-muted/40 text-muted-foreground text-left">
                                     <tr>
-                                        <th className="px-5 py-3 font-medium">Sender</th>
-                                        <th className="px-5 py-3 font-medium">Contact</th>
-                                        <th className="px-5 py-3 font-medium">Project</th>
-                                        <th className="px-5 py-3 font-medium">Message</th>
+                                        <th className="px-5 py-3 font-medium">Pengirim</th>
+                                        <th className="px-5 py-3 font-medium">Kontak</th>
+                                        <th className="px-5 py-3 font-medium">Proyek</th>
+                                        <th className="px-5 py-3 font-medium">Pesan</th>
                                         <th className="px-5 py-3 font-medium">Status</th>
-                                        <th className="px-5 py-3 font-medium">Received</th>
+                                        <th className="px-5 py-3 font-medium">Diterima</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y">
@@ -106,7 +110,7 @@ export default function Crm({ messages, status }: { messages: PaginatedResponse<
                                         <tr key={message.id} className="align-top">
                                             <td className="px-5 py-4">
                                                 <p className="font-medium">{message.name}</p>
-                                                <p className="text-muted-foreground text-xs">{message.company || 'No company provided'}</p>
+                                                <p className="text-muted-foreground text-xs">{message.company || 'Perusahaan tidak dicantumkan'}</p>
                                             </td>
                                             <td className="px-5 py-4">
                                                 <a href={`mailto:${message.email}`} className="text-primary hover:underline">
@@ -121,12 +125,12 @@ export default function Crm({ messages, status }: { messages: PaginatedResponse<
                                             </td>
                                             <td className="px-5 py-4">
                                                 <div className="flex flex-col gap-2">
-                                                    <Badge variant={statusVariant(message.status)}>{message.status}</Badge>
+                                                    <Badge variant={statusVariant(message.status)}>{statusLabel(message.status)}</Badge>
                                                     <select
                                                         value={message.status}
                                                         onChange={(event) => updateStatus(message.id, event.target.value)}
                                                         disabled={updatingId === message.id}
-                                                        aria-label={`Update status for message from ${message.name}`}
+                                                        aria-label={`Perbarui status pesan dari ${message.name}`}
                                                         className="border-input bg-background h-8 rounded-md border px-2 text-xs"
                                                     >
                                                         {statusOptions.map((option) => (

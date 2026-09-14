@@ -17,20 +17,20 @@ export function ContactInfoCards({ company }: { company: PublicCompany }) {
     return (
         <div className="space-y-4">
             <div className={cardClass}>
-                <p className={labelClass}>Office</p>
+                <p className={labelClass}>Kantor</p>
                 <h3 className="mt-6 text-base font-semibold text-white">{company.name}</h3>
                 <p className="text-soft mt-3 text-sm leading-7 whitespace-pre-line">{addressLines.join('\n')}</p>
             </div>
 
             <div className={cardClass}>
-                <p className={labelClass}>Phone</p>
+                <p className={labelClass}>Telepon</p>
                 <a href={`tel:${company.contact.phones[0] ?? ''}`} className={linkClass}>
                     {company.contact.phones[0] ?? '—'}
                 </a>
             </div>
 
             <div className={cardClass}>
-                <p className={labelClass}>Mobile / WhatsApp</p>
+                <p className={labelClass}>Ponsel / WhatsApp</p>
                 <a
                     href={`https://wa.me/${(company.contact.phones[1] ?? '').replace(/\D/g, '')}`}
                     target="_blank"
@@ -42,7 +42,7 @@ export function ContactInfoCards({ company }: { company: PublicCompany }) {
             </div>
 
             <div className={cardClass}>
-                <p className={labelClass}>E-mail</p>
+                <p className={labelClass}>Email</p>
                 <a href={`mailto:${company.contact.email}`} className={linkClass}>
                     {company.contact.email}
                 </a>

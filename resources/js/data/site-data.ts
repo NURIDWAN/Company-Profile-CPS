@@ -3,8 +3,8 @@
 export const company = {
     name: 'PT. Citra Protecta Semesta',
     shortName: 'CPS',
-    tagline: 'Quick Response and Good Quality are our commitment to serve',
-    about: 'PT. Citra Protecta Semesta is a company enthusiastic in Electrical & Electronic Engineering, through our idealism as a native entrepreneur, who wants to build a good worldwide company/manufacturer from Indonesia. We pursue good creation and innovation in business in Electrical System and Power Electronics.',
+    tagline: 'Respons Cepat dan Kualitas Baik adalah komitmen kami dalam melayani',
+    about: 'PT. Citra Protecta Semesta adalah perusahaan yang berfokus pada Rekayasa Kelistrikan & Elektronik. Dengan semangat kewirausahaan Indonesia, kami berkomitmen membangun perusahaan dan manufaktur berkelas dunia melalui kreasi serta inovasi dalam sistem kelistrikan dan elektronika daya.',
     address: {
         line1: 'Kavling DPR Blok C No. 234, Neroktog, Pinang',
         city: 'Tangerang',
@@ -24,19 +24,19 @@ export const company = {
 export const divisions = [
     {
         id: 'service-maintenance',
-        name: 'Service and Maintenance Division',
+        name: 'Divisi Servis dan Pemeliharaan',
         description:
-            'Serves clients for Service & Maintenance of power-electronic equipment: Energy Monitoring, UPS, Battery Monitoring, Charger, Inverter, Rectifier. Supported by expert human resources to give correct and fast solutions, reducing production time losses and improving production efficiency.',
+            'Melayani kebutuhan Servis & Pemeliharaan peralatan elektronika daya: Pemantauan Energi, UPS, Pemantauan Baterai, Charger, Inverter, dan Rectifier. Didukung sumber daya manusia berpengalaman untuk memberikan solusi yang tepat dan cepat, mengurangi waktu henti produksi, serta meningkatkan efisiensi produksi.',
     },
     {
         id: 'design-manufacture',
-        name: 'Design and Manufacture Division',
+        name: 'Divisi Desain dan Manufaktur',
         description:
             'Provides customized Power Electronic equipment solutions based on client requirements. Production covers Electrical Panel, Battery Monitoring, Inverter & Rectifier, and Cathodic Protection.',
     },
     {
         id: 'trading-construction',
-        name: 'Trading and Construction Division',
+        name: 'Divisi Perdagangan dan Konstruksi',
         description:
             'Assists customers in reaching project goals. Electrical, Mechanical & Instrument equipment comes with ANSI/NEMA or IEC Standard, competitive price, and good delivery, keeping projects on budget and schedule.',
     },
@@ -45,8 +45,8 @@ export const divisions = [
 export const productCategories = [
     {
         id: 'electrical',
-        name: 'Electrical',
-        description: 'Supply & Installation of electrical panels and distribution systems.',
+        name: 'Kelistrikan',
+        description: 'Pengadaan dan instalasi panel listrik serta sistem distribusi.',
         products: [
             {
                 id: 'lvmdp',
@@ -92,8 +92,8 @@ export const productCategories = [
     },
     {
         id: 'mechanical',
-        name: 'Mechanical',
-        description: 'Fire fighting and piping systems for industrial and power plant facilities.',
+        name: 'Mekanikal',
+        description: 'Sistem pemadam kebakaran dan perpipaan untuk fasilitas industri dan pembangkit listrik.',
         products: [
             {
                 id: 'sprinkler-system',
@@ -115,9 +115,9 @@ export const productCategories = [
     },
     {
         id: 'cathodic-protection',
-        name: 'Cathodic Protection System',
+        name: 'Sistem Proteksi Katodik',
         description:
-            'Supply & Installation of Transformer Rectifier (CPS product), Junction Box, Test Point, maintenance/repair of Transformer Rectifier, installation/repair of Cathodic Protection System, and Closed Interval Potential Survey (CIPS).',
+            'Pengadaan dan instalasi Transformer Rectifier (produk CPS), Junction Box, Test Point, pemeliharaan/perbaikan Transformer Rectifier, instalasi/perbaikan Sistem Proteksi Katodik, dan Closed Interval Potential Survey (CIPS).',
         products: [
             {
                 id: 'transformer-rectifier',
@@ -160,7 +160,7 @@ export const productCategories = [
     {
         id: 'load-bank',
         name: 'Load Bank / Dummy Load',
-        description: 'Load Bank DC for battery load testing and Load Bank AC for genset load testing.',
+        description: 'Load Bank DC untuk pengujian beban baterai dan Load Bank AC untuk pengujian beban genset.',
         products: [
             {
                 id: 'load-bank-dc',

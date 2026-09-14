@@ -79,10 +79,10 @@ export function ConfirmDelete({ title, description, onDelete, trigger }: Confirm
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
+                        <Button variant="outline">Batal</Button>
                     </DialogClose>
                     <Button variant="destructive" onClick={onDelete}>
-                        Delete
+                        Hapus
                     </Button>
                 </DialogFooter>
             </DialogContent>

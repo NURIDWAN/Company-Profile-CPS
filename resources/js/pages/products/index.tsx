@@ -24,29 +24,31 @@ export default function ProductsIndex({ categories }: { categories: ProductCateg
     return (
         <PublicLayout>
             <SeoHead
-                title="Our Products"
-                description="Explore CPS engineering products across cathodic protection, electrical, and electronic systems."
+                title="Produk Kami"
+                description="Jelajahi produk rekayasa CPS untuk sistem proteksi katodik, kelistrikan, dan elektronik."
                 ogType="website"
             />
             <section className="grid-bg bg-night border-b border-white/10 pt-40 pb-20 lg:pb-24">
                 <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
                     <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
-                        <span className="bg-cyan h-px w-10" /> Products / Portfolio
+                        <span className="bg-cyan h-px w-10" /> Produk / Portofolio
                     </p>
                     <h1 className="reveal mt-7 max-w-4xl text-5xl leading-[1.02] font-semibold tracking-[-.055em] text-white delay-1 sm:text-6xl">
-                        Engineered products for critical systems.
+                        Produk rekayasa untuk sistem kritis.
                     </h1>
                     <p className="reveal text-soft mt-6 max-w-2xl text-base leading-7 delay-2">
                         {total > 0
-                            ? `${total} products across ${categories.length} categories — cathodic protection, electrical, and electronic systems.`
-                            : 'Cathodic protection, electrical, and electronic systems engineered for demanding environments.'}
+                            ? `${total} produk dalam ${categories.length} kategori — proteksi katodik, sistem kelistrikan, dan elektronik.`
+                            : 'Sistem proteksi katodik, kelistrikan, dan elektronik yang direkayasa untuk lingkungan kerja yang menantang.'}
                     </p>
                 </div>
             </section>
 
             <section className="bg-ink py-20 lg:py-28">
                 <div className="mx-auto max-w-7xl space-y-16 px-6 lg:px-8">
-                    {total === 0 && <p className="text-soft py-16 text-center text-sm">No products available yet. Check back soon.</p>}
+                    {total === 0 && (
+                        <p className="text-soft py-16 text-center text-sm">Belum ada produk yang tersedia. Silakan kunjungi kembali nanti.</p>
+                    )}
                     {categories.map(
                         (category) =>
                             category.products.length > 0 && (
@@ -54,7 +56,7 @@ export default function ProductsIndex({ categories }: { categories: ProductCateg
                                     <div className="flex flex-wrap items-baseline justify-between gap-3">
                                         <h2 className="text-2xl font-semibold tracking-[-.03em] text-white">{category.name}</h2>
                                         <span className="text-dim font-mono text-[11px] tracking-[.18em] uppercase">
-                                            {category.products.length} products
+                                            {category.products.length} produk
                                         </span>
                                     </div>
                                     <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -82,7 +84,7 @@ export default function ProductsIndex({ categories }: { categories: ProductCateg
                                                     </h3>
                                                     {product.spec && <p className="text-soft line-clamp-2 text-sm leading-6">{product.spec}</p>}
                                                     <span className="text-cyan mt-auto inline-flex items-center gap-1.5 pt-2 text-xs font-semibold tracking-[.12em] uppercase">
-                                                        View details
+                                                        Lihat detail
                                                     </span>
                                                 </div>
                                             </Link>

@@ -9,7 +9,7 @@ import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Project References', href: '/admin/projects' },
+    { title: 'Referensi Proyek', href: '/admin/projects' },
 ];
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -64,11 +64,11 @@ export default function Projects({ references, category }: { references: Paginat
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Project References" />
+            <Head title="Referensi Proyek" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
-                        <h2 className="text-xl font-semibold">Project References</h2>
+                        <h2 className="text-xl font-semibold">Referensi Proyek</h2>
                         <p className="text-muted-foreground text-sm">{references.total} references in this category.</p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -87,22 +87,22 @@ export default function Projects({ references, category }: { references: Paginat
                         </div>
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
-                                <Button onClick={openCreate}>Add Reference</Button>
+                                <Button onClick={openCreate}>Tambah Referensi</Button>
                             </DialogTrigger>
                             <DialogContent className="max-w-lg">
                                 <DialogHeader>
-                                    <DialogTitle>{editing ? 'Edit Project Reference' : 'Add Project Reference'}</DialogTitle>
+                                    <DialogTitle>{editing ? 'Edit Referensi Proyek' : 'Tambah Referensi Proyek'}</DialogTitle>
                                 </DialogHeader>
                                 <form onSubmit={submit} className="space-y-4">
                                     <div className="grid gap-2">
-                                        <label className="text-sm font-medium">Category</label>
+                                        <label className="text-sm font-medium">Kategori</label>
                                         <select
                                             value={data.category}
                                             onChange={(e) => setData('category', e.target.value)}
                                             className="border-input bg-background flex h-9 rounded-md border px-3 py-1 text-sm"
                                         >
                                             <option value="cme">CME</option>
-                                            <option value="cathodic_protection">Cathodic Protection</option>
+                                            <option value="cathodic_protection">Proteksi Katodik</option>
                                         </select>
                                     </div>
                                     <div className="grid gap-4 sm:grid-cols-2">
@@ -117,7 +117,7 @@ export default function Projects({ references, category }: { references: Paginat
                                         />
                                         <TextField
                                             id="year"
-                                            label="Year"
+                                            label="Tahun"
                                             type="number"
                                             value={data.year}
                                             onChange={(v) => setData('year', v)}
@@ -126,7 +126,7 @@ export default function Projects({ references, category }: { references: Paginat
                                     </div>
                                     <TextField
                                         id="client"
-                                        label="Client"
+                                        label="Klien"
                                         value={data.client}
                                         onChange={(v) => setData('client', v)}
                                         error={errors.client}
@@ -134,7 +134,7 @@ export default function Projects({ references, category }: { references: Paginat
                                     />
                                     <TextField
                                         id="user"
-                                        label="User"
+                                        label="Pengguna"
                                         value={data.user}
                                         onChange={(v) => setData('user', v)}
                                         error={errors.user}
@@ -142,7 +142,7 @@ export default function Projects({ references, category }: { references: Paginat
                                     />
                                     <TextField
                                         id="project"
-                                        label="Project"
+                                        label="Proyek"
                                         value={data.project}
                                         onChange={(v) => setData('project', v)}
                                         error={errors.project}
@@ -150,7 +150,7 @@ export default function Projects({ references, category }: { references: Paginat
                                     />
                                     <DialogFooter>
                                         <Button type="submit" disabled={processing}>
-                                            {editing ? 'Update' : 'Create'}
+                                            {editing ? 'Perbarui' : 'Buat'}
                                         </Button>
                                     </DialogFooter>
                                 </form>
@@ -168,11 +168,11 @@ export default function Projects({ references, category }: { references: Paginat
                         <thead className="bg-muted/50 text-muted-foreground text-left text-xs tracking-wide uppercase">
                             <tr>
                                 <th className="px-4 py-3">No</th>
-                                <th className="px-4 py-3">Client</th>
-                                <th className="px-4 py-3">User</th>
-                                <th className="px-4 py-3">Year</th>
-                                <th className="px-4 py-3">Project</th>
-                                <th className="px-4 py-3 text-right">Actions</th>
+                                <th className="px-4 py-3">Klien</th>
+                                <th className="px-4 py-3">Pengguna</th>
+                                <th className="px-4 py-3">Tahun</th>
+                                <th className="px-4 py-3">Proyek</th>
+                                <th className="px-4 py-3 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,12 +194,12 @@ export default function Projects({ references, category }: { references: Paginat
                                             Edit
                                         </Button>
                                         <ConfirmDelete
-                                            title="Delete reference?"
-                                            description={`This will permanently delete reference #${reference.no} — ${reference.project}.`}
+                                            title="Hapus referensi?"
+                                            description={`Referensi #${reference.no} — ${reference.project} akan dihapus secara permanen.`}
                                             onDelete={() => destroy(reference)}
                                             trigger={
                                                 <Button variant="destructive" size="sm">
-                                                    Delete
+                                                    Hapus
                                                 </Button>
                                             }
                                         />
@@ -217,12 +217,12 @@ export default function Projects({ references, category }: { references: Paginat
                     <div className="flex gap-2">
                         {references.current_page > 1 && (
                             <Button variant="outline" size="sm" asChild>
-                                <Link href={`/admin/projects?category=${category}&page=${references.current_page - 1}`}>Previous</Link>
+                                <Link href={`/admin/projects?category=${category}&page=${references.current_page - 1}`}>Sebelumnya</Link>
                             </Button>
                         )}
                         {references.current_page < references.last_page && (
                             <Button variant="outline" size="sm" asChild>
-                                <Link href={`/admin/projects?category=${category}&page=${references.current_page + 1}`}>Next</Link>
+                                <Link href={`/admin/projects?category=${category}&page=${references.current_page + 1}`}>Berikutnya</Link>
                             </Button>
                         )}
                     </div>

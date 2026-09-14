@@ -41,7 +41,7 @@ class DivisionController extends Controller
             'sort_order' => $validated['sort_order'] ?? (int) Division::max('sort_order') + 1,
         ]);
 
-        return back()->with('success', 'Division created.');
+        return back()->with('success', __('Division created.'));
     }
 
     public function update(Request $request, Division $division): RedirectResponse
@@ -70,7 +70,7 @@ class DivisionController extends Controller
             Storage::disk('public')->delete($oldImagePath);
         }
 
-        return back()->with('success', 'Division updated.');
+        return back()->with('success', __('Division updated.'));
     }
 
     public function destroy(Division $division): RedirectResponse
@@ -81,6 +81,6 @@ class DivisionController extends Controller
 
         $division->delete();
 
-        return back()->with('success', 'Division deleted.');
+        return back()->with('success', __('Division deleted.'));
     }
 }

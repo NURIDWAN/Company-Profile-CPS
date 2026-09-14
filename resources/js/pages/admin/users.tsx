@@ -8,7 +8,7 @@ import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Manage Users', href: '/admin/users' },
+    { title: 'Kelola Pengguna', href: '/admin/users' },
 ];
 
 export default function Users({ users }: { users: ManagedUser[] }) {
@@ -55,42 +55,42 @@ export default function Users({ users }: { users: ManagedUser[] }) {
 
     const remove = (user: ManagedUser) => {
         if (user.id === currentUserId) return;
-        if (window.confirm(`Delete ${user.name}? This action cannot be undone.`)) {
+        if (window.confirm(`Hapus ${user.name}? Tindakan ini tidak dapat dibatalkan.`)) {
             destroy(route('admin.users.destroy', user.id), { preserveScroll: true });
         }
     };
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Manage Users" />
+            <Head title="Kelola Pengguna" />
             <div className="flex flex-1 flex-col gap-6 p-4">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                     <div>
-                        <h2 className="text-xl font-semibold">Manage Users</h2>
-                        <p className="text-muted-foreground text-sm">Create and maintain accounts that can access the admin area.</p>
+                        <h2 className="text-xl font-semibold">Kelola Pengguna</h2>
+                        <p className="text-muted-foreground text-sm">Buat dan kelola akun yang dapat mengakses area admin.</p>
                     </div>
                     <Button type="button" onClick={startCreate}>
-                        New User
+                        Pengguna Baru
                     </Button>
                 </div>
 
                 <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
                     <section className="overflow-hidden rounded-xl border">
                         <div className="border-b px-5 py-4">
-                            <h3 className="font-semibold">Admin Users</h3>
+                            <h3 className="font-semibold">Pengguna Admin</h3>
                             <p className="text-muted-foreground mt-1 text-sm">{users.length} user(s)</p>
                         </div>
                         {users.length === 0 ? (
-                            <div className="text-muted-foreground px-5 py-12 text-center text-sm">No users found.</div>
+                            <div className="text-muted-foreground px-5 py-12 text-center text-sm">Pengguna tidak ditemukan.</div>
                         ) : (
                             <div className="overflow-x-auto">
                                 <table className="w-full min-w-[620px] text-sm">
                                     <thead className="bg-muted/40 text-muted-foreground text-left">
                                         <tr>
-                                            <th className="px-5 py-3 font-medium">Name</th>
+                                            <th className="px-5 py-3 font-medium">Nama</th>
                                             <th className="px-5 py-3 font-medium">Email</th>
                                             <th className="px-5 py-3 font-medium">Status</th>
-                                            <th className="px-5 py-3 font-medium">Actions</th>
+                                            <th className="px-5 py-3 font-medium">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y">
@@ -100,7 +100,7 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                                                 <td className="text-muted-foreground px-5 py-4">{user.email}</td>
                                                 <td className="px-5 py-4">
                                                     <Badge variant={user.email_verified_at ? 'secondary' : 'outline'}>
-                                                        {user.email_verified_at ? 'Verified' : 'Unverified'}
+                                                        {user.email_verified_at ? 'Terverifikasi' : 'Belum terverifikasi'}
                                                     </Badge>
                                                 </td>
                                                 <td className="px-5 py-4">
@@ -115,7 +115,7 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                                                             disabled={user.id === currentUserId || processing}
                                                             onClick={() => remove(user)}
                                                         >
-                                                            Delete
+                                                            Hapus
                                                         </Button>
                                                     </div>
                                                 </td>
@@ -128,16 +128,16 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                     </section>
 
                     <section className="h-fit rounded-xl border p-5">
-                        <h3 className="font-semibold">{editing ? 'Edit User' : 'Create User'}</h3>
+                        <h3 className="font-semibold">{editing ? 'Edit Pengguna' : 'Buat Pengguna'}</h3>
                         <p className="text-muted-foreground mt-1 text-sm">
                             {editing
-                                ? 'Update account details. Leave password empty to keep it unchanged.'
-                                : 'New users are verified automatically and can log in immediately after creation.'}
+                                ? 'Perbarui detail akun. Kosongkan kata sandi jika tidak ingin mengubahnya.'
+                                : 'Pengguna baru diverifikasi otomatis dan dapat langsung masuk setelah dibuat.'}
                         </p>
                         <form onSubmit={submit} className="mt-5 space-y-4">
                             <TextField
                                 id="name"
-                                label="Name"
+                                label="Nama"
                                 value={data.name}
                                 onChange={(value) => setData('name', value)}
                                 error={errors.name}
@@ -154,7 +154,7 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                             />
                             <TextField
                                 id="password"
-                                label={editing ? 'New Password (optional)' : 'Password'}
+                                label={editing ? 'Kata Sandi Baru (opsional)' : 'Kata Sandi'}
                                 type="password"
                                 value={data.password}
                                 onChange={(value) => setData('password', value)}
@@ -163,7 +163,7 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                             />
                             <TextField
                                 id="password_confirmation"
-                                label="Confirm Password"
+                                label="Konfirmasi Kata Sandi"
                                 type="password"
                                 value={data.password_confirmation}
                                 onChange={(value) => setData('password_confirmation', value)}
@@ -172,11 +172,11 @@ export default function Users({ users }: { users: ManagedUser[] }) {
                             />
                             <div className="flex gap-2 pt-2">
                                 <Button type="submit" disabled={processing}>
-                                    {editing ? 'Save Changes' : 'Create User'}
+                                    {editing ? 'Simpan Perubahan' : 'Buat Pengguna'}
                                 </Button>
                                 {editing && (
                                     <Button type="button" variant="outline" onClick={startCreate}>
-                                        Cancel
+                                        Batal
                                     </Button>
                                 )}
                             </div>

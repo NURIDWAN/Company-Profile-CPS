@@ -4,21 +4,27 @@ import { Icon } from '@iconify/react';
 import { useState } from 'react';
 
 const PROJECT_TYPES = [
-    'Electrical Engineering',
-    'Cathodic Protection',
-    'Load Bank Testing',
-    'Equipment Supply',
-    'Maintenance & Service',
-    'Custom / Other',
+    { value: 'Electrical Engineering', label: 'Rekayasa Kelistrikan' },
+    { value: 'Cathodic Protection', label: 'Proteksi Katodik' },
+    { value: 'Load Bank Testing', label: 'Pengujian Load Bank' },
+    { value: 'Equipment Supply', label: 'Pengadaan Peralatan' },
+    { value: 'Maintenance & Service', label: 'Pemeliharaan & Servis' },
+    { value: 'Custom / Other', label: 'Kustom / Lainnya' },
 ];
 
-const TIMELINES = ['Immediate (0-1 month)', 'Short-term (1-3 months)', 'Medium-term (3-6 months)', 'Long-term (6-12 months)', 'Planning phase'];
+const TIMELINES = [
+    'Segera (0-1 bulan)',
+    'Jangka pendek (1-3 bulan)',
+    'Jangka menengah (3-6 bulan)',
+    'Jangka panjang (6-12 bulan)',
+    'Tahap perencanaan',
+];
 
-const BUDGET_LABELS = ['Under $10,000', '$10,000–$50,000', '$50,000–$100,000', '$100,000–$500,000', '$500,000+'];
+const BUDGET_LABELS = ['Di bawah $10.000', '$10.000–$50.000', '$50.000–$100.000', '$100.000–$500.000', '$500.000+'];
 
-const BUDGET_SCALE = ['< $10,000', '$10,000–$50,000', '$50,000–$100,000', '$100,000–$500,000', '$500,000+'];
+const BUDGET_SCALE = ['< $10.000', '$10.000–$50.000', '$50.000–$100.000', '$100.000–$500.000', '$500.000+'];
 
-const SERVICES = ['Service & Maintenance', 'Design & Manufacture', 'Trading & Construction', 'Cathodic Protection'];
+const SERVICES = ['Servis & Pemeliharaan', 'Desain & Manufaktur', 'Perdagangan & Konstruksi', 'Proteksi Katodik'];
 
 const inputClass =
     'h-14 w-full border border-white/10 bg-night px-4 text-sm text-white outline-none transition placeholder:text-dim hover:border-white/20 focus:border-cyan focus:ring-2 focus:ring-cyan/15';
@@ -47,21 +53,21 @@ export default function Consultation() {
                         <div className="max-w-3xl">
                             <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
                                 <span className="bg-cyan h-px w-10" />
-                                {content('hero.eyebrow', 'Contact / 08')}
+                                {content('hero.eyebrow', 'Konsultasi / 08')}
                             </p>
                             <h1 className="reveal mt-7 text-5xl leading-[.96] font-semibold tracking-[-.06em] text-white delay-1 sm:text-6xl lg:text-7xl">
-                                {content('hero.title', 'Request a consultation.')}
+                                {content('hero.title', 'Ajukan konsultasi.')}
                             </h1>
                             <p className="text-soft mt-8 max-w-xl text-base leading-7 sm:text-lg">
-                                {content('hero.description', "Let's discuss your engineering project requirements.")}
+                                {content('hero.description', 'Mari diskusikan kebutuhan proyek rekayasa Anda.')}
                             </p>
                             <p className="text-dim mt-4 max-w-xl text-sm leading-7">
-                                Fill out the form below and our team will get back to you within 24 hours.
+                                Isi formulir di bawah ini dan tim kami akan menghubungi Anda dalam 24 jam.
                             </p>
                         </div>
 
                         <div className="text-dim mt-16 flex items-center justify-between border-t border-white/10 pt-5 font-mono text-[10px] tracking-[.18em] uppercase">
-                            <span>Project inquiry</span>
+                            <span>Pertanyaan proyek</span>
                             <span className="text-cyan">CPS / ENG-08</span>
                         </div>
                     </div>
@@ -75,10 +81,15 @@ export default function Consultation() {
                                 <div className="border-cyan/60 text-cyan mx-auto flex h-16 w-16 items-center justify-center border">
                                     <Icon icon="lucide:check" className="text-3xl" />
                                 </div>
-                                <p className="text-cyan mt-8 font-mono text-[10px] tracking-[.2em] uppercase">Inquiry received / CPS</p>
-                                <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] text-white sm:text-4xl">Thank you for your inquiry!</h2>
+                                <p className="text-cyan mt-8 font-mono text-[10px] tracking-[.2em] uppercase">Pertanyaan diterima / CPS</p>
+                                <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] text-white sm:text-4xl">
+                                    Terima kasih atas pertanyaan Anda!
+                                </h2>
                                 <p className="text-soft mx-auto mt-5 max-w-md text-sm leading-7">
-                                    {content('form.success_message', "We've received your request. Our team will contact you within 24 hours.")}
+                                    {content(
+                                        'form.success_message',
+                                        'Permintaan Anda telah kami terima. Tim kami akan menghubungi Anda dalam 24 jam.',
+                                    )}
                                 </p>
                             </div>
                         ) : (
@@ -91,11 +102,9 @@ export default function Consultation() {
                                 >
                                     <fieldset className="border-b border-white/10 p-6 sm:p-8 lg:p-10">
                                         <legend className={legendClass}>
-                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">
-                                                01 / Personal information
-                                            </span>
+                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">01 / Informasi pribadi</span>
                                             <span className="mt-3 block text-xl font-semibold tracking-[-.03em] text-white">
-                                                Tell us how to reach you.
+                                                Berikan informasi agar kami dapat menghubungi Anda.
                                             </span>
                                         </legend>
 
@@ -105,7 +114,7 @@ export default function Consultation() {
                                                     htmlFor="full-name"
                                                     className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                                 >
-                                                    Full Name{' '}
+                                                    Nama Lengkap{' '}
                                                     <span className="text-cyan" aria-hidden="true">
                                                         *
                                                     </span>
@@ -118,7 +127,7 @@ export default function Consultation() {
                                                     required
                                                     aria-required="true"
                                                     className={inputClass}
-                                                    placeholder="Your full name"
+                                                    placeholder="Nama lengkap Anda"
                                                 />
                                             </div>
 
@@ -149,7 +158,7 @@ export default function Consultation() {
                                                     htmlFor="phone"
                                                     className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                                 >
-                                                    Phone Number{' '}
+                                                    Nomor Telepon{' '}
                                                     <span className="text-cyan" aria-hidden="true">
                                                         *
                                                     </span>
@@ -171,7 +180,7 @@ export default function Consultation() {
                                                     htmlFor="company-name"
                                                     className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                                 >
-                                                    Company Name <span className="text-dim">(optional)</span>
+                                                    Nama Perusahaan <span className="text-dim">(opsional)</span>
                                                 </label>
                                                 <input
                                                     id="company-name"
@@ -179,7 +188,7 @@ export default function Consultation() {
                                                     type="text"
                                                     autoComplete="organization"
                                                     className={inputClass}
-                                                    placeholder="Your company"
+                                                    placeholder="Nama perusahaan Anda"
                                                 />
                                             </div>
                                         </div>
@@ -187,9 +196,9 @@ export default function Consultation() {
 
                                     <fieldset className="border-b border-white/10 p-6 sm:p-8 lg:p-10">
                                         <legend className={legendClass}>
-                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">02 / Project details</span>
+                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">02 / Detail proyek</span>
                                             <span className="mt-3 block text-xl font-semibold tracking-[-.03em] text-white">
-                                                Help us understand the scope.
+                                                Bantu kami memahami ruang lingkup proyek.
                                             </span>
                                         </legend>
 
@@ -199,7 +208,7 @@ export default function Consultation() {
                                                     htmlFor="project-type"
                                                     className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                                 >
-                                                    Project Type{' '}
+                                                    Jenis Proyek{' '}
                                                     <span className="text-cyan" aria-hidden="true">
                                                         *
                                                     </span>
@@ -213,11 +222,11 @@ export default function Consultation() {
                                                     className={inputClass}
                                                 >
                                                     <option value="" disabled>
-                                                        Select project type
+                                                        Pilih jenis proyek
                                                     </option>
                                                     {PROJECT_TYPES.map((type) => (
-                                                        <option key={type} value={type}>
-                                                            {type}
+                                                        <option key={type.value} value={type.value}>
+                                                            {type.label}
                                                         </option>
                                                     ))}
                                                 </select>
@@ -228,7 +237,7 @@ export default function Consultation() {
                                                     htmlFor="timeline"
                                                     className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                                 >
-                                                    Timeline{' '}
+                                                    Jadwal Pelaksanaan{' '}
                                                     <span className="text-cyan" aria-hidden="true">
                                                         *
                                                     </span>
@@ -242,7 +251,7 @@ export default function Consultation() {
                                                     className={inputClass}
                                                 >
                                                     <option value="" disabled>
-                                                        Select timeline
+                                                        Pilih jadwal pelaksanaan
                                                     </option>
                                                     {TIMELINES.map((timeline) => (
                                                         <option key={timeline} value={timeline}>
@@ -256,7 +265,7 @@ export default function Consultation() {
                                         <div className="mt-8">
                                             <div className="flex items-center justify-between">
                                                 <label htmlFor="budget" className="text-soft font-mono text-[10px] tracking-[.16em] uppercase">
-                                                    Project Budget{' '}
+                                                    Anggaran Proyek{' '}
                                                     <span className="text-cyan" aria-hidden="true">
                                                         *
                                                     </span>
@@ -275,7 +284,7 @@ export default function Consultation() {
                                                 value={budget}
                                                 onChange={(event) => setBudget(Number(event.target.value))}
                                                 className="accent-cyan mt-6 h-5 w-full cursor-pointer appearance-none bg-transparent"
-                                                aria-label="Project budget"
+                                                aria-label="Anggaran proyek"
                                             />
                                             <div className="text-dim mt-3 grid grid-cols-5 gap-2 font-mono text-[9px] leading-4">
                                                 {BUDGET_SCALE.map((label, index) => (
@@ -289,11 +298,9 @@ export default function Consultation() {
 
                                     <fieldset className="border-b border-white/10 p-6 sm:p-8 lg:p-10">
                                         <legend className={legendClass}>
-                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">
-                                                03 / Project description
-                                            </span>
+                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">03 / Deskripsi proyek</span>
                                             <span className="mt-3 block text-xl font-semibold tracking-[-.03em] text-white">
-                                                Share the technical context.
+                                                Bagikan konteks teknis proyek Anda.
                                             </span>
                                         </legend>
 
@@ -302,7 +309,7 @@ export default function Consultation() {
                                                 htmlFor="description"
                                                 className="text-soft mb-3 block font-mono text-[10px] tracking-[.16em] uppercase"
                                             >
-                                                Project Description{' '}
+                                                Deskripsi Proyek{' '}
                                                 <span className="text-cyan" aria-hidden="true">
                                                     *
                                                 </span>
@@ -317,7 +324,7 @@ export default function Consultation() {
                                                 value={description}
                                                 onChange={(event) => setDescription(event.target.value)}
                                                 className="bg-night placeholder:text-dim focus:border-cyan focus:ring-cyan/15 w-full resize-y border border-white/10 px-4 py-4 text-sm leading-7 text-white transition outline-none hover:border-white/20 focus:ring-2"
-                                                placeholder="Describe your project requirements, technical specifications, and any specific challenges..."
+                                                placeholder="Jelaskan kebutuhan proyek, spesifikasi teknis, dan tantangan khusus yang dihadapi..."
                                             />
                                             <div className="mt-2 flex items-center justify-between">
                                                 <span className="text-dim ml-auto font-mono text-[10px]">{description.length} / 1000</span>
@@ -327,9 +334,11 @@ export default function Consultation() {
 
                                     <fieldset className="p-6 sm:p-8 lg:p-10">
                                         <legend className={legendClass}>
-                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">04 / Required services</span>
+                                            <span className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">
+                                                04 / Layanan yang dibutuhkan
+                                            </span>
                                             <span className="mt-3 block text-xl font-semibold tracking-[-.03em] text-white">
-                                                What can CPS support?
+                                                Bagaimana CPS dapat membantu?
                                             </span>
                                         </legend>
 
@@ -351,13 +360,13 @@ export default function Consultation() {
                                                 className="text-soft hover:border-cyan hover:text-cyan inline-flex min-h-14 items-center justify-center gap-2 border border-white/10 px-6 text-xs font-bold tracking-[.14em] uppercase transition"
                                             >
                                                 <Icon icon="lucide:arrow-left" className="text-base" />
-                                                Go Back
+                                                Kembali
                                             </a>
                                             <button
                                                 type="submit"
                                                 className="bg-cyan text-ink-foreground focus:ring-cyan focus:ring-offset-panel inline-flex min-h-14 items-center justify-center gap-3 px-7 text-xs font-bold tracking-[.16em] uppercase transition hover:bg-white focus:ring-2 focus:ring-offset-2 focus:outline-none"
                                             >
-                                                Submit Request
+                                                Kirim Permintaan
                                                 <Icon icon="lucide:arrow-up-right" className="text-base" />
                                             </button>
                                         </div>
@@ -372,8 +381,8 @@ export default function Consultation() {
                 <section id="contact" className="bg-night border-t border-white/10 py-16">
                     <div className="mx-auto flex max-w-7xl flex-col justify-between gap-8 px-6 lg:flex-row lg:items-end lg:px-8">
                         <div>
-                            <p className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">Direct contact</p>
-                            <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em] text-white">Prefer to speak directly?</h2>
+                            <p className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">Kontak langsung</p>
+                            <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em] text-white">Ingin berbicara langsung?</h2>
                         </div>
                         <div className="text-soft grid gap-2 text-sm sm:grid-cols-2 sm:gap-x-10">
                             <a href="mailto:cps@cpsindo.com" className="hover:text-cyan transition">

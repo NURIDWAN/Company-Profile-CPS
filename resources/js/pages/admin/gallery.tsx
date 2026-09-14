@@ -11,7 +11,7 @@ import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Gallery', href: '/admin/gallery' },
+    { title: 'Galeri', href: '/admin/gallery' },
 ];
 
 interface CategoryOption {
@@ -65,35 +65,35 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Gallery" />
+            <Head title="Galeri" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl font-semibold">Gallery</h2>
-                        <p className="text-muted-foreground text-sm">Manage project gallery items ({items.length}).</p>
+                        <h2 className="text-xl font-semibold">Galeri</h2>
+                        <p className="text-muted-foreground text-sm">Kelola item galeri proyek ({items.length}).</p>
                     </div>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={openCreate}>Add Item</Button>
+                            <Button onClick={openCreate}>Tambah Item</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>{editing ? 'Edit Gallery Item' : 'Add Gallery Item'}</DialogTitle>
+                                <DialogTitle>{editing ? 'Edit Item Galeri' : 'Tambah Item Galeri'}</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={submit} className="space-y-4">
                                 <TextField
                                     id="caption"
-                                    label="Caption"
+                                    label="Keterangan"
                                     value={data.caption}
                                     onChange={(v) => setData('caption', v)}
                                     error={errors.caption}
                                     required
                                 />
                                 <div className="grid gap-2">
-                                    <label className="text-sm font-medium">Category</label>
+                                    <label className="text-sm font-medium">Kategori</label>
                                     <Select value={data.product_category_id} onValueChange={(v) => setData('product_category_id', v)}>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select category" />
+                                            <SelectValue placeholder="Pilih kategori" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {categories.map((category) => (
@@ -107,14 +107,14 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                                 </div>
                                 <TextField
                                     id="project"
-                                    label="Project"
+                                    label="Proyek"
                                     value={data.project}
                                     onChange={(v) => setData('project', v)}
                                     error={errors.project}
                                 />
                                 <div className="grid gap-2">
                                     <label htmlFor="image" className="text-sm font-medium">
-                                        Image <span className="text-destructive">{editing ? '(optional)' : '*'}</span>
+                                        Gambar <span className="text-destructive">{editing ? '(opsional)' : '*'}</span>
                                     </label>
                                     <input
                                         id="image"
@@ -130,13 +130,13 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                                         alt={editing?.caption ?? data.caption}
                                         className="h-32 w-full rounded-md object-cover"
                                     />
-                                    {data.image && <p className="text-muted-foreground text-xs">Selected: {data.image.name}</p>}
+                                    {data.image && <p className="text-muted-foreground text-xs">Dipilih: {data.image.name}</p>}
                                     <p className="text-muted-foreground text-xs">JPG, PNG, atau WebP. Maksimal 5 MB.</p>
                                     {errors.image && <p className="text-destructive text-sm">{errors.image}</p>}
                                 </div>
                                 <DialogFooter>
                                     <Button type="submit" disabled={processing}>
-                                        {editing ? 'Update' : 'Create'}
+                                        {editing ? 'Perbarui' : 'Buat'}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -152,12 +152,12 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                     <table className="w-full text-sm">
                         <thead className="bg-muted/50 text-muted-foreground text-left text-xs tracking-wide uppercase">
                             <tr>
-                                <th className="px-4 py-3">Image</th>
-                                <th className="px-4 py-3">Order</th>
+                                <th className="px-4 py-3">Gambar</th>
+                                <th className="px-4 py-3">Urutan</th>
                                 <th className="px-4 py-3">Caption</th>
-                                <th className="px-4 py-3">Category</th>
-                                <th className="px-4 py-3">Project</th>
-                                <th className="px-4 py-3 text-right">Actions</th>
+                                <th className="px-4 py-3">Kategori</th>
+                                <th className="px-4 py-3">Proyek</th>
+                                <th className="px-4 py-3 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,7 +167,7 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                                         {item.image_url ? (
                                             <img src={item.image_url} alt={item.caption} className="h-14 w-20 rounded-md object-cover" />
                                         ) : (
-                                            <span className="text-muted-foreground text-xs">No image</span>
+                                            <span className="text-muted-foreground text-xs">Tidak ada gambar</span>
                                         )}
                                     </td>
                                     <td className="px-4 py-3 font-mono text-xs">{item.sort_order}</td>
@@ -185,12 +185,12 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                                             Edit
                                         </Button>
                                         <ConfirmDelete
-                                            title="Delete gallery item?"
-                                            description={`This will permanently delete "${item.caption}".`}
+                                            title="Hapus item galeri?"
+                                            description={`"${item.caption}" akan dihapus secara permanen.`}
                                             onDelete={() => destroy(item)}
                                             trigger={
                                                 <Button variant="destructive" size="sm">
-                                                    Delete
+                                                    Hapus
                                                 </Button>
                                             }
                                         />

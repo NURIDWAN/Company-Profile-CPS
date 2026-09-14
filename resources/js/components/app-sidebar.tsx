@@ -1,75 +1,81 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
+import { type NavGroup } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Briefcase, FileText, Folder, Image, LayoutGrid, Mail, Newspaper, Package, Settings, Users } from 'lucide-react';
+import { Briefcase, FileText, Folder, Image, LayoutGrid, Mail, Newspaper, Package, Settings, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const navGroups: NavGroup[] = [
     {
-        title: 'Dashboard',
-        url: '/dashboard',
-        icon: LayoutGrid,
+        title: 'Navigasi',
+        items: [
+            {
+                title: 'Dashboard',
+                url: '/dashboard',
+                icon: LayoutGrid,
+            },
+            {
+                title: 'Pesan CRM',
+                url: '/admin/crm',
+                icon: Mail,
+            },
+            {
+                title: 'Kelola Pengguna',
+                url: '/admin/users',
+                icon: Users,
+            },
+        ],
     },
     {
-        title: 'CRM Messages',
-        url: '/admin/crm',
-        icon: Mail,
+        title: 'Data Master',
+        items: [
+            {
+                title: 'Divisi',
+                url: '/admin/divisions',
+                icon: Folder,
+            },
+            {
+                title: 'Kategori & Produk',
+                url: '/admin/categories',
+                icon: Package,
+            },
+            {
+                title: 'Referensi Proyek',
+                url: '/admin/projects',
+                icon: Briefcase,
+            },
+            {
+                title: 'Galeri',
+                url: '/admin/gallery',
+                icon: Image,
+            },
+        ],
     },
     {
-        title: 'Manage Users',
-        url: '/admin/users',
-        icon: Users,
+        title: 'Artikel',
+        items: [
+            {
+                title: 'Kelola Artikel',
+                url: '/admin/articles',
+                icon: Newspaper,
+            },
+        ],
     },
     {
-        title: 'Divisions',
-        url: '/admin/divisions',
-        icon: Folder,
-    },
-    {
-        title: 'Categories & Products',
-        url: '/admin/categories',
-        icon: Package,
-    },
-    {
-        title: 'Project References',
-        url: '/admin/projects',
-        icon: Briefcase,
-    },
-    {
-        title: 'Gallery',
-        url: '/admin/gallery',
-        icon: Image,
-    },
-    {
-        title: 'Articles',
-        url: '/admin/articles',
-        icon: Newspaper,
-    },
-    {
-        title: 'Website Content',
-        url: '/admin/content',
-        icon: FileText,
-    },
-    {
-        title: 'Website Settings',
-        url: '/admin/settings',
-        icon: Settings,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        url: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        url: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
+        title: 'Pengaturan Situs',
+        items: [
+            {
+                title: 'Konten Situs Web',
+                url: '/admin/content',
+                icon: FileText,
+            },
+            {
+                title: 'Pengaturan Situs Web',
+                url: '/admin/settings',
+                icon: Settings,
+            },
+        ],
     },
 ];
 
@@ -89,11 +95,10 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain groups={navGroups} />
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

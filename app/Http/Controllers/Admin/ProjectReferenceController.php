@@ -41,7 +41,7 @@ class ProjectReferenceController extends Controller
 
         ProjectReference::create($validated);
 
-        return back()->with('success', 'Project reference created.');
+        return back()->with('success', __('Project reference created.'));
     }
 
     public function update(Request $request, ProjectReference $reference): RedirectResponse
@@ -57,14 +57,14 @@ class ProjectReferenceController extends Controller
 
         $reference->update($validated);
 
-        return back()->with('success', 'Project reference updated.');
+        return back()->with('success', __('Project reference updated.'));
     }
 
     public function destroy(ProjectReference $reference): RedirectResponse
     {
         $reference->delete();
 
-        return back()->with('success', 'Project reference deleted.');
+        return back()->with('success', __('Project reference deleted.'));
     }
 
     public function stats(): Response

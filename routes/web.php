@@ -14,10 +14,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\PublicProductController;
+use App\Http\Controllers\PublicServiceController;
 use App\Models\Article;
+use App\Models\Division;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('robots.txt', function () {
     $robots = str_replace('Sitemap: /sitemap.xml', 'Sitemap: '.url('/sitemap.xml'), file_get_contents(public_path('robots.txt')));
@@ -26,7 +27,7 @@ Route::get('robots.txt', function () {
 });
 
 Route::get('sitemap.xml', function () {
-    $pages = ['/', '/about', '/services', '/industries', '/projects', '/consultation', '/contact', '/articles', '/products'];
+    $pages = ['/', '/about', '/services', '/projects', '/consultation', '/contact', '/articles', '/products'];
     $articleUrls = Article::query()
         ->published()
         ->orderByDesc('published_at')
@@ -42,12 +43,19 @@ Route::get('sitemap.xml', function () {
             'loc' => url('/products/'.$product->slug),
             'lastmod' => $product->updated_at->toAtomString(),
         ]);
+    $serviceUrls = Division::query()
+        ->orderBy('sort_order')
+        ->get()
+        ->map(fn (Division $division) => [
+            'loc' => url('/services/'.$division->slug),
+            'lastmod' => $division->updated_at->toAtomString(),
+        ]);
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
     foreach ($pages as $page) {
-        $xml .= "    <url><loc>".url($page).'</loc></url>'."\n";
+        $xml .= '    <url><loc>'.url($page).'</loc></url>'."\n";
     }
-    foreach ([...$articleUrls, ...$productUrls] as $entry) {
+    foreach ([...$articleUrls, ...$productUrls, ...$serviceUrls] as $entry) {
         $xml .= '    <url><loc>'.$entry['loc'].'</loc><lastmod>'.$entry['lastmod'].'</lastmod></url>'."\n";
     }
     $xml .= '</urlset>'."\n";
@@ -60,7 +68,6 @@ $publicPages = [
     '/' => ['page' => 'home', 'name' => 'home'],
     '/about' => ['page' => 'about', 'name' => 'about'],
     '/services' => ['page' => 'services', 'name' => 'services'],
-    '/industries' => ['page' => 'industries', 'name' => 'industries'],
     '/projects' => ['page' => 'projects', 'name' => 'projects'],
     '/consultation' => ['page' => 'consultation', 'name' => 'consultation'],
     '/contact' => ['page' => 'contact', 'name' => 'contact'],
@@ -71,6 +78,8 @@ foreach ($publicPages as $uri => $definition) {
         ->defaults('page', $definition['page'])
         ->name($definition['name']);
 }
+
+Route::redirect('/industries', '/projects#industries', 301)->name('industries');
 
 Route::post('contact/messages', [ContactMessageController::class, 'store'])
     ->middleware('throttle:5,1')
@@ -83,6 +92,9 @@ Route::get('articles/{article:slug}', [PublicArticleController::class, 'show'])-
 // Public products
 Route::get('products', [PublicProductController::class, 'index'])->name('products.index');
 Route::get('products/{product}', [PublicProductController::class, 'show'])->name('products.show');
+
+// Public service details
+Route::get('services/{division:slug}', [PublicServiceController::class, 'show'])->name('services.show');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');

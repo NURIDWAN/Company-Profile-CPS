@@ -9,14 +9,12 @@ import { useEffect, useState } from 'react';
 import { useAppearance } from '@/hooks/use-appearance';
 
 const NAV_ITEMS = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Services', href: '/services' },
-    { label: 'Products', href: '/products' },
-    { label: 'Industries', href: '/industries' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Articles', href: '/articles' },
-    { label: 'Contact', href: '/contact' },
+    { label: 'Beranda', href: '/' },
+    { label: 'Tentang Kami', href: '/about' },
+    { label: 'Layanan', href: '/services' },
+    { label: 'Produk', href: '/products' },
+    { label: 'Proyek', href: '/projects' },
+    { label: 'Artikel', href: '/articles' },
 ];
 
 function ThemeToggle() {
@@ -29,12 +27,12 @@ function ThemeToggle() {
         <button
             type="button"
             onClick={toggle}
-            aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-            title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
+            aria-label={isDark ? 'Beralih ke tema terang' : 'Beralih ke tema gelap'}
+            title={isDark ? 'Beralih ke tema terang' : 'Beralih ke tema gelap'}
             className="border-public-border bg-public-panel text-public-foreground hover:border-cyan hover:text-cyan flex h-11 w-11 items-center justify-center border transition"
         >
             {isDark ? <Sun className="h-5 w-5" aria-hidden="true" /> : <Moon className="h-5 w-5" aria-hidden="true" />}
-            <span className="sr-only">{appearance === 'system' ? 'Theme (system)' : isDark ? 'Dark theme' : 'Light theme'}</span>
+            <span className="sr-only">{appearance === 'system' ? 'Tema (sistem)' : isDark ? 'Tema gelap' : 'Tema terang'}</span>
         </button>
     );
 }
@@ -94,7 +92,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                     }`}
                 >
                     <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-8">
-                        <Link href="/" className="public-brand flex items-center gap-3" aria-label="CPS home">
+                        <Link href="/" className="public-brand flex items-center gap-3" aria-label="Beranda CPS">
                             {siteSettings?.logo_url ? (
                                 <img
                                     src={siteSettings.logo_url}
@@ -113,7 +111,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                             </span>
                         </Link>
 
-                        <nav className="hidden items-center gap-5 lg:flex xl:gap-6" aria-label="Main navigation">
+                        <nav className="hidden items-center gap-5 lg:flex xl:gap-6" aria-label="Navigasi utama">
                             {NAV_ITEMS.map((item) => (
                                 <Link
                                     key={item.label}
@@ -138,7 +136,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                                 type="button"
                                 onClick={() => setMenuOpen((open) => !open)}
                                 className="public-menu-button flex h-11 w-11 items-center justify-center border border-white/10 text-white lg:hidden"
-                                aria-label="Toggle navigation menu"
+                                aria-label="Buka atau tutup menu navigasi"
                                 aria-expanded={menuOpen}
                             >
                                 <Icon icon={menuOpen ? 'lucide:x' : 'lucide:menu'} className="text-xl" />
@@ -148,7 +146,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
 
                     {menuOpen && (
                         <div className="public-mobile-menu bg-night border-public-border border-t px-6 py-5 lg:hidden">
-                            <nav className="flex flex-col gap-5" aria-label="Mobile navigation">
+                            <nav className="flex flex-col gap-5" aria-label="Navigasi seluler">
                                 {NAV_ITEMS.map((item) => (
                                     <Link key={item.label} href={item.href} className="public-nav-link text-soft text-xs tracking-[.16em] uppercase">
                                         {item.label}
@@ -182,10 +180,10 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                                     <p className="text-xs font-semibold tracking-[.18em] text-white uppercase">
                                         {siteSettings?.site_name ?? 'Citra Protecta Semesta'}
                                     </p>
-                                    <p className="text-dim mt-1 text-xs">Electrical &amp; Electronic Engineering</p>
+                                    <p className="text-dim mt-1 text-xs">Rekayasa Kelistrikan &amp; Elektronik</p>
                                 </div>
                             </div>
-                            <nav className="flex flex-wrap gap-x-7 gap-y-3" aria-label="Footer navigation">
+                            <nav className="flex flex-wrap gap-x-7 gap-y-3" aria-label="Navigasi footer">
                                 {NAV_ITEMS.map((item) => (
                                     <Link key={item.label} href={item.href} className="public-nav-link text-dim hover:text-cyan text-xs transition">
                                         {item.label}
@@ -195,7 +193,7 @@ export default function PublicLayout({ children, preloadImage }: { children: Rea
                         </div>
                         <div className="text-dim mt-10 flex flex-col justify-between gap-3 border-t border-white/10 pt-6 text-[10px] tracking-[.16em] uppercase sm:flex-row">
                             <span>© PT. Citra Protecta Semesta</span>
-                            <span>All Rights Reserved.</span>
+                            <span>Hak cipta dilindungi.</span>
                         </div>
                     </div>
                 </footer>

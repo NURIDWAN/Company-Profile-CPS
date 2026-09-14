@@ -9,7 +9,7 @@ import { FormEventHandler } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Website Settings', href: '/admin/settings' },
+    { title: 'Pengaturan Situs Web', href: '/admin/settings' },
 ];
 
 export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) {
@@ -91,11 +91,11 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Website Settings" />
+            <Head title="Pengaturan Situs Web" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div>
-                    <h2 className="text-xl font-semibold">Website Settings</h2>
-                    <p className="text-muted-foreground text-sm">Company profile information used across the site.</p>
+                    <h2 className="text-xl font-semibold">Pengaturan Situs Web</h2>
+                    <p className="text-muted-foreground text-sm">Informasi profil perusahaan yang digunakan di seluruh situs.</p>
                 </div>
 
                 {flash?.success && (
@@ -104,11 +104,11 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
 
                 <form onSubmit={submit} className="max-w-2xl space-y-6">
                     <div className="rounded-lg border p-6">
-                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">General</h3>
+                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Umum</h3>
                         <div className="space-y-4">
                             <TextField
                                 id="site_name"
-                                label="Site Name"
+                                label="Nama Situs"
                                 value={data.site_name}
                                 onChange={(v) => setData('site_name', v)}
                                 error={errors.site_name}
@@ -123,38 +123,38 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                             />
                             <RichTextEditor
                                 id="about"
-                                label="About"
+                                label="Tentang Perusahaan"
                                 value={data.about}
                                 onChange={(value) => setData('about', value)}
                                 error={errors.about}
                                 rows={6}
-                                hint="This content is rendered on public company sections."
+                                hint="Konten ini ditampilkan pada bagian publik perusahaan."
                             />
                         </div>
                     </div>
 
                     <div className="rounded-lg border p-6">
-                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Address</h3>
+                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Alamat</h3>
                         <div className="space-y-4">
                             <TextField
                                 id="address_line1"
-                                label="Address Line"
+                                label="Alamat"
                                 value={data.address_line1}
                                 onChange={(v) => setData('address_line1', v)}
                                 error={errors.address_line1}
                             />
                             <div className="grid gap-4 sm:grid-cols-3">
-                                <TextField id="city" label="City" value={data.city} onChange={(v) => setData('city', v)} error={errors.city} />
+                                <TextField id="city" label="Kota" value={data.city} onChange={(v) => setData('city', v)} error={errors.city} />
                                 <TextField
                                     id="province"
-                                    label="Province"
+                                    label="Provinsi"
                                     value={data.province}
                                     onChange={(v) => setData('province', v)}
                                     error={errors.province}
                                 />
                                 <TextField
                                     id="postal_code"
-                                    label="Postal Code"
+                                    label="Kode Pos"
                                     value={data.postal_code}
                                     onChange={(v) => setData('postal_code', v)}
                                     error={errors.postal_code}
@@ -162,7 +162,7 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                             </div>
                             <TextField
                                 id="country"
-                                label="Country"
+                                label="Negara"
                                 value={data.country}
                                 onChange={(v) => setData('country', v)}
                                 error={errors.country}
@@ -171,15 +171,15 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                     </div>
 
                     <div className="rounded-lg border p-6">
-                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Contact</h3>
+                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Kontak</h3>
                         <div className="space-y-4">
                             <div>
-                                <label className="mb-2 block text-sm font-medium">Phone Numbers</label>
+                                <label className="mb-2 block text-sm font-medium">Nomor Telepon</label>
                                 <div className="space-y-2">
                                     {data.phones.map((phone, index) => (
                                         <div key={index} className="grid gap-2">
                                             <label className="text-muted-foreground text-xs">
-                                                {index === 0 ? 'Phone' : index === 1 ? 'Mobile (WhatsApp)' : `Additional Phone ${index - 1}`}
+                                                {index === 0 ? 'Telepon' : index === 1 ? 'Seluler (WhatsApp)' : `Telepon Tambahan ${index - 1}`}
                                             </label>
                                             <div className="flex gap-2">
                                                 <input
@@ -189,14 +189,14 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                                                     className="border-input bg-background focus-visible:ring-ring flex h-9 w-full rounded-md border px-3 py-1 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                                                 />
                                                 <Button type="button" variant="outline" size="sm" onClick={() => removePhone(index)}>
-                                                    Remove
+                                                    Hapus
                                                 </Button>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                                 <Button type="button" variant="secondary" size="sm" className="mt-2" onClick={addPhone}>
-                                    Add Phone
+                                    Tambah Telepon
                                 </Button>
                                 {errors.phones && <p className="mt-2 text-sm text-red-600">{errors.phones}</p>}
                             </div>
@@ -211,7 +211,7 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                             />
                             <TextField
                                 id="website"
-                                label="Website"
+                                label="Situs Web"
                                 value={data.website}
                                 onChange={(v) => setData('website', v)}
                                 error={errors.website}
@@ -221,11 +221,11 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
 
                     <div className="rounded-lg border p-6">
                         <h3 className="text-muted-foreground mb-1 text-sm font-semibold tracking-wide uppercase">WhatsApp Popup</h3>
-                        <p className="text-muted-foreground mb-4 text-sm">Configure the floating WhatsApp button shown on public pages.</p>
+                        <p className="text-muted-foreground mb-4 text-sm">Atur tombol WhatsApp mengambang yang ditampilkan di halaman publik.</p>
                         <div className="space-y-4">
                             <div className="grid gap-2">
                                 <label htmlFor="whatsapp_number" className="text-sm font-medium">
-                                    WhatsApp Number
+                                    Nomor WhatsApp
                                 </label>
                                 <input
                                     id="whatsapp_number"
@@ -233,16 +233,16 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                                     readOnly
                                     className="border-input bg-muted/50 text-muted-foreground flex h-9 w-full rounded-md border px-3 py-1 text-sm"
                                 />
-                                <p className="text-muted-foreground text-xs">Automatically uses the Mobile number above.</p>
+                                <p className="text-muted-foreground text-xs">Otomatis menggunakan nomor seluler di atas.</p>
                             </div>
                             <TextField
                                 id="whatsapp_message"
-                                label="WhatsApp Opening Message"
+                                label="Pesan Pembuka WhatsApp"
                                 value={data.whatsapp_message}
                                 onChange={(v) => setData('whatsapp_message', v)}
                                 error={errors.whatsapp_message}
-                                placeholder="Hello, I would like to ask about your services."
-                                hint="This message is prefilled when a visitor starts a WhatsApp chat."
+                                placeholder="Halo, saya ingin menanyakan layanan Anda."
+                                hint="Pesan ini diisi otomatis saat pengunjung memulai percakapan WhatsApp."
                             />
                         </div>
                     </div>
@@ -252,15 +252,15 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                         <div className="space-y-4">
                             <TextField
                                 id="seo_title"
-                                label="Default SEO Title"
+                                label="Judul SEO Default"
                                 value={data.seo_title}
                                 onChange={(v) => setData('seo_title', v)}
                                 error={errors.seo_title}
-                                hint="Used as the default title when a page does not define its own title."
+                                hint="Digunakan sebagai judul default saat halaman tidak memiliki judul sendiri."
                             />
                             <div>
                                 <label htmlFor="seo_description" className="mb-1 block text-sm font-medium">
-                                    Default SEO Description
+                                    Deskripsi SEO Default
                                 </label>
                                 <textarea
                                     id="seo_description"
@@ -270,9 +270,7 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                                     rows={4}
                                     className="border-input bg-background focus-visible:ring-ring w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:outline-none"
                                 />
-                                <p className="text-muted-foreground mt-1 text-xs">
-                                    Recommended: 120–160 characters. {data.seo_description.length}/320
-                                </p>
+                                <p className="text-muted-foreground mt-1 text-xs">Rekomendasi: 120–160 karakter. {data.seo_description.length}/320</p>
                                 {errors.seo_description && <p className="text-destructive text-sm">{errors.seo_description}</p>}
                             </div>
                             <TextField
@@ -305,12 +303,12 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                             />
                             <div className="grid gap-2">
                                 <label htmlFor="og_image" className="text-sm font-medium">
-                                    Open Graph Image
+                                    Gambar Open Graph
                                 </label>
                                 <ImageUploadPreview
                                     file={data.og_image}
                                     currentUrl={siteSetting.og_image_url}
-                                    alt="Open Graph preview"
+                                    alt="Pratinjau Open Graph"
                                     className="h-32 w-full rounded border object-cover"
                                 />
                                 <input
@@ -320,23 +318,23 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                                     onChange={(event) => setData('og_image', event.target.files?.[0] ?? null)}
                                     className="border-input bg-background file:bg-muted w-full rounded-md border text-sm file:mr-4 file:border-0 file:px-4 file:py-2"
                                 />
-                                <p className="text-muted-foreground text-xs">JPG, PNG, atau WebP. Recommended 1200×630 px. Maksimal 4 MB.</p>
+                                <p className="text-muted-foreground text-xs">JPG, PNG, atau WebP. Rekomendasi 1200×630 px. Maksimal 4 MB.</p>
                                 {errors.og_image && <p className="text-destructive text-sm">{errors.og_image}</p>}
                             </div>
                         </div>
                     </div>
 
                     <div className="rounded-lg border p-6">
-                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Branding &amp; Map</h3>
+                        <h3 className="text-muted-foreground mb-4 text-sm font-semibold tracking-wide uppercase">Branding &amp; Peta</h3>
                         <div className="space-y-4">
                             <div className="grid gap-2">
                                 <label htmlFor="logo" className="text-sm font-medium">
-                                    Website Logo
+                                    Logo Situs Web
                                 </label>
                                 <ImageUploadPreview
                                     file={data.logo}
                                     currentUrl={siteSetting.logo_url}
-                                    alt="Website logo"
+                                    alt="Logo situs web"
                                     className="h-16 w-fit max-w-64 rounded border object-contain p-2"
                                 />
                                 <input
@@ -351,7 +349,7 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                             </div>
                             <TextField
                                 id="map_embed_url"
-                                label="Google Maps Embed URL"
+                                label="URL Sematan Google Maps"
                                 value={data.map_embed_url}
                                 onChange={(v) => setData('map_embed_url', v)}
                                 error={errors.map_embed_url}
@@ -362,7 +360,7 @@ export default function Settings({ siteSetting }: { siteSetting: SiteSetting }) 
                     </div>
 
                     <Button type="submit" disabled={processing}>
-                        Save Settings
+                        Simpan Pengaturan
                     </Button>
                 </form>
             </div>

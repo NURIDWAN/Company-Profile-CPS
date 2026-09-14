@@ -40,7 +40,7 @@ class GalleryItemController extends Controller
             'sort_order' => (int) GalleryItem::max('sort_order') + 1,
         ]);
 
-        return back()->with('success', 'Gallery item created.');
+        return back()->with('success', __('Gallery item created.'));
     }
 
     public function update(Request $request, GalleryItem $item): RedirectResponse
@@ -68,7 +68,7 @@ class GalleryItemController extends Controller
             Storage::disk('public')->delete($oldImagePath);
         }
 
-        return back()->with('success', 'Gallery item updated.');
+        return back()->with('success', __('Gallery item updated.'));
     }
 
     public function destroy(GalleryItem $item): RedirectResponse
@@ -79,6 +79,6 @@ class GalleryItemController extends Controller
 
         $item->delete();
 
-        return back()->with('success', 'Gallery item deleted.');
+        return back()->with('success', __('Gallery item deleted.'));
     }
 }

@@ -10,9 +10,6 @@
     <loc>http://127.0.0.1:8000/services</loc>
             </url>
     <url>
-    <loc>http://127.0.0.1:8000/industries</loc>
-            </url>
-    <url>
     <loc>http://127.0.0.1:8000/projects</loc>
             </url>
     <url>
@@ -20,5 +17,9 @@
             </url>
     <url>
     <loc>http://127.0.0.1:8000/contact</loc>
+            </url>
+    <url>
+    <loc>http://127.0.0.1:8000/services/service-maintenance</loc>
+    <lastmod>2026-09-14T06:52:51+00:00</lastmod>
             </url>
 </urlset>

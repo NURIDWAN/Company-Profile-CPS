@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Testing\File;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ArticleTest extends TestCase
@@ -67,13 +69,13 @@ class ArticleTest extends TestCase
 
         $response = $this->post(
             route('admin.articles.upload-image'),
-            ['image' => \Illuminate\Http\Testing\File::image('banner.jpg', 400, 300)],
+            ['image' => File::image('banner.jpg', 400, 300)],
         );
 
         $response->assertOk()->assertJsonStructure(['url']);
         $url = $response->json('url');
         $this->assertMatchesRegularExpression('#/storage/articles/content/.+\.jpg$#', $url);
-        \Illuminate\Support\Facades\Storage::disk('public')->assertExists('articles/content/'.basename($url));
+        Storage::disk('public')->assertExists('articles/content/'.basename($url));
     }
 
     public function test_upload_image_requires_image_file(): void
@@ -191,16 +193,68 @@ class ArticleTest extends TestCase
         $this->assertStringContainsString('cathodic', $article->seo_keywords);
     }
 
+    public function test_admin_article_index_includes_all_editable_fields(): void
+    {
+        $user = User::factory()->create();
+        $article = Article::create($this->validPayload([
+            'excerpt' => 'Ringkasan artikel.',
+            'cover_alt' => 'Teks alternatif',
+            'seo_title' => 'Judul SEO',
+            'seo_description' => 'Deskripsi SEO',
+            'seo_keywords' => 'kata kunci',
+        ]));
+
+        $this->actingAs($user)
+            ->get('/admin/articles')
+            ->assertInertia(fn ($page) => $page
+                ->where('articles.0.id', $article->id)
+                ->where('articles.0.excerpt', 'Ringkasan artikel.')
+                ->where('articles.0.content', $article->content)
+                ->where('articles.0.cover_alt', 'Teks alternatif')
+                ->where('articles.0.seo_title', 'Judul SEO')
+                ->where('articles.0.seo_description', 'Deskripsi SEO')
+                ->where('articles.0.seo_keywords', 'kata kunci')
+            );
+    }
+
     public function test_authenticated_users_can_update_article(): void
     {
         $this->actingAs(User::factory()->create());
-        $article = Article::create($this->validPayload());
+        $article = Article::create($this->validPayload([
+            'excerpt' => 'Ringkasan lama.',
+            'cover_alt' => 'Sampul lama',
+            'seo_title' => 'SEO lama',
+            'seo_description' => 'Deskripsi lama',
+            'seo_keywords' => 'lama',
+        ]));
 
-        $this->put("/admin/articles/{$article->id}", $this->validPayload(['title' => 'Updated title']))->assertRedirect();
+        $article->cover_image_path = 'articles/existing-cover.jpg';
+        $article->save();
+
+        $this->post("/admin/articles/{$article->id}", [
+            '_method' => 'PUT',
+            ...$this->validPayload([
+                'title' => 'Updated title',
+                'slug' => 'updated-title',
+                'excerpt' => 'Ringkasan baru.',
+                'content' => '<p>Konten baru.</p>',
+                'cover_alt' => 'Sampul baru',
+                'seo_title' => 'SEO baru',
+                'seo_description' => 'Deskripsi baru',
+                'seo_keywords' => 'baru',
+            ]),
+        ])->assertRedirect();
 
         $article->refresh();
         $this->assertSame('Updated title', $article->title);
-        $this->assertSame('understanding-cathodic-protection-systems', $article->slug, 'Slug must stay stable unless regenerated.');
+        $this->assertSame('updated-title', $article->slug);
+        $this->assertSame('Ringkasan baru.', $article->excerpt);
+        $this->assertSame('<p>Konten baru.</p>', $article->content);
+        $this->assertSame('Sampul baru', $article->cover_alt);
+        $this->assertSame('SEO baru', $article->seo_title);
+        $this->assertSame('Deskripsi baru', $article->seo_description);
+        $this->assertSame('baru', $article->seo_keywords);
+        $this->assertSame('articles/existing-cover.jpg', $article->cover_image_path);
     }
 
     public function test_articles_can_be_deleted(): void

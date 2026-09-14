@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Division;
 use Illuminate\Console\Command;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
@@ -14,12 +15,16 @@ class GenerateSitemap extends Command
 
     public function handle(): int
     {
-        $paths = ['/', '/about', '/services', '/industries', '/projects', '/consultation', '/contact'];
+        $paths = ['/', '/about', '/services', '/projects', '/consultation', '/contact'];
         $sitemap = Sitemap::create();
 
         foreach ($paths as $path) {
             $sitemap->add(Url::create(url($path)));
         }
+
+        Division::query()->orderBy('sort_order')->each(function (Division $division) use ($sitemap): void {
+            $sitemap->add(Url::create(url('/services/'.$division->slug))->setLastModificationDate($division->updated_at));
+        });
 
         $sitemap->writeToFile(public_path('sitemap.xml'));
         $this->info('Sitemap generated at public/sitemap.xml.');

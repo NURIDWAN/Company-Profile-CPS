@@ -78,6 +78,6 @@ class SiteSettingController extends Controller
             Storage::disk('public')->delete($oldOgImagePath);
         }
 
-        return back()->with('success', 'Website settings saved.');
+        return back()->with('success', __('Website settings saved.'));
     }
 }

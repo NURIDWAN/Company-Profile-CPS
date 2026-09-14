@@ -12,26 +12,26 @@ const DIVISION_IMAGES = [
 ];
 
 const DIVISION_TAGLINES = [
-    'Keep Your Systems Running at Peak Performance',
-    'Custom Solutions Built to Your Specifications',
-    'Equipment Supply and Professional Installation Services',
+    'Menjaga Sistem Anda Berjalan Optimal',
+    'Solusi Kustom Sesuai Spesifikasi Anda',
+    'Pengadaan Peralatan dan Layanan Instalasi Profesional',
 ];
 
 const DELIVERY_STEPS = [
-    { icon: 'lucide:search-check', title: 'Assessment', description: 'Comprehensive analysis of your technical requirements and system needs.' },
-    { icon: 'lucide:route', title: 'Planning', description: 'Detailed engineering planning and customized solution design.' },
-    { icon: 'lucide:settings-2', title: 'Execution', description: 'Professional implementation with quality assurance and testing.' },
-    { icon: 'lucide:headphones', title: 'Support', description: 'Ongoing maintenance, monitoring, and technical support.' },
+    { icon: 'lucide:search-check', title: 'Asesmen', description: 'Analisis menyeluruh atas kebutuhan teknis dan sistem Anda.' },
+    { icon: 'lucide:route', title: 'Perencanaan', description: 'Perencanaan rekayasa yang terperinci dan desain solusi yang disesuaikan.' },
+    { icon: 'lucide:settings-2', title: 'Pelaksanaan', description: 'Implementasi profesional dengan jaminan mutu dan pengujian.' },
+    { icon: 'lucide:headphones', title: 'Dukungan', description: 'Pemeliharaan, pemantauan, dan dukungan teknis berkelanjutan.' },
 ];
 
 const STANDARDS = [
     {
         icon: 'lucide:cpu',
-        title: 'Technical Precision',
-        description: 'Engineering solutions designed with meticulous attention to technical detail.',
+        title: 'Presisi Teknis',
+        description: 'Solusi rekayasa yang dirancang dengan perhatian cermat terhadap detail teknis.',
     },
-    { icon: 'lucide:zap', title: 'Fast Turnaround', description: 'Quick response and efficient project execution without compromising quality.' },
-    { icon: 'lucide:check-circle-2', title: 'Quality Assurance', description: 'Rigorous testing and quality control at every stage of delivery.' },
+    { icon: 'lucide:zap', title: 'Penyelesaian Cepat', description: 'Respons cepat dan pelaksanaan proyek yang efisien tanpa mengurangi kualitas.' },
+    { icon: 'lucide:check-circle-2', title: 'Jaminan Mutu', description: 'Pengujian ketat dan pengendalian mutu di setiap tahap pelaksanaan.' },
 ];
 
 export default function Services() {
@@ -41,7 +41,8 @@ export default function Services() {
     const divisionCards = divisions.map((division, index) => ({
         code: `${String(index + 1).padStart(2, '0')} / ${division.name.replace(/ Division$/, '')}`,
         title: division.name.replace(/ Division$/, ''),
-        tagline: DIVISION_TAGLINES[index] ?? 'Technical engineering support for critical systems',
+        slug: division.slug,
+        tagline: DIVISION_TAGLINES[index] ?? 'Dukungan rekayasa teknis untuk sistem kritis',
         description: division.description ?? '',
         items: division.points ?? [],
         image: division.image_url ?? galleryImages[index] ?? DIVISION_IMAGES[index],
@@ -74,26 +75,26 @@ export default function Services() {
                         <div className="max-w-3xl">
                             <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
                                 <span className="bg-cyan h-px w-10" />
-                                {content('hero.eyebrow', 'Services / 01')}
+                                {content('hero.eyebrow', 'Layanan / 01')}
                             </p>
                             <h1 className="reveal mt-7 text-5xl leading-[.98] font-semibold tracking-[-.06em] text-white delay-1 sm:text-6xl lg:text-7xl">
-                                {content('hero.title', 'Our Services')}
+                                {content('hero.title', 'Layanan Kami')}
                             </h1>
                             <p className="reveal mt-7 max-w-2xl text-xl leading-8 font-medium text-white delay-2 sm:text-2xl">
-                                {content('hero.subtitle', 'Comprehensive Engineering Solutions Across Three Core Divisions')}
+                                {content('hero.subtitle', 'Solusi Rekayasa Menyeluruh melalui Tiga Divisi Inti')}
                             </p>
                             <p className="reveal text-soft mt-6 max-w-2xl text-base leading-7 delay-3">
                                 {content(
                                     'hero.description',
-                                    'From maintenance and optimization to design and manufacturing, CPS delivers end-to-end engineering solutions built for reliability and precision.',
+                                    'Mulai dari pemeliharaan dan optimalisasi hingga desain dan manufaktur, CPS menghadirkan solusi rekayasa menyeluruh yang andal dan presisi.',
                                 )}
                             </p>
                         </div>
 
                         <div className="text-dim mt-16 flex items-center gap-8 font-mono text-[10px] tracking-[.18em] uppercase">
-                            <span>Electrical &amp; Electronic Engineering</span>
+                            <span>Rekayasa Kelistrikan &amp; Elektronik</span>
                             <span className="bg-cyan/50 hidden h-px w-16 sm:block" />
-                            <span className="hidden sm:block">Technical capability / CPS</span>
+                            <span className="hidden sm:block">Kapabilitas teknis / CPS</span>
                         </div>
                     </div>
                 </section>
@@ -102,12 +103,12 @@ export default function Services() {
                 <section className="bg-ink py-24 lg:py-36">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mb-14 max-w-2xl">
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Core divisions / 02</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Divisi inti / 02</p>
                             <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">
-                                {content('divisions.title', 'Engineering in action.')}
+                                {content('divisions.title', 'Rekayasa dalam aksi.')}
                             </h2>
                             <p className="text-soft mt-6 text-base leading-7">
-                                Three divisions built to support electrical and electronic engineering requirements from design through execution.
+                                Tiga divisi yang mendukung kebutuhan rekayasa kelistrikan dan elektronik dari desain hingga pelaksanaan.
                             </p>
                         </div>
 
@@ -142,10 +143,10 @@ export default function Services() {
                                             ))}
                                         </ul>
                                         <Link
-                                            href="/contact"
+                                            href={`/services/${division.slug}`}
                                             className="hover:border-cyan hover:text-cyan mt-8 inline-flex items-center gap-3 border border-white/15 px-5 py-3 text-[10px] font-bold tracking-[.16em] text-white uppercase transition"
                                         >
-                                            Learn More
+                                            Pelajari Selengkapnya
                                             <Icon icon="lucide:arrow-up-right" />
                                         </Link>
                                     </div>
@@ -159,11 +160,11 @@ export default function Services() {
                 <section className="grid-bg bg-steel border-y border-white/10 py-24 lg:py-32">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="max-w-2xl">
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Delivery method / 03</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Metode pelaksanaan / 03</p>
                             <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">
-                                {content('delivery.title', 'How We Deliver')}
+                                {content('delivery.title', 'Cara Kami Melaksanakan Proyek')}
                             </h2>
-                            <p className="text-soft mt-6 text-base leading-7">Our Proven Engineering Process</p>
+                            <p className="text-soft mt-6 text-base leading-7">Proses Rekayasa Teruji Kami</p>
                         </div>
 
                         <div className="mt-16 grid grid-cols-2 border-t border-l border-white/10 lg:grid-cols-4">
@@ -186,13 +187,13 @@ export default function Services() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Service standard / 04</p>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Standar layanan / 04</p>
                                 <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">
-                                    {content('standards.title', 'Why Choose CPS Services?')}
+                                    {content('standards.title', 'Mengapa Memilih Layanan CPS?')}
                                 </h2>
                             </div>
                             <p className="text-soft max-w-sm text-sm leading-7">
-                                Technical focus, responsive delivery, and quality-minded execution across every service division.
+                                Fokus teknis, pelaksanaan responsif, dan pengerjaan berorientasi mutu di setiap divisi layanan.
                             </p>
                         </div>
 
@@ -216,25 +217,25 @@ export default function Services() {
                     <div className="bg-cyan/[.025] absolute top-0 right-0 h-full w-1/2" />
                     <div className="relative mx-auto flex max-w-7xl flex-col justify-between gap-10 px-6 lg:flex-row lg:items-end lg:px-8">
                         <div>
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Next step / 05</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Langkah berikutnya / 05</p>
                             <h2 className="mt-6 max-w-3xl text-5xl leading-[.95] font-semibold tracking-[-.06em] sm:text-7xl">
-                                {content('cta.title', 'Ready to Get Started?')}
+                                {content('cta.title', 'Siap Memulai?')}
                             </h2>
-                            <p className="text-soft mt-7 text-lg">Let's discuss your service requirements.</p>
+                            <p className="text-soft mt-7 text-lg">Mari diskusikan kebutuhan layanan Anda.</p>
                         </div>
                         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                             <Link
                                 href="/consultation"
                                 className="bg-cyan text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:bg-white"
                             >
-                                Request Consultation
+                                Ajukan Konsultasi
                                 <Icon icon="lucide:arrow-up-right" className="text-base" />
                             </Link>
                             <Link
                                 href="/projects"
                                 className="hover:border-cyan hover:text-cyan inline-flex h-14 items-center justify-center gap-3 border border-white/20 px-6 text-xs font-bold tracking-[.15em] text-white uppercase transition"
                             >
-                                View Projects
+                                Lihat Proyek
                                 <Icon icon="lucide:arrow-up-right" className="text-base" />
                             </Link>
                         </div>

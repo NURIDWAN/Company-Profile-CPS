@@ -9,12 +9,12 @@ import { useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 const PROJECT_TYPES = [
-    { value: 'electrical', label: 'Electrical' },
-    { value: 'cathodic-protection', label: 'Cathodic Protection' },
-    { value: 'mechanical', label: 'Mechanical' },
+    { value: 'electrical', label: 'Kelistrikan' },
+    { value: 'cathodic-protection', label: 'Proteksi Katodik' },
+    { value: 'mechanical', label: 'Mekanikal' },
     { value: 'cme', label: 'CME' },
     { value: 'load-bank', label: 'Load Bank' },
-    { value: 'other', label: 'Other' },
+    { value: 'other', label: 'Lainnya' },
 ];
 
 const inputClass =
@@ -53,8 +53,8 @@ export default function Contact() {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         itemListElement: [
-            { '@type': 'ListItem', position: 1, name: 'Home', item: props.seo?.canonical ? new URL('/', props.seo.canonical).toString() : '/' },
-            { '@type': 'ListItem', position: 2, name: 'Contact', item: props.seo?.canonical ?? '/contact' },
+            { '@type': 'ListItem', position: 1, name: 'Beranda', item: props.seo?.canonical ? new URL('/', props.seo.canonical).toString() : '/' },
+            { '@type': 'ListItem', position: 2, name: 'Kontak', item: props.seo?.canonical ?? '/contact' },
         ],
     };
 
@@ -62,8 +62,8 @@ export default function Contact() {
         <PublicLayout>
             <>
                 <SeoHead
-                    title={props.seo?.title ?? 'Contact PT. Citra Protecta Semesta'}
-                    description={props.seo?.description ?? 'Contact CPS for engineering services and technical consultation.'}
+                    title={props.seo?.title ?? 'Hubungi PT. Citra Protecta Semesta'}
+                    description={props.seo?.description ?? 'Hubungi CPS untuk layanan rekayasa dan konsultasi teknis.'}
                     canonicalUrl={props.seo?.canonical}
                     ogImage={props.seo?.ogImage}
                     schema={[localBusinessSchema, breadcrumbSchema]}
@@ -86,13 +86,13 @@ export default function Contact() {
                         <div className="max-w-4xl">
                             <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
                                 <span className="bg-cyan h-px w-10" />
-                                {content('hero.eyebrow', 'Contact / 01')}
+                                {content('hero.eyebrow', 'Kontak / 01')}
                             </p>
                             <h1 className="reveal mt-7 max-w-4xl text-5xl leading-[1.02] font-semibold tracking-[-.055em] text-white delay-1 sm:text-6xl lg:text-7xl">
-                                {content('hero.title', "Let's discuss your engineering project.")}
+                                {content('hero.title', 'Mari diskusikan proyek rekayasa Anda.')}
                             </h1>
                             <p className="reveal text-soft mt-8 max-w-xl text-base leading-7 delay-2">
-                                {content('hero.description', 'Have a technical requirement? Connect with our team.')}
+                                {content('hero.description', 'Memiliki kebutuhan teknis? Hubungi tim kami.')}
                             </p>
                         </div>
                     </div>
@@ -103,12 +103,12 @@ export default function Contact() {
                     <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_.95fr] lg:gap-24 lg:px-8">
                         <div>
                             <div className="mb-10">
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Inquiry form / 02</p>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Formulir pertanyaan / 02</p>
                                 <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] text-white sm:text-4xl">
-                                    {content('form.title', 'Send us a message')}
+                                    {content('form.title', 'Kirim pesan kepada kami')}
                                 </h2>
                                 <p className="text-soft mt-4 max-w-lg text-sm leading-7">
-                                    Share your requirements and our team can understand how to support your project.
+                                    Sampaikan kebutuhan Anda agar tim kami dapat memahami cara mendukung proyek Anda.
                                 </p>
                             </div>
 
@@ -129,7 +129,7 @@ export default function Contact() {
                                 <div className="grid gap-6 sm:grid-cols-2">
                                     <div>
                                         <label htmlFor="name" className="text-cyan mb-3 block font-mono text-[11px] tracking-[.16em] uppercase">
-                                            Name
+                                            Nama
                                         </label>
                                         <input
                                             id="name"
@@ -139,7 +139,7 @@ export default function Contact() {
                                             required
                                             value={data.name}
                                             onChange={(event) => setData('name', event.target.value)}
-                                            placeholder="Your full name"
+                                            placeholder="Nama lengkap Anda"
                                             className={inputClass}
                                         />
                                         {errors.name && <p className="mt-2 text-sm text-red-400">{errors.name}</p>}
@@ -166,7 +166,7 @@ export default function Contact() {
                                 <div className="grid gap-6 sm:grid-cols-2">
                                     <div>
                                         <label htmlFor="phone" className="text-cyan mb-3 block font-mono text-[11px] tracking-[.16em] uppercase">
-                                            Phone
+                                            Telepon
                                         </label>
                                         <input
                                             id="phone"
@@ -182,7 +182,7 @@ export default function Contact() {
                                     </div>
                                     <div>
                                         <label htmlFor="company" className="text-cyan mb-3 block font-mono text-[11px] tracking-[.16em] uppercase">
-                                            Company
+                                            Perusahaan
                                         </label>
                                         <input
                                             id="company"
@@ -191,7 +191,7 @@ export default function Contact() {
                                             autoComplete="organization"
                                             value={data.company}
                                             onChange={(event) => setData('company', event.target.value)}
-                                            placeholder="Company name"
+                                            placeholder="Nama perusahaan"
                                             className={inputClass}
                                         />
                                         {errors.company && <p className="mt-2 text-sm text-red-400">{errors.company}</p>}
@@ -200,7 +200,7 @@ export default function Contact() {
 
                                 <div>
                                     <label htmlFor="project-type" className="text-cyan mb-3 block font-mono text-[11px] tracking-[.16em] uppercase">
-                                        Project Type
+                                        Jenis Proyek
                                     </label>
                                     <div className="relative">
                                         <select
@@ -211,7 +211,7 @@ export default function Contact() {
                                             onChange={(event) => setData('project_type', event.target.value)}
                                             className={`${inputClass} appearance-none pr-12`}
                                         >
-                                            <option value="">Select a project type</option>
+                                            <option value="">Pilih jenis proyek</option>
                                             {PROJECT_TYPES.map((type) => (
                                                 <option key={type.value} value={type.value}>
                                                     {type.label}
@@ -228,7 +228,7 @@ export default function Contact() {
 
                                 <div>
                                     <label htmlFor="message" className="text-cyan mb-3 block font-mono text-[11px] tracking-[.16em] uppercase">
-                                        Message
+                                        Pesan
                                     </label>
                                     <textarea
                                         id="message"
@@ -237,7 +237,7 @@ export default function Contact() {
                                         required
                                         value={data.message}
                                         onChange={(event) => setData('message', event.target.value)}
-                                        placeholder="Tell us about your technical requirement..."
+                                        placeholder="Ceritakan kebutuhan teknis Anda..."
                                         className="bg-panel placeholder:text-dim/60 focus:border-cyan w-full resize-y border border-white/10 px-4 py-4 text-sm leading-7 text-white transition outline-none focus:shadow-[0_0_20px_rgba(0,217,255,.08)]"
                                     />
                                     {errors.message && <p className="mt-2 text-sm text-red-400">{errors.message}</p>}
@@ -251,21 +251,21 @@ export default function Contact() {
                                     }`}
                                 >
                                     {processing ? (
-                                        'Sending...'
+                                        'Mengirim...'
                                     ) : sent ? (
                                         <>
-                                            <Icon icon="lucide:check" className="text-base" /> Inquiry Sent
+                                            <Icon icon="lucide:check" className="text-base" /> Pertanyaan Terkirim
                                         </>
                                     ) : (
                                         <>
-                                            Send Inquiry <Icon icon="lucide:arrow-up-right" className="text-base" />
+                                            Kirim Pertanyaan <Icon icon="lucide:arrow-up-right" className="text-base" />
                                         </>
                                     )}
                                 </button>
                             </form>
                         </div>
 
-                        <aside aria-label="CPS contact information">
+                        <aside aria-label="Informasi kontak CPS">
                             <ContactInfoCards company={company} />
                         </aside>
                     </div>
@@ -277,9 +277,11 @@ export default function Contact() {
                         <div className="mb-10">
                             <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Location / 03</p>
                             <h2 className="mt-5 text-3xl font-semibold tracking-[-.04em] text-white sm:text-4xl">
-                                {content('location.title', 'Office location')}
+                                {content('location.title', 'Lokasi kantor')}
                             </h2>
-                            <p className="text-soft mt-4 text-sm leading-7">{content('location.description', 'Visit us at our Tangerang office.')}</p>
+                            <p className="text-soft mt-4 text-sm leading-7">
+                                {content('location.description', 'Kunjungi kantor kami di Tangerang.')}
+                            </p>
                         </div>
 
                         <div className="border-cyan/40 bg-night relative min-h-[360px] overflow-hidden border">

@@ -10,7 +10,7 @@ import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Categories & Products', href: '/admin/categories' },
+    { title: 'Kategori & Produk', href: '/admin/categories' },
 ];
 
 export default function Categories({ categories }: { categories: ProductCategory[] }) {
@@ -83,27 +83,25 @@ export default function Categories({ categories }: { categories: ProductCategory
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Categories & Products" />
+            <Head title="Kategori & Produk" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h2 className="text-xl font-semibold">Categories & Products</h2>
-                        <p className="text-muted-foreground text-sm">
-                            Manage product categories and their products ({categories.length} categories).
-                        </p>
+                        <h2 className="text-xl font-semibold">Kategori & Produk</h2>
+                        <p className="text-muted-foreground text-sm">Kelola kategori produk dan produk di dalamnya ({categories.length} kategori).</p>
                     </div>
                     <Dialog open={categoryOpen} onOpenChange={setCategoryOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={openCategoryCreate}>Add Category</Button>
+                            <Button onClick={openCategoryCreate}>Tambah Kategori</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>{editingCategory ? 'Edit Category' : 'Add Category'}</DialogTitle>
+                                <DialogTitle>{editingCategory ? 'Edit Kategori' : 'Tambah Kategori'}</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={submitCategory} className="space-y-4">
                                 <TextField
                                     id="category-name"
-                                    label="Name"
+                                    label="Nama"
                                     value={categoryForm.data.name}
                                     onChange={(v) => categoryForm.setData('name', v)}
                                     error={categoryForm.errors.name}
@@ -111,14 +109,14 @@ export default function Categories({ categories }: { categories: ProductCategory
                                 />
                                 <RichTextEditor
                                     id="category-description"
-                                    label="Description"
+                                    label="Deskripsi"
                                     value={categoryForm.data.description}
                                     onChange={(value) => categoryForm.setData('description', value)}
                                     error={categoryForm.errors.description}
                                 />
                                 <DialogFooter>
                                     <Button type="submit" disabled={categoryForm.processing}>
-                                        {editingCategory ? 'Update' : 'Create'}
+                                        {editingCategory ? 'Perbarui' : 'Buat'}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -140,18 +138,18 @@ export default function Categories({ categories }: { categories: ProductCategory
                                 </div>
                                 <div className="flex gap-2">
                                     <Button variant="outline" size="sm" onClick={() => openProductCreate(category)}>
-                                        Add Product
+                                        Tambah Produk
                                     </Button>
                                     <Button variant="outline" size="sm" onClick={() => openCategoryEdit(category)}>
                                         Edit
                                     </Button>
                                     <ConfirmDelete
-                                        title="Delete category?"
-                                        description={`This will permanently delete "${category.name}" and all its products.`}
+                                        title="Hapus kategori?"
+                                        description={`Kategori "${category.name}" dan semua produknya akan dihapus secara permanen.`}
                                         onDelete={() => destroyCategory(category)}
                                         trigger={
                                             <Button variant="destructive" size="sm">
-                                                Delete
+                                                Hapus
                                             </Button>
                                         }
                                     />
@@ -169,12 +167,12 @@ export default function Categories({ categories }: { categories: ProductCategory
                                                 Edit
                                             </Button>
                                             <ConfirmDelete
-                                                title="Delete product?"
-                                                description={`This will permanently delete "${product.name}".`}
+                                                title="Hapus produk?"
+                                                description={`Produk "${product.name}" akan dihapus secara permanen.`}
                                                 onDelete={() => destroyProduct(product)}
                                                 trigger={
                                                     <Button variant="ghost" size="sm" className="text-red-600">
-                                                        Delete
+                                                        Hapus
                                                     </Button>
                                                 }
                                             />
@@ -182,7 +180,7 @@ export default function Categories({ categories }: { categories: ProductCategory
                                     </li>
                                 ))}
                                 {(category.products?.length ?? 0) === 0 && (
-                                    <li className="text-muted-foreground px-5 py-3 text-sm">No products yet.</li>
+                                    <li className="text-muted-foreground px-5 py-3 text-sm">Belum ada produk.</li>
                                 )}
                             </ul>
                         </div>
@@ -194,12 +192,12 @@ export default function Categories({ categories }: { categories: ProductCategory
             <Dialog open={productOpen} onOpenChange={setProductOpen}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>{editingProduct ? 'Edit Product' : `Add Product to ${productTarget?.name ?? ''}`}</DialogTitle>
+                        <DialogTitle>{editingProduct ? 'Edit Produk' : `Tambah Produk ke ${productTarget?.name ?? ''}`}</DialogTitle>
                     </DialogHeader>
                     <form onSubmit={submitProduct} className="space-y-4">
                         <TextField
                             id="product-name"
-                            label="Name"
+                            label="Nama"
                             value={productForm.data.name}
                             onChange={(v) => productForm.setData('name', v)}
                             error={productForm.errors.name}
@@ -214,17 +212,17 @@ export default function Categories({ categories }: { categories: ProductCategory
                         />
                         <RichTextEditor
                             id="product-description"
-                            label="Description"
+                            label="Deskripsi"
                             value={productForm.data.description}
                             onChange={(value) => productForm.setData('description', value)}
                             error={productForm.errors.description}
                             rows={8}
                             uploadUrl={route('admin.products.upload-image')}
-                            hint="You can insert images into the description."
+                            hint="Anda dapat menyisipkan gambar ke dalam deskripsi."
                         />
                         <DialogFooter>
                             <Button type="submit" disabled={productForm.processing}>
-                                {editingProduct ? 'Update' : 'Create'}
+                                {editingProduct ? 'Perbarui' : 'Buat'}
                             </Button>
                         </DialogFooter>
                     </form>

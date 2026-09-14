@@ -26,7 +26,7 @@ export default function ProductShow({ product, related, schemas }: ShowProps) {
         <PublicLayout preloadImage={product.image_url ?? undefined}>
             <SeoHead
                 title={product.name}
-                description={product.spec ?? 'Product detail'}
+                description={product.spec ?? 'Detail produk'}
                 ogType="product"
                 schema={schemas}
                 preloadImage={product.image_url}
@@ -37,7 +37,7 @@ export default function ProductShow({ product, related, schemas }: ShowProps) {
                         href="/products"
                         className="text-cyan inline-flex items-center gap-2 text-xs font-semibold tracking-[.14em] uppercase hover:underline"
                     >
-                        <Icon icon="lucide:arrow-left" className="text-sm" /> All products
+                        <Icon icon="lucide:arrow-left" className="text-sm" /> Semua produk
                     </Link>
 
                     {product.category && <p className="text-dim mt-8 font-mono text-[11px] tracking-[.18em] uppercase">{product.category.name}</p>}
@@ -58,12 +58,12 @@ export default function ProductShow({ product, related, schemas }: ShowProps) {
 
                     {product.description ? (
                         <div className="mt-10">
-                            <h2 className="text-ink-foreground/60 text-xs font-semibold tracking-[.2em] uppercase">Description</h2>
+                            <h2 className="text-ink-foreground/60 text-xs font-semibold tracking-[.2em] uppercase">Deskripsi</h2>
                             <RichText value={product.description} className="mt-5 [&_img]:rounded-xl [&_img]:border [&_img]:border-white/10" />
                         </div>
                     ) : (
                         <p className="text-soft mt-10 text-sm">
-                            Detailed description coming soon. Contact us for more information about this product.
+                            Deskripsi lengkap segera tersedia. Hubungi kami untuk informasi lebih lanjut tentang produk ini.
                         </p>
                     )}
                 </div>
@@ -72,7 +72,7 @@ export default function ProductShow({ product, related, schemas }: ShowProps) {
             {related.length > 0 && (
                 <section className="bg-panel/40 border-t border-white/10 py-16 lg:py-20">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <h2 className="text-xl font-semibold tracking-[-.03em] text-white">Related products</h2>
+                        <h2 className="text-xl font-semibold tracking-[-.03em] text-white">Produk terkait</h2>
                         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                             {related.map((item) => (
                                 <Link

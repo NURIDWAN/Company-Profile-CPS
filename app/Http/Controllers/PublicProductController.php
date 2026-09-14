@@ -29,8 +29,8 @@ class PublicProductController extends Controller
         return Inertia::render('products/index', [
             'categories' => $categories,
             'seo' => [
-                'title' => 'Our Products',
-                'description' => 'Explore CPS engineering products across cathodic protection, electrical, and electronic systems.',
+                'title' => __('Our Products'),
+                'description' => __('Explore CPS engineering products across cathodic protection, electrical, and electronic systems.'),
                 'canonical' => url('/products'),
                 'ogImage' => $settings?->og_image_url ?? $settings?->logo_url,
                 'ogType' => 'website',
@@ -61,8 +61,8 @@ class PublicProductController extends Controller
             '@context' => 'https://schema.org',
             '@type' => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Products', 'item' => url('/products')],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => __('Products'), 'item' => url('/products')],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => $product->name, 'item' => $canonical],
             ],
         ];
@@ -91,7 +91,7 @@ class PublicProductController extends Controller
             'schemas' => [$productSchema, $breadcrumbSchema],
             'seo' => [
                 'title' => $product->name,
-                'description' => $product->spec ?? 'Learn more about '.$product->name.' from PT. Citra Protecta Semesta.',
+                'description' => $product->spec ?? __('Learn more about :name from PT. Citra Protecta Semesta.', ['name' => $product->name]),
                 'canonical' => $canonical,
                 'ogImage' => $imageUrl,
                 'ogType' => 'product',

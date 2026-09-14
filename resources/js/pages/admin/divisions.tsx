@@ -92,17 +92,17 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                     </div>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={openCreate}>Add division</Button>
+                            <Button onClick={openCreate}>Tambah divisi</Button>
                         </DialogTrigger>
                         <DialogContent className="h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden sm:max-w-xl">
                             <DialogHeader>
-                                <DialogTitle>{editing ? 'Edit division' : 'Add division'}</DialogTitle>
+                                <DialogTitle>{editing ? 'Edit divisi' : 'Tambah divisi'}</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={submit} className="flex min-h-0 flex-col">
                                 <div className="min-h-0 flex-1 space-y-4 overflow-y-auto pr-2">
                                     <TextField
                                         id="name"
-                                        label="Division name"
+                                        label="Nama divisi"
                                         value={data.name}
                                         onChange={(value) => setData('name', value)}
                                         error={errors.name}
@@ -110,12 +110,12 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                     />
                                     <RichTextEditor
                                         id="description"
-                                        label="Description"
+                                        label="Deskripsi"
                                         value={data.description}
                                         onChange={(value) => setData('description', value)}
                                         error={errors.description}
                                         rows={6}
-                                        hint="Use formatting to structure the division description."
+                                        hint="Gunakan format untuk menyusun deskripsi divisi."
                                     />
                                     <div className="rounded-lg border p-4">
                                         <div className="mb-3 flex items-start justify-between gap-3">
@@ -130,7 +130,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                                 onClick={addPoint}
                                                 disabled={data.points.length >= 12}
                                             >
-                                                Add point
+                                                Tambah poin
                                             </Button>
                                         </div>
                                         <div className="space-y-2">
@@ -139,7 +139,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                                     <input
                                                         value={point}
                                                         onChange={(event) => updatePoint(index, event.target.value)}
-                                                        placeholder={`Point ${index + 1}`}
+                                                        placeholder={`Poin ${index + 1}`}
                                                         maxLength={255}
                                                         className="border-input bg-background focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm outline-none focus-visible:ring-2"
                                                     />
@@ -174,7 +174,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                             <ImageUploadPreview
                                                 file={data.image}
                                                 currentUrl={editing?.image_url}
-                                                alt={editing?.name ?? data.name ?? 'Division image'}
+                                                alt={editing?.name ?? data.name ?? 'Gambar divisi'}
                                                 className="mb-2 h-24 w-full rounded-md border object-cover"
                                             />
                                             <input
@@ -191,7 +191,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                 </div>
                                 <DialogFooter className="bg-background sticky bottom-0 mt-4 border-t pt-4">
                                     <Button type="submit" disabled={processing}>
-                                        {processing ? 'Saving…' : editing ? 'Update division' : 'Create division'}
+                                        {processing ? 'Menyimpan…' : editing ? 'Perbarui divisi' : 'Buat divisi'}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -209,7 +209,9 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                             {division.image_url ? (
                                 <img src={division.image_url} alt={division.name} className="h-44 w-full object-cover" />
                             ) : (
-                                <div className="bg-muted text-muted-foreground flex h-44 items-center justify-center text-sm">No image uploaded</div>
+                                <div className="bg-muted text-muted-foreground flex h-44 items-center justify-center text-sm">
+                                    Belum ada gambar yang diunggah
+                                </div>
                             )}
                             <div className="space-y-3 p-5">
                                 <div className="flex items-start justify-between gap-3">
@@ -220,19 +222,19 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                     <Badge variant="secondary">{division.slug}</Badge>
                                 </div>
                                 <p className="text-muted-foreground line-clamp-4 text-sm leading-6">
-                                    {division.description || 'No description provided.'}
+                                    {division.description || 'Deskripsi belum tersedia.'}
                                 </p>
                                 <div className="flex justify-end gap-2 border-t pt-3">
                                     <Button variant="outline" size="sm" onClick={() => openEdit(division)}>
                                         Edit
                                     </Button>
                                     <ConfirmDelete
-                                        title="Delete division?"
-                                        description={`This will permanently delete "${division.name}" and its image.`}
+                                        title="Hapus divisi?"
+                                        description={`Divisi "${division.name}" dan gambarnya akan dihapus secara permanen.`}
                                         onDelete={() => destroy(division)}
                                         trigger={
                                             <Button variant="destructive" size="sm">
-                                                Delete
+                                                Hapus
                                             </Button>
                                         }
                                     />
@@ -244,7 +246,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
 
                 <div className="text-muted-foreground text-xs">
                     <Link href="/dashboard" className="hover:underline">
-                        ← Back to dashboard
+                        ← Kembali ke dasbor
                     </Link>
                 </div>
             </div>

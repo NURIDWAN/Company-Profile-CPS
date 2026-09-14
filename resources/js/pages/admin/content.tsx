@@ -28,10 +28,10 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
         <form onSubmit={saveMedia} className="mt-6 border-t pt-5">
             <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                 <div>
-                    <p className="text-sm font-semibold">Section image</p>
-                    <p className="text-muted-foreground mt-1 text-xs">Upload the image used by this section. The existing image will be replaced.</p>
+                    <p className="text-sm font-semibold">Gambar bagian</p>
+                    <p className="text-muted-foreground mt-1 text-xs">Unggah gambar yang digunakan bagian ini. Gambar yang ada akan diganti.</p>
                 </div>
-                {mediaSlot && <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs">Current image</span>}
+                {mediaSlot && <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs">Gambar saat ini</span>}
             </div>
             <div className="grid gap-4 md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]">
                 <div>
@@ -43,18 +43,18 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
                         />
                     ) : (
                         <div className="bg-muted/50 text-muted-foreground flex h-28 items-center justify-center rounded-md border border-dashed text-xs">
-                            No image uploaded
+                            Belum ada gambar yang diunggah
                         </div>
                     )}
                 </div>
                 <div className="space-y-3">
                     <div>
                         <Label htmlFor={`media-alt-${section}`} className="mb-2 block text-xs">
-                            Alt text
+                            Teks alt
                         </Label>
                         <Input
                             id={`media-alt-${section}`}
-                            placeholder={`Describe the ${formatLabel(section, sectionLabels).toLowerCase()} image`}
+                            placeholder={`Jelaskan gambar ${formatLabel(section, sectionLabels).toLowerCase()}`}
                             value={mediaForm.data.alt_text}
                             onChange={(event) => mediaForm.setData('alt_text', event.target.value)}
                         />
@@ -62,7 +62,7 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
                     </div>
                     <div>
                         <Label htmlFor={`media-file-${section}`} className="mb-2 block text-xs">
-                            Choose image
+                            Pilih gambar
                         </Label>
                         <Input
                             id={`media-file-${section}`}
@@ -77,11 +77,11 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
                             alt={mediaForm.data.alt_text || `${section} image`}
                             className="mt-3 h-28 w-full rounded-md border object-cover"
                         />
-                        <p className="text-muted-foreground mt-1 text-xs">JPG, PNG, or WebP. Maximum 5 MB.</p>
+                        <p className="text-muted-foreground mt-1 text-xs">JPG, PNG, atau WebP. Maksimal 5 MB.</p>
                         {mediaForm.errors.image && <p className="text-destructive mt-1 text-xs">{mediaForm.errors.image}</p>}
                     </div>
                     <Button type="submit" size="sm" disabled={mediaForm.processing}>
-                        {mediaForm.processing ? 'Uploading…' : mediaSlot?.image_url ? 'Replace image' : 'Upload image'}
+                        {mediaForm.processing ? 'Mengunggah…' : mediaSlot?.image_url ? 'Ganti gambar' : 'Unggah gambar'}
                     </Button>
                 </div>
             </div>
@@ -91,46 +91,45 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Website Content', href: '/admin/content' },
+    { title: 'Konten Situs Web', href: '/admin/content' },
 ];
 
 const pageLabels: Record<string, string> = {
-    home: 'Home',
-    about: 'About',
-    services: 'Services',
-    projects: 'Projects',
-    industries: 'Industries',
-    contact: 'Contact',
-    consultation: 'Consultation',
+    home: 'Beranda',
+    about: 'Tentang',
+    services: 'Layanan',
+    projects: 'Proyek',
+    contact: 'Kontak',
+    consultation: 'Konsultasi',
 };
 
 const sectionLabels: Record<string, string> = {
-    hero: 'Hero section',
-    company: 'Company section',
-    services: 'Services section',
-    delivery: 'Delivery section',
-    standards: 'Standards section',
-    portfolio: 'Portfolio section',
-    scope: 'Scope section',
-    sectors: 'Sectors section',
-    capabilities: 'Capabilities section',
-    contact_cta: 'Contact call to action',
-    cta: 'Call to action',
-    mission: 'Mission section',
-    team: 'Team section',
-    references: 'References section',
-    form: 'Form section',
-    location: 'Location section',
+    hero: 'Bagian hero',
+    company: 'Bagian perusahaan',
+    services: 'Bagian layanan',
+    delivery: 'Bagian pelaksanaan',
+    standards: 'Bagian standar',
+    portfolio: 'Bagian portofolio',
+    scope: 'Bagian cakupan',
+    sectors: 'Bagian sektor',
+    capabilities: 'Bagian kapabilitas',
+    contact_cta: 'Ajakan bertindak kontak',
+    cta: 'Ajakan bertindak',
+    mission: 'Bagian misi',
+    team: 'Bagian tim',
+    references: 'Bagian referensi',
+    form: 'Bagian formulir',
+    location: 'Bagian lokasi',
 };
 
 const fieldLabels: Record<string, string> = {
-    eyebrow: 'Eyebrow label',
-    title: 'Title',
-    subtitle: 'Subtitle',
-    description: 'Description',
-    primary_cta: 'Primary button label',
-    secondary_cta: 'Secondary button label',
-    success_message: 'Success message',
+    eyebrow: 'Label pengantar',
+    title: 'Judul',
+    subtitle: 'Subjudul',
+    description: 'Deskripsi',
+    primary_cta: 'Label tombol utama',
+    secondary_cta: 'Label tombol sekunder',
+    success_message: 'Pesan sukses',
 };
 
 const formatLabel = (value: string, labels: Record<string, string>) =>
@@ -167,19 +166,19 @@ export default function Content({
     };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Website Content" />
+            <Head title="Konten Situs Web" />
             <div className="flex flex-1 flex-col gap-6 p-4 lg:p-6">
                 <header className="bg-card flex flex-col gap-4 rounded-xl border p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">Website CMS</p>
-                        <h2 className="mt-1 text-2xl font-semibold tracking-tight">Website Content</h2>
+                        <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">CMS Situs Web</p>
+                        <h2 className="mt-1 text-2xl font-semibold tracking-tight">Konten Situs Web</h2>
                         <p className="text-muted-foreground mt-1 max-w-2xl text-sm">
                             Kelola teks dan media halaman publik tanpa mengubah kode aplikasi.
                         </p>
                     </div>
                     <div className="min-w-52">
                         <Label htmlFor="page-selector" className="mb-2 block text-xs font-medium">
-                            Editing page
+                            Halaman yang diedit
                         </Label>
                         <select
                             id="page-selector"
@@ -207,10 +206,10 @@ export default function Content({
                         <form onSubmit={saveContent} className="space-y-5">
                             <div className="flex items-end justify-between gap-4">
                                 <div>
-                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Copy editor</p>
-                                    <h3 className="mt-1 text-lg font-semibold">{pageLabels[page] ?? page} page content</h3>
+                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Editor teks</p>
+                                    <h3 className="mt-1 text-lg font-semibold">{pageLabels[page] ?? page} konten halaman</h3>
                                 </div>
-                                <span className="text-muted-foreground text-xs">{contents.length} editable fields</span>
+                                <span className="text-muted-foreground text-xs">{contents.length} bidang yang dapat diedit</span>
                             </div>
 
                             {Object.entries(groupedContents).map(([section, items]) => (
@@ -218,10 +217,10 @@ export default function Content({
                                     <div className="mb-5 flex items-start justify-between gap-4 border-b pb-4">
                                         <div>
                                             <h4 className="font-semibold">{formatLabel(section, sectionLabels)}</h4>
-                                            <p className="text-muted-foreground mt-1 text-xs">Edit the copy displayed in this section.</p>
+                                            <p className="text-muted-foreground mt-1 text-xs">Edit teks yang ditampilkan di bagian ini.</p>
                                         </div>
                                         <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs font-medium">
-                                            {items.length} {items.length === 1 ? 'field' : 'fields'}
+                                            {items.length} {items.length === 1 ? 'bidang' : 'bidang'}
                                         </span>
                                     </div>
                                     <div className="grid gap-5 md:grid-cols-2">
@@ -281,9 +280,9 @@ export default function Content({
                             ))}
 
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                <p className="text-muted-foreground text-xs">Changes are applied to the selected page only.</p>
+                                <p className="text-muted-foreground text-xs">Perubahan hanya diterapkan pada halaman yang dipilih.</p>
                                 <Button type="submit" disabled={contentForm.processing} className="sm:min-w-32">
-                                    {contentForm.processing ? 'Saving…' : 'Save content'}
+                                    {contentForm.processing ? 'Menyimpan…' : 'Simpan konten'}
                                 </Button>
                             </div>
                         </form>
@@ -293,9 +292,9 @@ export default function Content({
                         <section className="bg-card rounded-xl border p-5 shadow-sm sm:p-6">
                             <div className="mb-4 flex items-center justify-between gap-3">
                                 <div>
-                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Visual assets</p>
-                                    <h3 className="mt-1 font-semibold">Page media</h3>
-                                    <p className="text-muted-foreground mt-1 text-xs">Upload images directly inside their related sections.</p>
+                                    <p className="text-muted-foreground text-xs font-semibold tracking-[0.16em] uppercase">Aset visual</p>
+                                    <h3 className="mt-1 font-semibold">Media halaman</h3>
+                                    <p className="text-muted-foreground mt-1 text-xs">Unggah gambar langsung di dalam bagian terkait.</p>
                                 </div>
                                 <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs font-medium">{media.length}</span>
                             </div>
@@ -311,7 +310,7 @@ export default function Content({
                                                 />
                                             ) : (
                                                 <div className="bg-muted text-muted-foreground flex h-12 w-16 items-center justify-center rounded border text-[10px]">
-                                                    No preview
+                                                    Tidak ada pratinjau
                                                 </div>
                                             )}
                                             <div className="min-w-0">
@@ -323,7 +322,7 @@ export default function Content({
                                 </div>
                             ) : (
                                 <div className="bg-muted/50 text-muted-foreground rounded-lg border border-dashed p-6 text-center text-sm">
-                                    No media uploaded for this page yet.
+                                    Belum ada media yang diunggah untuk halaman ini.
                                 </div>
                             )}
                         </section>

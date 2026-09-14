@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\ContactMessage;
 use App\Models\Division;
 use App\Models\GalleryItem;
 use App\Models\PageContent;
@@ -30,7 +29,7 @@ class PublicDataAndGalleryTest extends TestCase
         ]);
 
         $response->assertRedirect();
-        $response->assertSessionHas('success');
+        $response->assertSessionHas('success', 'Terima kasih. Pertanyaan Anda telah dikirimkan kepada tim kami.');
         $this->assertDatabaseHas('contact_messages', [
             'name' => 'Jane Doe',
             'email' => 'jane@example.com',
@@ -280,6 +279,15 @@ class PublicDataAndGalleryTest extends TestCase
         $division->refresh();
         Storage::disk('public')->assertMissing($oldPath);
         Storage::disk('public')->assertExists($division->image_path);
+    }
+
+    public function test_admin_content_page_list_excludes_removed_industries_page(): void
+    {
+        $this->actingAs(User::factory()->create())
+            ->get(route('admin.content.index'))
+            ->assertInertia(fn ($page) => $page
+                ->where('pages', fn ($pages) => ! $pages->contains('industries'))
+            );
     }
 
     public function test_admin_can_update_public_copy_and_upload_page_media(): void

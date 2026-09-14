@@ -33,8 +33,8 @@ class PublicArticleController extends Controller
         return Inertia::render('articles/index', [
             'articles' => $articles,
             'seo' => [
-                'title' => 'Articles & Engineering Insights',
-                'description' => 'Read engineering articles, technical guides, and industry insights from PT. Citra Protecta Semesta.',
+                'title' => __('Articles & Engineering Insights'),
+                'description' => __('Read engineering articles, technical guides, and industry insights from PT. Citra Protecta Semesta.'),
                 'canonical' => url('/articles'),
                 'ogImage' => $settings?->og_image_url ?? $settings?->logo_url,
                 'ogType' => 'website',
@@ -75,8 +75,8 @@ class PublicArticleController extends Controller
             '@context' => 'https://schema.org',
             '@type' => 'BreadcrumbList',
             'itemListElement' => [
-                ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => url('/')],
-                ['@type' => 'ListItem', 'position' => 2, 'name' => 'Articles', 'item' => url('/articles')],
+                ['@type' => 'ListItem', 'position' => 1, 'name' => __('Home'), 'item' => url('/')],
+                ['@type' => 'ListItem', 'position' => 2, 'name' => __('Articles'), 'item' => url('/articles')],
                 ['@type' => 'ListItem', 'position' => 3, 'name' => $article->title, 'item' => $canonical],
             ],
         ];

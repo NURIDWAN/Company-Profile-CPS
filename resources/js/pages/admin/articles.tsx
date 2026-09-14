@@ -14,7 +14,7 @@ import { FormEventHandler, useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/dashboard' },
-    { title: 'Articles', href: '/admin/articles' },
+    { title: 'Artikel', href: '/admin/articles' },
 ];
 
 export interface AdminArticle {
@@ -24,14 +24,20 @@ export interface AdminArticle {
     status: string;
     published_at: string | null;
     created_at: string;
+    excerpt: string | null;
+    content: string;
     cover_url: string | null;
+    cover_alt: string | null;
+    seo_title: string | null;
+    seo_description: string | null;
+    seo_keywords: string | null;
     has_seo: boolean;
     reading_time: number;
 }
 
 function formatDate(value: string | null): string {
     if (!value) return '—';
-    return new Intl.DateTimeFormat('en', { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(value));
+    return new Intl.DateTimeFormat('id-ID', { dateStyle: 'medium', timeZone: 'UTC' }).format(new Date(value));
 }
 
 function CharCounter({ value, max }: { value: string; max: number }) {
@@ -71,7 +77,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
     const [editing, setEditing] = useState<AdminArticle | null>(null);
     const [open, setOpen] = useState(false);
     const [generating, setGenerating] = useState(false);
-    const { data, setData, post, processing, errors, reset, clearErrors, setError } = useForm({ ...emptyForm });
+    const { data, setData, post, processing, errors, reset, clearErrors, setError, transform } = useForm({ ...emptyForm });
 
     const openCreate = () => {
         setEditing(null);
@@ -85,8 +91,14 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
             ...emptyForm,
             title: article.title,
             slug: article.slug,
+            excerpt: article.excerpt ?? '',
+            content: article.content,
+            cover_alt: article.cover_alt ?? '',
             status: article.status,
             published_at: article.published_at ? article.published_at.slice(0, 10) : '',
+            seo_title: article.seo_title ?? '',
+            seo_description: article.seo_description ?? '',
+            seo_keywords: article.seo_keywords ?? '',
         });
         setOpen(true);
     };
@@ -112,7 +124,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                 }));
             })
             .catch(() => {
-                setError('seo_title', 'Failed to generate SEO. Please try again.');
+                setError('seo_title', 'Gagal membuat SEO. Silakan coba lagi.');
             })
             .finally(() => setGenerating(false));
     };
@@ -121,6 +133,11 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
         event.preventDefault();
         clearErrors();
         setData('slug', slugify(data.slug));
+
+        transform((formData) => ({
+            ...formData,
+            _method: editing ? 'put' : undefined,
+        }));
 
         if (editing) {
             post(route('admin.articles.update', editing.id), { forceFormData: true, onSuccess: () => setOpen(false) });
@@ -135,30 +152,30 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Articles" />
+            <Head title="Artikel" />
             <div className="flex flex-1 flex-col gap-6 p-4 lg:p-6">
                 <div className="bg-card flex flex-col gap-4 rounded-xl border p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">Content</p>
-                        <h2 className="mt-1 text-2xl font-semibold tracking-tight">Articles</h2>
+                        <p className="text-muted-foreground text-xs font-semibold tracking-[0.18em] uppercase">Konten</p>
+                        <h2 className="mt-1 text-2xl font-semibold tracking-tight">Artikel</h2>
                         <p className="text-muted-foreground mt-1 text-sm">
-                            Write articles with automatic SEO generation. Published articles appear in /articles and the sitemap.
+                            Tulis artikel dengan pembuatan SEO otomatis. Artikel yang diterbitkan muncul di /articles dan sitemap.
                         </p>
                         {flash?.success && <p className="text-success mt-2 text-sm">{flash.success}</p>}
                     </div>
                     <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button onClick={openCreate}>Add article</Button>
+                            <Button onClick={openCreate}>Tambah artikel</Button>
                         </DialogTrigger>
                         <DialogContent className="h-[calc(100vh-2rem)] max-h-[calc(100vh-2rem)] overflow-hidden sm:max-w-3xl">
                             <DialogHeader>
-                                <DialogTitle>{editing ? 'Edit article' : 'Add article'}</DialogTitle>
+                                <DialogTitle>{editing ? 'Edit artikel' : 'Tambah artikel'}</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={submit} className="flex min-h-0 flex-col">
                                 <div className="min-h-0 flex-1 space-y-5 overflow-y-auto pr-2">
                                     <TextField
                                         id="title"
-                                        label="Title"
+                                        label="Judul"
                                         value={data.title}
                                         onChange={(value) => setData('title', value)}
                                         error={errors.title}
@@ -176,7 +193,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                 onClick={() => setData('slug', slugify(data.title))}
                                                 disabled={!data.title}
                                             >
-                                                Generate from title
+                                                Buat dari judul
                                             </Button>
                                         </div>
                                         <Input
@@ -187,18 +204,18 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                             maxLength={255}
                                         />
                                         <p className="text-muted-foreground text-xs">
-                                            URL: /articles/{data.slug ? slugify(data.slug) : '…'} — leave empty to auto-generate from the title.
+                                            URL: /articles/{data.slug ? slugify(data.slug) : '…'} — kosongkan untuk membuat otomatis dari judul.
                                         </p>
                                         <InputError message={errors.slug} />
                                     </div>
 
                                     <div className="grid gap-2">
-                                        <Label htmlFor="excerpt">Excerpt</Label>
+                                        <Label htmlFor="excerpt">Ringkasan</Label>
                                         <Input
                                             id="excerpt"
                                             value={data.excerpt}
                                             onChange={(e) => setData('excerpt', e.target.value)}
-                                            placeholder="Short summary used for SEO description"
+                                            placeholder="Ringkasan singkat untuk deskripsi SEO"
                                             maxLength={500}
                                         />
                                         <InputError message={errors.excerpt} />
@@ -206,18 +223,18 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
 
                                     <RichTextEditor
                                         id="content"
-                                        label="Content"
+                                        label="Konten"
                                         value={data.content}
                                         onChange={(value) => setData('content', value)}
                                         error={errors.content}
                                         rows={12}
-                                        hint="Use H2/H3 headings to structure the article for SEO."
+                                        hint="Gunakan judul H2/H3 untuk menyusun artikel demi SEO."
                                         uploadUrl={route('admin.articles.upload-image')}
                                     />
 
                                     <div className="grid gap-4 sm:grid-cols-2">
                                         <div className="grid gap-2">
-                                            <Label htmlFor="cover">Cover image</Label>
+                                            <Label htmlFor="cover">Gambar sampul</Label>
                                             <Input
                                                 id="cover"
                                                 type="file"
@@ -228,14 +245,16 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                         </div>
                                         <TextField
                                             id="cover_alt"
-                                            label="Cover alt text"
+                                            label="Teks alt sampul"
                                             value={data.cover_alt}
                                             onChange={(value) => setData('cover_alt', value)}
                                             error={errors.cover_alt}
-                                            placeholder="Describe the cover image"
+                                            placeholder="Jelaskan gambar sampul"
                                         />
                                     </div>
-                                    {data.cover && <ImageUploadPreview file={data.cover} currentUrl={null} alt="Cover preview" />}
+                                    {(data.cover || (editing?.cover_url && !data.cover)) && (
+                                        <ImageUploadPreview file={data.cover} currentUrl={editing?.cover_url} alt="Pratinjau sampul" />
+                                    )}
 
                                     <div className="grid gap-4 sm:grid-cols-2">
                                         <div className="grid gap-2">
@@ -246,13 +265,13 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                 onChange={(e) => setData('status', e.target.value)}
                                                 className="border-input bg-background h-9 rounded-md border px-3 text-sm"
                                             >
-                                                <option value="draft">Draft</option>
-                                                <option value="published">Published</option>
+                                                <option value="draft">Draf</option>
+                                                <option value="published">Diterbitkan</option>
                                             </select>
                                             <InputError message={errors.status} />
                                         </div>
                                         <div className="grid gap-2">
-                                            <Label htmlFor="published_at">Publish date</Label>
+                                            <Label htmlFor="published_at">Tanggal terbit</Label>
                                             <Input
                                                 id="published_at"
                                                 type="date"
@@ -268,7 +287,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                             <div>
                                                 <Label>SEO</Label>
                                                 <p className="text-muted-foreground mt-1 text-xs">
-                                                    Auto-generated from the content. Leave empty to generate on save.
+                                                    Dibuat otomatis dari konten. Kosongkan untuk membuat saat disimpan.
                                                 </p>
                                             </div>
                                             <Button
@@ -278,13 +297,13 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                 onClick={generateSeo}
                                                 disabled={generating || !data.title}
                                             >
-                                                {generating ? 'Generating...' : 'Generate SEO'}
+                                                {generating ? 'Membuat...' : 'Buat SEO'}
                                             </Button>
                                         </div>
                                         <div className="space-y-4">
                                             <div className="grid gap-2">
                                                 <div className="flex items-center justify-between">
-                                                    <Label htmlFor="seo_title">Meta title</Label>
+                                                    <Label htmlFor="seo_title">Judul meta</Label>
                                                     <CharCounter value={data.seo_title} max={60} />
                                                 </div>
                                                 <Input
@@ -297,7 +316,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                             </div>
                                             <div className="grid gap-2">
                                                 <div className="flex items-center justify-between">
-                                                    <Label htmlFor="seo_description">Meta description</Label>
+                                                    <Label htmlFor="seo_description">Deskripsi meta</Label>
                                                     <CharCounter value={data.seo_description} max={160} />
                                                 </div>
                                                 <textarea
@@ -311,7 +330,7 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                 <InputError message={errors.seo_description} />
                                             </div>
                                             <div className="grid gap-2">
-                                                <Label htmlFor="seo_keywords">Keywords</Label>
+                                                <Label htmlFor="seo_keywords">Kata kunci</Label>
                                                 <Input
                                                     id="seo_keywords"
                                                     value={data.seo_keywords}
@@ -324,10 +343,10 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                 </div>
                                 <DialogFooter className="bg-background sticky bottom-0 mt-4 border-t pt-4">
                                     <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-                                        Cancel
+                                        Batal
                                     </Button>
                                     <Button type="submit" disabled={processing}>
-                                        {processing ? 'Saving...' : editing ? 'Update article' : 'Create article'}
+                                        {processing ? 'Menyimpan...' : editing ? 'Perbarui artikel' : 'Buat artikel'}
                                     </Button>
                                 </DialogFooter>
                             </form>
@@ -338,23 +357,25 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                 <section className="min-w-0 overflow-hidden rounded-xl border">
                     <div className="flex items-center justify-between border-b px-5 py-4">
                         <div>
-                            <h3 className="font-semibold">All articles</h3>
+                            <h3 className="font-semibold">Semua artikel</h3>
                             <p className="text-muted-foreground mt-1 text-sm">{articles.length} article(s)</p>
                         </div>
                     </div>
                     {articles.length === 0 ? (
-                        <div className="text-muted-foreground px-5 py-12 text-center text-sm">No articles yet. Click "Add article" to write one.</div>
+                        <div className="text-muted-foreground px-5 py-12 text-center text-sm">
+                            Belum ada artikel. Klik "Tambah artikel" untuk menulisnya.
+                        </div>
                     ) : (
                         <div className="overflow-x-auto">
                             <table className="w-full min-w-[760px] text-sm">
                                 <thead className="bg-muted/40 text-muted-foreground text-left">
                                     <tr>
-                                        <th className="px-5 py-3 font-medium">Title</th>
+                                        <th className="px-5 py-3 font-medium">Judul</th>
                                         <th className="px-5 py-3 font-medium">Status</th>
                                         <th className="px-5 py-3 font-medium">SEO</th>
-                                        <th className="px-5 py-3 font-medium">Published</th>
-                                        <th className="px-5 py-3 font-medium">Read</th>
-                                        <th className="px-5 py-3 text-right font-medium">Actions</th>
+                                        <th className="px-5 py-3 font-medium">Diterbitkan</th>
+                                        <th className="px-5 py-3 font-medium">Dibaca</th>
+                                        <th className="px-5 py-3 text-right font-medium">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y">
@@ -366,12 +387,12 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                             </td>
                                             <td className="px-5 py-4">
                                                 <Badge variant={article.status === 'published' ? 'default' : 'outline'}>
-                                                    {article.status === 'published' ? 'Published' : 'Draft'}
+                                                    {article.status === 'published' ? 'Diterbitkan' : 'Draf'}
                                                 </Badge>
                                             </td>
                                             <td className="px-5 py-4">{article.has_seo ? '✓' : '—'}</td>
                                             <td className="px-5 py-4">{formatDate(article.published_at)}</td>
-                                            <td className="px-5 py-4">{article.reading_time} min</td>
+                                            <td className="px-5 py-4">{article.reading_time} menit</td>
                                             <td className="px-5 py-4">
                                                 <div className="flex justify-end gap-2">
                                                     {article.status === 'published' && (
@@ -381,15 +402,15 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                                             rel="noopener noreferrer"
                                                             className="text-muted-foreground hover:text-foreground px-2 py-1 text-xs underline"
                                                         >
-                                                            View
+                                                            Lihat
                                                         </a>
                                                     )}
                                                     <Button variant="outline" size="sm" onClick={() => openEdit(article)}>
                                                         Edit
                                                     </Button>
                                                     <ConfirmDelete
-                                                        title={`Delete article "${article.title}"?`}
-                                                        description="This will remove the article permanently."
+                                                        title={`Hapus artikel "${article.title}"?`}
+                                                        description="Artikel ini akan dihapus secara permanen."
                                                         onDelete={() => destroy(article)}
                                                         trigger={
                                                             <Button variant="destructive" size="sm">

@@ -14,7 +14,7 @@ use Inertia\Response;
 
 class PageContentController extends Controller
 {
-    private const PAGES = ['home', 'about', 'services', 'projects', 'industries', 'contact', 'consultation'];
+    private const PAGES = ['home', 'about', 'services', 'projects', 'contact', 'consultation'];
 
     public function index(Request $request): Response
     {
@@ -40,7 +40,9 @@ class PageContentController extends Controller
 
         foreach ($validated['contents'] as $key => $value) {
             [$section, $field] = array_pad(explode('.', (string) $key, 2), 2, null);
-            if (! $section || ! $field) continue;
+            if (! $section || ! $field) {
+                continue;
+            }
 
             PageContent::updateOrCreate(
                 ['page_key' => $validated['page_key'], 'section_key' => $section, 'field_key' => $field],
@@ -51,7 +53,7 @@ class PageContentController extends Controller
             );
         }
 
-        return back()->with('success', 'Website content saved.');
+        return back()->with('success', __('Website content saved.'));
     }
 
     public function updateMedia(Request $request): RedirectResponse
@@ -77,8 +79,10 @@ class PageContentController extends Controller
             'image_path' => $newPath ?? $media->image_path,
         ])->save();
 
-        if ($newPath && $oldPath) Storage::disk('public')->delete($oldPath);
+        if ($newPath && $oldPath) {
+            Storage::disk('public')->delete($oldPath);
+        }
 
-        return back()->with('success', 'Page media saved.');
+        return back()->with('success', __('Page media saved.'));
     }
 }

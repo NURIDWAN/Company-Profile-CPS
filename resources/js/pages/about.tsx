@@ -6,10 +6,10 @@ import { Icon } from '@iconify/react';
 import { Link } from '@inertiajs/react';
 
 const VALUES = [
-    { icon: 'lucide:cpu', title: 'Technical Excellence', description: 'Engineering expertise and attention to technical detail.' },
-    { icon: 'lucide:shield-check', title: 'Reliability', description: 'Consistent project support and dependable execution.' },
-    { icon: 'lucide:lightbulb', title: 'Innovation', description: 'Continuous improvement and practical technical advancement.' },
-    { icon: 'lucide:users', title: 'Customer Focus', description: 'Understanding project requirements and developing suitable solutions.' },
+    { icon: 'lucide:cpu', title: 'Keunggulan Teknis', description: 'Keahlian rekayasa dan perhatian terhadap detail teknis.' },
+    { icon: 'lucide:shield-check', title: 'Keandalan', description: 'Dukungan proyek yang konsisten dan pelaksanaan yang dapat diandalkan.' },
+    { icon: 'lucide:lightbulb', title: 'Inovasi', description: 'Peningkatan berkelanjutan dan kemajuan teknis yang praktis.' },
+    { icon: 'lucide:users', title: 'Fokus pada Pelanggan', description: 'Memahami kebutuhan proyek dan mengembangkan solusi yang sesuai.' },
 ];
 
 export default function About() {
@@ -24,12 +24,12 @@ export default function About() {
     }));
     const reasons = [
         {
-            title: `${totalReferences}+ Project References`,
-            description: 'A project track record spanning electrical and electronic engineering work.',
+            title: `${totalReferences}+ Referensi Proyek`,
+            description: 'Rekam jejak proyek yang mencakup pekerjaan rekayasa kelistrikan dan elektronik.',
         },
         { title: 'Quick Response & Good Quality', description: `“${company.tagline}”` },
-        { title: 'Technical Expertise', description: 'Engineering capability organized around specialized systems and project needs.' },
-        { title: 'Customized Solutions', description: 'Solutions shaped around specific technical requirements.' },
+        { title: 'Keahlian Teknis', description: 'Kapabilitas rekayasa yang disusun berdasarkan sistem khusus dan kebutuhan proyek.' },
+        { title: 'Solusi yang Disesuaikan', description: 'Solusi yang dirancang berdasarkan kebutuhan teknis tertentu.' },
     ];
     const references = Array.from(
         new Set(
@@ -53,8 +53,8 @@ export default function About() {
         code: `${String(index + 1).padStart(2, '0')} / DIVISION`,
         title: division.name.replace(/ Division$/, ''),
         tagline:
-            ['Keeping critical systems running', 'From concept to delivery', 'System integration and installation'][index] ??
-            'Technical engineering support',
+            ['Menjaga sistem kritis tetap berjalan', 'Dari konsep hingga pelaksanaan', 'Integrasi dan instalasi sistem'][index] ??
+            'Dukungan rekayasa teknis',
         description: division.description ?? '',
         items: division.points ?? [],
         image:
@@ -89,18 +89,18 @@ export default function About() {
                     <div className="relative mx-auto w-full max-w-7xl px-6 pt-40 pb-24 lg:px-8 lg:pb-28">
                         <div className="max-w-4xl">
                             <p className="reveal text-cyan flex items-center gap-3 font-mono text-[11px] tracking-[.22em] uppercase">
-                                <span className="bg-cyan h-px w-10" /> {content('hero.eyebrow', 'Company / 01')}
+                                <span className="bg-cyan h-px w-10" /> {content('hero.eyebrow', 'Perusahaan / 01')}
                             </p>
                             <h1 className="reveal mt-7 max-w-3xl text-5xl leading-[.98] font-semibold tracking-[-.05em] delay-1 sm:text-6xl lg:text-8xl">
-                                {content('hero.title', 'About CPS.')}
+                                {content('hero.title', 'Tentang CPS.')}
                             </h1>
                             <p className="reveal mt-7 max-w-2xl text-xl leading-8 text-white delay-2 sm:text-2xl">
-                                {content('hero.subtitle', 'Electrical engineering excellence built around demanding projects.')}
+                                {content('hero.subtitle', 'Keunggulan rekayasa kelistrikan yang dibangun untuk proyek-proyek menantang.')}
                             </p>
                             <p className="reveal text-soft mt-6 max-w-xl text-base leading-7 delay-3">
                                 {content(
                                     'hero.description',
-                                    'PT. Citra Protecta Semesta is an electrical and electronic engineering company focused on technical solutions, customized systems, and project support.',
+                                    'PT. Citra Protecta Semesta adalah perusahaan rekayasa kelistrikan dan elektronik yang berfokus pada solusi teknis, sistem yang disesuaikan, dan dukungan proyek.',
                                 )}
                             </p>
                         </div>
@@ -108,7 +108,7 @@ export default function About() {
                         <div className="text-dim mt-20 flex items-center gap-6 font-mono text-[10px] tracking-[.18em] uppercase">
                             <span>PT. CITRA PROTECTA SEMESTA</span>
                             <span className="bg-cyan/50 hidden h-px w-16 sm:block" />
-                            <span className="hidden sm:block">Electrical &amp; Electronic Engineering</span>
+                            <span className="hidden sm:block">Rekayasa Kelistrikan &amp; Elektronik</span>
                         </div>
                     </div>
                 </section>
@@ -128,26 +128,26 @@ export default function About() {
                             />
                             <div className="from-ink/75 to-cyan/10 absolute inset-0 bg-gradient-to-tr via-transparent" />
                             <div className="border-cyan absolute bottom-7 left-7 border-l pl-4 font-mono text-[10px] tracking-[.16em] text-white uppercase">
-                                Company profile
+                                Profil perusahaan
                                 <br />
                                 <span className="text-cyan">CPS / FOUNDATION</span>
                             </div>
                         </div>
 
                         <div className="flex flex-col justify-center">
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Our foundation / 02</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Fondasi kami / 02</p>
                             <h2 className="mt-6 max-w-xl text-4xl leading-[1.02] font-semibold tracking-[-.05em] sm:text-6xl">
-                                Engineering with
+                                Rekayasa dengan
                                 <br />
-                                <span className="text-cyan">purpose and precision.</span>
+                                <span className="text-cyan">tujuan dan presisi.</span>
                             </h2>
                             <p className="text-soft mt-8 max-w-xl text-[15px] leading-8">
-                                PT. Citra Protecta Semesta is positioned around electrical and electronic engineering. The company supports demanding
-                                project requirements through technical expertise, customized solutions, and project assistance.
+                                PT. Citra Protecta Semesta berfokus pada rekayasa kelistrikan dan elektronik. Perusahaan mendukung kebutuhan proyek
+                                yang menantang melalui keahlian teknis, solusi yang disesuaikan, dan pendampingan proyek.
                             </p>
                             <p className="text-soft mt-5 max-w-xl text-[15px] leading-8">
-                                Its capabilities are organized across three core divisions: Service &amp; Maintenance, Design &amp; Manufacture, and
-                                Trading &amp; Construction.
+                                Kapabilitas kami terbagi dalam tiga divisi inti: Servis &amp; Pemeliharaan, Desain &amp; Manufaktur, serta Perdagangan
+                                &amp; Konstruksi.
                             </p>
 
                             <div className="mt-10 border-t border-white/10">
@@ -163,22 +163,22 @@ export default function About() {
                     </div>
                 </section>
 
-                {/* Mission & Vision Section */}
+                {/* Misi & Visi Section */}
                 <section className="bg-steel border-y border-white/10 py-24 lg:py-32">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-16 lg:grid-cols-[.75fr_1.25fr] lg:items-center">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Direction / 03</p>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Arah / 03</p>
                                 <h2 className="mt-6 text-5xl leading-[.94] font-semibold tracking-[-.06em] sm:text-7xl">
-                                    Mission
+                                    Misi
                                     <br />
-                                    <span className="text-cyan">&amp; vision.</span>
+                                    <span className="text-cyan">&amp; visi.</span>
                                 </h2>
                             </div>
 
                             <div className="space-y-12">
                                 <blockquote className="border-cyan border-l-2 pl-7">
-                                    <p className="text-dim font-mono text-[10px] tracking-[.2em] uppercase">Mission</p>
+                                    <p className="text-dim font-mono text-[10px] tracking-[.2em] uppercase">Misi</p>
                                     <p className="mt-5 max-w-3xl text-2xl leading-[1.25] font-medium tracking-[-.03em] text-white sm:text-4xl">
                                         Menjadi mitra engineering yang andal dan terpercaya dalam mendukung pembangunan infrastruktur energi dan
                                         industri di Indonesia.
@@ -186,10 +186,10 @@ export default function About() {
                                 </blockquote>
 
                                 <blockquote className="border-l border-white/20 pl-7">
-                                    <p className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">Vision</p>
+                                    <p className="text-cyan font-mono text-[10px] tracking-[.2em] uppercase">Visi</p>
                                     <p className="text-soft mt-5 max-w-2xl text-xl leading-8 sm:text-3xl">
-                                        Memberikan solusi Electrical &amp; Electronic Engineering yang andal, inovatif, dan berkualitas untuk
-                                        mendukung kemajuan infrastruktur kritikal.
+                                        Memberikan solusi Rekayasa Kelistrikan &amp; Elektronik yang andal, inovatif, dan berkualitas untuk mendukung
+                                        kemajuan infrastruktur kritikal.
                                     </p>
                                 </blockquote>
                             </div>
@@ -202,11 +202,11 @@ export default function About() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Principles / 04</p>
-                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">What guides our work.</h2>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Prinsip / 04</p>
+                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Prinsip yang memandu pekerjaan kami.</h2>
                             </div>
                             <p className="text-soft max-w-sm text-sm leading-7">
-                                A technical approach shaped by precision, dependability, improvement, and understanding.
+                                Pendekatan teknis yang dibentuk oleh presisi, keandalan, peningkatan, dan pemahaman.
                             </p>
                         </div>
 
@@ -218,7 +218,7 @@ export default function About() {
                                 >
                                     <Icon icon={value.icon} className="text-cyan text-2xl" />
                                     <p className="text-cyan mt-8 font-mono text-[10px] tracking-[.18em] uppercase">
-                                        {String(index + 1).padStart(2, '0')} / Value
+                                        {String(index + 1).padStart(2, '0')} / Nilai
                                     </p>
                                     <h3 className="mt-4 text-xl font-semibold">{value.title}</h3>
                                     <RichText value={value.description} className="text-soft mt-5 text-sm leading-7" />
@@ -232,11 +232,11 @@ export default function About() {
                 <section className="bg-night py-24 lg:py-36">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="max-w-3xl">
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Core divisions / 05</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Divisi inti / 05</p>
                             <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">
-                                Three ways to support
+                                Tiga cara mendukung
                                 <br />
-                                <span className="text-cyan">critical systems.</span>
+                                <span className="text-cyan">sistem kritis.</span>
                             </h2>
                         </div>
 
@@ -268,7 +268,7 @@ export default function About() {
                                             href={division.href}
                                             className="text-cyan mt-7 inline-flex items-center gap-3 text-xs font-bold tracking-[.15em] uppercase transition hover:text-white"
                                         >
-                                            Learn More <Icon icon="lucide:arrow-up-right" />
+                                            Pelajari Selengkapnya <Icon icon="lucide:arrow-up-right" />
                                         </Link>
                                     </div>
                                 </article>
@@ -282,10 +282,10 @@ export default function About() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Engineering expertise / 06</p>
-                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Technical capabilities.</h2>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Keahlian rekayasa / 06</p>
+                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Kapabilitas teknis.</h2>
                             </div>
-                            <p className="text-soft max-w-sm text-sm leading-7">Technical scopes identified across CPS engineering capabilities.</p>
+                            <p className="text-soft max-w-sm text-sm leading-7">Ruang lingkup teknis dalam kapabilitas rekayasa CPS.</p>
                         </div>
 
                         <div className="mt-14 grid border-t border-l border-white/10 md:grid-cols-3">
@@ -309,11 +309,11 @@ export default function About() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Why CPS / 07</p>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Mengapa CPS / 07</p>
                                 <h2 className="mt-6 text-5xl leading-[.95] font-semibold tracking-[-.06em] sm:text-7xl">
-                                    A serious partner
+                                    Mitra terpercaya
                                     <br />
-                                    <span className="text-cyan">for complex work.</span>
+                                    <span className="text-cyan">untuk pekerjaan kompleks.</span>
                                 </h2>
                             </div>
                             <div className="border-t border-white/10">
@@ -346,25 +346,25 @@ export default function About() {
                             />
                             <div className="from-ink/75 to-cyan/10 absolute inset-0 bg-gradient-to-tr via-transparent" />
                             <div className="text-cyan absolute bottom-7 left-7 font-mono text-[10px] tracking-[.18em] uppercase">
-                                People / Technical environment
+                                Tim / Lingkungan teknis
                             </div>
                         </div>
                         <div>
-                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Our team / 08</p>
+                            <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Tim kami / 08</p>
                             <h2 className="mt-6 text-5xl leading-[.95] font-semibold tracking-[-.06em] sm:text-7xl">
-                                People behind
+                                Tim di balik
                                 <br />
-                                <span className="text-cyan">the precision.</span>
+                                <span className="text-cyan">presisi.</span>
                             </h2>
                             <p className="text-soft mt-8 max-w-xl text-[15px] leading-8">
-                                CPS is built around engineering focus, practical technical knowledge, and commitment to project requirements.
+                                CPS dibangun dengan fokus rekayasa, pengetahuan teknis praktis, dan komitmen terhadap kebutuhan proyek.
                             </p>
                             <p className="text-soft mt-5 max-w-xl text-[15px] leading-8">
-                                Across maintenance, design, manufacturing, trading, and construction, the work is supported by a culture of teamwork
-                                and attention to detail.
+                                Dalam pemeliharaan, desain, manufaktur, perdagangan, dan konstruksi, pekerjaan kami didukung budaya kerja sama dan
+                                perhatian terhadap detail.
                             </p>
                             <div className="text-cyan mt-9 flex flex-wrap gap-3 font-mono text-[10px] tracking-[.16em] uppercase">
-                                {['Expertise', 'Teamwork', 'Commitment'].map((tag) => (
+                                {['Keahlian', 'Kerja Sama', 'Komitmen'].map((tag) => (
                                     <span key={tag} className="border-cyan/40 border px-4 py-3">
                                         {tag}
                                     </span>
@@ -379,13 +379,13 @@ export default function About() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="flex flex-col justify-between gap-7 lg:flex-row lg:items-end">
                             <div>
-                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Project experience / 09</p>
-                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Trusted by industry references.</h2>
+                                <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Pengalaman proyek / 09</p>
+                                <h2 className="mt-5 text-4xl font-semibold tracking-[-.05em] sm:text-6xl">Dipercaya oleh berbagai industri.</h2>
                             </div>
                             <div className="text-dim font-mono text-xs tracking-[.15em] uppercase">
                                 <span className="text-cyan text-4xl">{totalReferences}+</span>
                                 <br />
-                                Project references
+                                Referensi proyek
                             </div>
                         </div>
 
@@ -399,10 +399,10 @@ export default function About() {
                                 </div>
                             ))}
                             <div className="text-dim flex min-h-28 items-center border-r border-b border-white/10 p-6 font-mono text-xs tracking-[.15em] uppercase">
-                                And others
+                                Dan lainnya
                             </div>
                             <div className="text-cyan flex min-h-28 items-center border-r border-b border-white/10 p-6 font-mono text-xs tracking-[.15em] uppercase">
-                                Project references
+                                Referensi proyek
                             </div>
                         </div>
                     </div>
@@ -421,20 +421,20 @@ export default function About() {
                                 <br />
                                 with CPS?
                             </h2>
-                            <p className="text-ink-foreground/70 mt-7 text-lg">Let's discuss your engineering challenges.</p>
+                            <p className="text-ink-foreground/70 mt-7 text-lg">Mari diskusikan tantangan rekayasa Anda.</p>
                         </div>
                         <div className="flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href="/contact"
                                 className="bg-ink hover:text-ink-foreground inline-flex h-14 items-center justify-center gap-3 px-6 text-xs font-bold tracking-[.15em] text-white uppercase transition hover:bg-white"
                             >
-                                Start a Project <Icon icon="lucide:arrow-up-right" />
+                                Mulai Proyek <Icon icon="lucide:arrow-up-right" />
                             </Link>
                             <Link
                                 href="/consultation"
                                 className="border-ink/40 text-ink-foreground hover:bg-ink inline-flex h-14 items-center justify-center gap-3 border px-6 text-xs font-bold tracking-[.15em] uppercase transition hover:text-white"
                             >
-                                Request Consultation <Icon icon="lucide:arrow-up-right" />
+                                Ajukan Konsultasi <Icon icon="lucide:arrow-up-right" />
                             </Link>
                         </div>
                     </div>

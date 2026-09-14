@@ -14,16 +14,16 @@ interface RichTextEditorProps {
 }
 
 const toolbar: { command: string; label: string; title: string; block?: string }[] = [
-    { command: 'bold', label: 'B', title: 'Bold' },
-    { command: 'italic', label: 'I', title: 'Italic' },
-    { command: 'underline', label: 'U', title: 'Underline' },
-    { command: 'insertUnorderedList', label: '• List', title: 'Bulleted list' },
-    { command: 'insertOrderedList', label: '1. List', title: 'Numbered list' },
-    { command: 'formatBlock', label: 'H2', title: 'Heading 2', block: 'h2' },
-    { command: 'formatBlock', label: 'H3', title: 'Heading 3', block: 'h3' },
-    { command: 'formatBlock', label: 'Quote', title: 'Blockquote', block: 'blockquote' },
-    { command: 'formatBlock', label: '¶', title: 'Paragraph', block: 'p' },
-    { command: 'removeFormat', label: 'Clear', title: 'Clear formatting' },
+    { command: 'bold', label: 'B', title: 'Tebal' },
+    { command: 'italic', label: 'I', title: 'Miring' },
+    { command: 'underline', label: 'U', title: 'Garis bawah' },
+    { command: 'insertUnorderedList', label: '• List', title: 'Daftar berpoin' },
+    { command: 'insertOrderedList', label: '1. List', title: 'Daftar bernomor' },
+    { command: 'formatBlock', label: 'H2', title: 'Judul 2', block: 'h2' },
+    { command: 'formatBlock', label: 'H3', title: 'Judul 3', block: 'h3' },
+    { command: 'formatBlock', label: 'Quote', title: 'Kutipan', block: 'blockquote' },
+    { command: 'formatBlock', label: '¶', title: 'Paragraf', block: 'p' },
+    { command: 'removeFormat', label: 'Bersihkan', title: 'Bersihkan format' },
 ];
 
 export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hint, uploadUrl }: RichTextEditorProps) {
@@ -92,7 +92,7 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                 onChange(html);
             })
             .catch(() => {
-                setUploadError('Image upload failed. Please try again.');
+                setUploadError('Gagal mengunggah gambar. Silakan coba lagi.');
             })
             .finally(() => setUploading(false));
     };
@@ -123,13 +123,13 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                             type="button"
                             variant="ghost"
                             size="sm"
-                            title="Insert image"
+                            title="Sisipkan gambar"
                             disabled={uploading}
                             className="h-8 px-2 text-xs"
                             onMouseDown={(event) => event.preventDefault()}
                             onClick={handleImageButton}
                         >
-                            {uploading ? 'Uploading…' : 'Image'}
+                            {uploading ? 'Mengunggah…' : 'Gambar'}
                         </Button>
                     )}
                 </div>
@@ -148,7 +148,7 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                 <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleFileChange} />
             </div>
             <div className="mt-1 flex justify-between gap-3">
-                <p className="text-muted-foreground text-xs">{hint ?? 'Basic formatting is supported.'}</p>
+                <p className="text-muted-foreground text-xs">{hint ?? 'Format dasar didukung.'}</p>
                 {(error || uploadError) && <p className="text-destructive text-xs">{error ?? uploadError}</p>}
             </div>
         </div>

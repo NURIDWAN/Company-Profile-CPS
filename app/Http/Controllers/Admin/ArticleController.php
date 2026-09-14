@@ -26,7 +26,13 @@ class ArticleController extends Controller
                     'status' => $article->status,
                     'published_at' => $article->published_at?->toISOString(),
                     'created_at' => $article->created_at->toISOString(),
+                    'excerpt' => $article->excerpt,
+                    'content' => $article->content,
                     'cover_url' => $article->cover_url,
+                    'cover_alt' => $article->cover_alt,
+                    'seo_title' => $article->seo_title,
+                    'seo_description' => $article->seo_description,
+                    'seo_keywords' => $article->seo_keywords,
                     'has_seo' => (bool) ($article->seo_title && $article->seo_description),
                     'reading_time' => $article->reading_time,
                 ];
@@ -43,7 +49,7 @@ class ArticleController extends Controller
             'user_id' => $request->user()->id,
         ]);
 
-        return back()->with('success', "Article created. Slug: {$article->slug}");
+        return back()->with('success', __('Article created. Slug: :slug', ['slug' => $article->slug]));
     }
 
     public function update(Request $request, Article $article): RedirectResponse
@@ -52,7 +58,7 @@ class ArticleController extends Controller
 
         $article->update($this->attributes($request, $validated, $article));
 
-        return back()->with('success', 'Article updated.');
+        return back()->with('success', __('Article updated.'));
     }
 
     public function destroy(Article $article): RedirectResponse
@@ -63,7 +69,7 @@ class ArticleController extends Controller
 
         $article->delete();
 
-        return back()->with('success', 'Article deleted.');
+        return back()->with('success', __('Article deleted.'));
     }
 
     public function seoPreview(Request $request): array
