@@ -78,6 +78,24 @@ class ArticleTest extends TestCase
         Storage::disk('public')->assertExists('articles/content/'.basename($url));
     }
 
+    public function test_uploaded_content_image_is_preserved_when_article_is_saved(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $upload = $this->post(route('admin.articles.upload-image'), [
+            'image' => File::image('inline.jpg', 400, 300),
+        ])->assertOk();
+
+        $imageUrl = $upload->json('url');
+        $this->assertStringStartsWith('/storage/articles/content/', $imageUrl);
+
+        $this->post('/admin/articles', $this->validPayload([
+            'content' => '<p>Artikel</p><img src="'.$imageUrl.'" alt="Gambar artikel">',
+        ]))->assertRedirect();
+
+        $this->assertStringContainsString('src="'.$imageUrl.'"', Article::query()->sole()->content);
+    }
+
     public function test_upload_image_requires_image_file(): void
     {
         $this->actingAs(User::factory()->create());

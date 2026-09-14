@@ -1,4 +1,5 @@
 import { ConfirmDelete, TextField } from '@/components/admin/form-fields';
+import { ImageUploadPreview } from '@/components/admin/image-upload-preview';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -22,14 +23,15 @@ export default function Projects({ references, category }: { references: Paginat
     const [editing, setEditing] = useState<ProjectReference | null>(null);
     const [open, setOpen] = useState(false);
 
-    const { data, setData, post, put, processing, errors, reset } = useForm<{
+    const { data, setData, post, processing, errors, reset, transform } = useForm<{
         category: string;
         no: string;
         client: string;
         user: string;
         year: string;
         project: string;
-    }>({ category, no: '', client: '', user: '', year: '', project: '' });
+        image: File | null;
+    }>({ category, no: '', client: '', user: '', year: '', project: '', image: null });
 
     const openCreate = () => {
         setEditing(null);
@@ -47,16 +49,22 @@ export default function Projects({ references, category }: { references: Paginat
             user: reference.user,
             year: reference.year ? String(reference.year) : '',
             project: reference.project,
+            image: null,
         });
         setOpen(true);
     };
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
+        transform((formData) => ({
+            ...formData,
+            _method: editing ? 'put' : undefined,
+        }));
+
         if (editing) {
-            put(route('admin.projects.update', editing.id), { onSuccess: () => setOpen(false) });
+            post(route('admin.projects.update', editing.id), { forceFormData: true, onSuccess: () => setOpen(false) });
         } else {
-            post(route('admin.projects.store'), { onSuccess: () => setOpen(false) });
+            post(route('admin.projects.store'), { forceFormData: true, onSuccess: () => setOpen(false) });
         }
     };
 
@@ -89,7 +97,7 @@ export default function Projects({ references, category }: { references: Paginat
                             <DialogTrigger asChild>
                                 <Button onClick={openCreate}>Tambah Referensi</Button>
                             </DialogTrigger>
-                            <DialogContent className="max-w-lg">
+                            <DialogContent className="max-h-[calc(100vh-2rem)] max-w-lg overflow-y-auto">
                                 <DialogHeader>
                                     <DialogTitle>{editing ? 'Edit Referensi Proyek' : 'Tambah Referensi Proyek'}</DialogTitle>
                                 </DialogHeader>
@@ -148,6 +156,25 @@ export default function Projects({ references, category }: { references: Paginat
                                         error={errors.project}
                                         required
                                     />
+                                    <div className="grid gap-2">
+                                        <label htmlFor="image" className="text-sm font-medium">
+                                            Gambar proyek
+                                        </label>
+                                        <input
+                                            id="image"
+                                            type="file"
+                                            accept="image/jpeg,image/png,image/webp"
+                                            onChange={(event) => setData('image', event.target.files?.[0] ?? null)}
+                                            className="border-input bg-background h-9 rounded-md border px-3 py-1 text-sm"
+                                        />
+                                        <ImageUploadPreview
+                                            file={data.image}
+                                            currentUrl={editing?.image_url}
+                                            alt={data.project || 'Pratinjau gambar proyek'}
+                                            className="h-[clamp(8rem,20vh,14rem)] w-full rounded-md border object-contain"
+                                        />
+                                        {errors.image && <p className="text-destructive text-sm">{errors.image}</p>}
+                                    </div>
                                     <DialogFooter>
                                         <Button type="submit" disabled={processing}>
                                             {editing ? 'Perbarui' : 'Buat'}

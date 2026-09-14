@@ -3,6 +3,7 @@ import PublicLayout from '@/layouts/public-layout';
 import { usePublicContent } from '@/lib/public-content';
 import { usePublicSiteData } from '@/lib/public-data';
 import { Icon } from '@iconify/react';
+import { Link } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
 const CATEGORY_FILTERS = [
@@ -121,16 +122,17 @@ export default function Projects() {
     const galleryImages = gallery.filter((item) => item.image_url).map((item) => item.image_url as string);
     const totalReferences = projectReferences.cme.length + projectReferences.cathodicProtection.length;
     const databaseProjects = [...projectReferences.cme, ...projectReferences.cathodicProtection].map((reference, index) => ({
+        id: reference.id,
         category: reference.category === 'cathodic_protection' ? 'Cathodic Protection' : 'Electrical',
         client: reference.client,
         user: reference.user,
         description: reference.project,
-        image: galleryImages[index] ?? PROJECTS[index % PROJECTS.length].image,
+        image: reference.image_url ?? galleryImages[index] ?? PROJECTS[index % PROJECTS.length].image,
         alt: `${reference.client} project reference`,
     }));
     const projects = databaseProjects.length
         ? databaseProjects
-        : PROJECTS.map((project) => ({ ...project, user: '', alt: `${project.client} project reference` }));
+        : PROJECTS.map((project) => ({ ...project, id: undefined, user: '', alt: `${project.client} project reference` }));
     const visibleProjects = useMemo(() => {
         const query = search.trim().toLowerCase();
         return projects.filter((project) => {
@@ -300,9 +302,10 @@ export default function Projects() {
                         {visibleProjects.length > 0 ? (
                             <div className="mt-14 grid gap-8 md:grid-cols-2">
                                 {visibleProjects.map((project) => (
-                                    <article
+                                    <Link
+                                        href={project.id ? `/projects/${project.id}` : '#'}
                                         key={`${project.client}-${project.description}`}
-                                        className="project-card group bg-panel hover:border-cyan/70 overflow-hidden border border-white/10 transition duration-500 hover:-translate-y-1"
+                                        className="project-card group bg-panel hover:border-cyan/70 block overflow-hidden border border-white/10 transition duration-500 hover:-translate-y-1"
                                     >
                                         <div className="relative h-72 overflow-hidden">
                                             <img
@@ -329,7 +332,7 @@ export default function Projects() {
                                                 <span className="text-dim shrink-0 font-mono text-[10px] tracking-[.12em] uppercase">Referensi</span>
                                             </div>
                                         </div>
-                                    </article>
+                                    </Link>
                                 ))}
                             </div>
                         ) : (

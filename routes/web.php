@@ -14,10 +14,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PublicArticleController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\PublicProductController;
+use App\Http\Controllers\PublicProjectController;
 use App\Http\Controllers\PublicServiceController;
 use App\Models\Article;
 use App\Models\Division;
 use App\Models\Product;
+use App\Models\ProjectReference;
 use Illuminate\Support\Facades\Route;
 
 Route::get('robots.txt', function () {
@@ -50,12 +52,19 @@ Route::get('sitemap.xml', function () {
             'loc' => url('/services/'.$division->slug),
             'lastmod' => $division->updated_at->toAtomString(),
         ]);
+    $projectUrls = ProjectReference::query()
+        ->orderBy('id')
+        ->get()
+        ->map(fn (ProjectReference $reference) => [
+            'loc' => url('/projects/'.$reference->id),
+            'lastmod' => $reference->updated_at->toAtomString(),
+        ]);
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n".'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
     foreach ($pages as $page) {
         $xml .= '    <url><loc>'.url($page).'</loc></url>'."\n";
     }
-    foreach ([...$articleUrls, ...$productUrls, ...$serviceUrls] as $entry) {
+    foreach ([...$articleUrls, ...$productUrls, ...$serviceUrls, ...$projectUrls] as $entry) {
         $xml .= '    <url><loc>'.$entry['loc'].'</loc><lastmod>'.$entry['lastmod'].'</lastmod></url>'."\n";
     }
     $xml .= '</urlset>'."\n";
@@ -93,6 +102,9 @@ Route::get('articles/{article:slug}', [PublicArticleController::class, 'show'])-
 Route::get('products', [PublicProductController::class, 'index'])->name('products.index');
 Route::get('products/{product}', [PublicProductController::class, 'show'])->name('products.show');
 
+// Public project details
+Route::get('projects/{reference}', [PublicProjectController::class, 'show'])->name('projects.show');
+
 // Public service details
 Route::get('services/{division:slug}', [PublicServiceController::class, 'show'])->name('services.show');
 
@@ -105,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('users', UserController::class)->only(['index', 'store', 'update', 'destroy']);
         Route::get('projects/stats', [ProjectReferenceController::class, 'stats'])->name('projects.stats');
 
+        Route::post('divisions/upload-image', [DivisionController::class, 'uploadImage'])->name('divisions.upload-image');
         Route::resource('divisions', DivisionController::class)->except('show');
         Route::resource('categories', ProductCategoryController::class)->except('show');
         Route::post('categories/{category}/products', [ProductCategoryController::class, 'storeProduct'])

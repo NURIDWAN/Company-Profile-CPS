@@ -116,6 +116,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                         error={errors.description}
                                         rows={6}
                                         hint="Gunakan format untuk menyusun deskripsi divisi."
+                                        uploadUrl={route('admin.divisions.upload-image')}
                                     />
                                     <div className="rounded-lg border p-4">
                                         <div className="mb-3 flex items-start justify-between gap-3">
@@ -175,7 +176,7 @@ export default function Divisions({ divisions }: { divisions: Division[] }) {
                                                 file={data.image}
                                                 currentUrl={editing?.image_url}
                                                 alt={editing?.name ?? data.name ?? 'Gambar divisi'}
-                                                className="mb-2 h-24 w-full rounded-md border object-cover"
+                                                className="mb-2 h-[clamp(8rem,20vh,14rem)] w-full rounded-md border object-contain"
                                             />
                                             <input
                                                 id="image"

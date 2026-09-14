@@ -94,7 +94,7 @@ export default function Categories({ categories }: { categories: ProductCategory
                         <DialogTrigger asChild>
                             <Button onClick={openCategoryCreate}>Tambah Kategori</Button>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto">
                             <DialogHeader>
                                 <DialogTitle>{editingCategory ? 'Edit Kategori' : 'Tambah Kategori'}</DialogTitle>
                             </DialogHeader>
@@ -190,7 +190,7 @@ export default function Categories({ categories }: { categories: ProductCategory
 
             {/* Product dialog (nested) */}
             <Dialog open={productOpen} onOpenChange={setProductOpen}>
-                <DialogContent>
+                <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>{editingProduct ? 'Edit Produk' : `Tambah Produk ke ${productTarget?.name ?? ''}`}</DialogTitle>
                     </DialogHeader>

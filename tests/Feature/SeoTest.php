@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Division;
+use App\Models\ProjectReference;
 use App\Models\SiteSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -79,6 +80,37 @@ class SeoTest extends TestCase
         );
 
         $this->get('/services/not-found')->assertNotFound();
+    }
+
+    public function test_project_detail_page_uses_reference_id_and_related_projects(): void
+    {
+        $project = ProjectReference::create([
+            'category' => 'cme',
+            'no' => 1,
+            'client' => 'PT. CPS',
+            'user' => 'PT. Pengguna',
+            'year' => 2026,
+            'project' => 'Panel Distribusi Utama',
+        ]);
+        ProjectReference::create([
+            'category' => 'cme',
+            'no' => 2,
+            'client' => 'PT. Lainnya',
+            'user' => 'PT. Pengguna',
+            'year' => 2025,
+            'project' => 'Sistem Panel Kelistrikan',
+        ]);
+
+        $this->get('/projects/'.$project->id)->assertInertia(fn ($page) => $page
+            ->component('projects/show')
+            ->where('project.id', $project->id)
+            ->where('project.project', 'Panel Distribusi Utama')
+            ->where('seo.canonical', url('/projects/'.$project->id))
+            ->has('schemas', 2)
+            ->has('related', 1)
+        );
+
+        $this->get('/projects/999999')->assertNotFound();
     }
 
     public function test_sitemap_contains_public_pages_only(): void

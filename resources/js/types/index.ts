@@ -141,6 +141,8 @@ export interface ProjectReference {
     user: string;
     year: number | null;
     project: string;
+    image_path: string | null;
+    image_url: string | null;
 }
 
 export interface GalleryItem {

@@ -95,7 +95,7 @@ class ArticleController extends Controller
 
         $path = $request->file('image')->store('articles/content', 'public');
 
-        return ['url' => url(Storage::disk('public')->url($path))];
+        return ['url' => '/storage/'.ltrim($path, '/')];
     }
 
     private function validatePayload(Request $request): array

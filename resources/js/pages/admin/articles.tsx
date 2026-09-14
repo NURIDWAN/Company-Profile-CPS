@@ -253,7 +253,12 @@ export default function Articles({ articles }: { articles: AdminArticle[] }) {
                                         />
                                     </div>
                                     {(data.cover || (editing?.cover_url && !data.cover)) && (
-                                        <ImageUploadPreview file={data.cover} currentUrl={editing?.cover_url} alt="Pratinjau sampul" />
+                                        <ImageUploadPreview
+                                            file={data.cover}
+                                            currentUrl={editing?.cover_url}
+                                            alt="Pratinjau sampul"
+                                            className="h-[clamp(8rem,20vh,14rem)] w-full rounded-md border object-contain"
+                                        />
                                     )}
 
                                     <div className="grid gap-4 sm:grid-cols-2">

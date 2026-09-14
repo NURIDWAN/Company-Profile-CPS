@@ -76,7 +76,7 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                         <DialogTrigger asChild>
                             <Button onClick={openCreate}>Tambah Item</Button>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto">
                             <DialogHeader>
                                 <DialogTitle>{editing ? 'Edit Item Galeri' : 'Tambah Item Galeri'}</DialogTitle>
                             </DialogHeader>
@@ -128,7 +128,7 @@ export default function Gallery({ items, categories }: { items: GalleryItem[]; c
                                         file={data.image}
                                         currentUrl={editing?.image_url}
                                         alt={editing?.caption ?? data.caption}
-                                        className="h-32 w-full rounded-md object-cover"
+                                        className="h-[clamp(8rem,20vh,14rem)] w-full rounded-md border object-contain"
                                     />
                                     {data.image && <p className="text-muted-foreground text-xs">Dipilih: {data.image.name}</p>}
                                     <p className="text-muted-foreground text-xs">JPG, PNG, atau WebP. Maksimal 5 MB.</p>

@@ -73,6 +73,17 @@ class DivisionController extends Controller
         return back()->with('success', __('Division updated.'));
     }
 
+    public function uploadImage(Request $request): array
+    {
+        $request->validate([
+            'image' => ['required', 'image', 'mimes:jpeg,jpg,png,webp', 'max:5120'],
+        ]);
+
+        $path = $request->file('image')->store('divisions/content', 'public');
+
+        return ['url' => '/storage/'.ltrim($path, '/')];
+    }
+
     public function destroy(Division $division): RedirectResponse
     {
         if ($division->image_path) {

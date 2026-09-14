@@ -116,6 +116,6 @@ class ProductCategoryController extends Controller
 
         $path = $request->file('image')->store('products/content', 'public');
 
-        return ['url' => url(Storage::disk('public')->url($path))];
+        return ['url' => '/storage/'.ltrim($path, '/')];
     }
 }

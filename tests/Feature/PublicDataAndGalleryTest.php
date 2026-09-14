@@ -6,6 +6,7 @@ use App\Models\Division;
 use App\Models\GalleryItem;
 use App\Models\PageContent;
 use App\Models\PageMedia;
+use App\Models\ProjectReference;
 use App\Models\SiteSetting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -245,6 +246,19 @@ class PublicDataAndGalleryTest extends TestCase
         $response->assertSessionHasErrors('map_embed_url');
     }
 
+    public function test_admin_can_upload_division_rich_text_image(): void
+    {
+        Storage::fake('public');
+
+        $response = $this->actingAs(User::factory()->create())
+            ->post(route('admin.divisions.upload-image'), [
+                'image' => UploadedFile::fake()->image('division-content.jpg'),
+            ]);
+
+        $response->assertOk()->assertJsonStructure(['url']);
+        Storage::disk('public')->assertExists('divisions/content/'.basename($response->json('url')));
+    }
+
     public function test_admin_can_create_and_replace_division_image(): void
     {
         Storage::fake('public');
@@ -281,6 +295,54 @@ class PublicDataAndGalleryTest extends TestCase
         Storage::disk('public')->assertExists($division->image_path);
     }
 
+    public function test_admin_can_create_replace_and_delete_project_image(): void
+    {
+        Storage::fake('public');
+        $user = User::factory()->create();
+        $project = ProjectReference::create([
+            'category' => 'cme',
+            'no' => 1,
+            'client' => 'PT. CPS',
+            'user' => 'PT. Pengguna',
+            'project' => 'Panel Distribusi',
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('admin.projects.update', $project), [
+                '_method' => 'put',
+                'category' => 'cme',
+                'no' => 1,
+                'client' => 'PT. CPS',
+                'user' => 'PT. Pengguna',
+                'project' => 'Panel Distribusi',
+                'image' => UploadedFile::fake()->image('project-one.jpg'),
+            ])
+            ->assertRedirect();
+
+        $project->refresh();
+        $oldPath = $project->image_path;
+        Storage::disk('public')->assertExists($oldPath);
+
+        $this->actingAs($user)
+            ->post(route('admin.projects.update', $project), [
+                '_method' => 'put',
+                'category' => 'cme',
+                'no' => 1,
+                'client' => 'PT. CPS',
+                'user' => 'PT. Pengguna',
+                'project' => 'Panel Distribusi',
+                'image' => UploadedFile::fake()->image('project-two.png'),
+            ])
+            ->assertRedirect();
+
+        $project->refresh();
+        Storage::disk('public')->assertMissing($oldPath);
+        Storage::disk('public')->assertExists($project->image_path);
+
+        $this->actingAs($user)->delete(route('admin.projects.destroy', $project))->assertRedirect();
+        Storage::disk('public')->assertMissing($project->image_path);
+    }
+
     public function test_admin_content_page_list_excludes_removed_industries_page(): void
     {
         $this->actingAs(User::factory()->create())
@@ -295,24 +357,23 @@ class PublicDataAndGalleryTest extends TestCase
         Storage::fake('public');
 
         $this->actingAs(User::factory()->create())
-            ->put(route('admin.content.update'), [
+            ->post(route('admin.content.update'), [
+                '_method' => 'put',
                 'page_key' => 'home',
                 'contents' => ['hero.title' => 'CMS Hero Title'],
-            ])
-            ->assertRedirect();
-
-        $this->actingAs(User::factory()->create())
-            ->post(route('admin.content.media.update'), [
-                'page_key' => 'home',
-                'section_key' => 'hero',
-                'media_key' => 'background',
-                'alt_text' => 'CMS hero background',
-                'image' => UploadedFile::fake()->image('hero.webp'),
+                'media' => [
+                    'hero' => [
+                        'media_key' => 'background',
+                        'alt_text' => 'CMS hero background',
+                        'image' => UploadedFile::fake()->image('hero.webp'),
+                    ],
+                ],
             ])
             ->assertRedirect();
 
         $this->assertSame('CMS Hero Title', PageContent::where('page_key', 'home')->where('section_key', 'hero')->where('field_key', 'title')->value('value'));
         $media = PageMedia::where('page_key', 'home')->where('media_key', 'background')->firstOrFail();
+        $this->assertSame('CMS hero background', $media->alt_text);
         Storage::disk('public')->assertExists($media->image_path);
     }
 

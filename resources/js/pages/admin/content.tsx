@@ -8,28 +8,29 @@ import type { BreadcrumbItem, PageContent as PageContentItem, PageMedia, SharedD
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler, useMemo } from 'react';
 
-function SectionMediaUpload({ page, section, media }: { page: string; section: string; media: PageMedia[] }) {
-    const sectionMedia = media.filter((item) => item.section_key === section);
-    const mediaSlot = sectionMedia[0];
-    const mediaForm = useForm<{ page_key: string; section_key: string; media_key: string; alt_text: string; image: File | null }>({
-        page_key: page,
-        section_key: section,
-        media_key: mediaSlot?.media_key ?? 'image',
-        alt_text: mediaSlot?.alt_text ?? '',
-        image: null,
-    });
-
-    const saveMedia: FormEventHandler = (event) => {
-        event.preventDefault();
-        mediaForm.post(route('admin.content.media.update'), { forceFormData: true, preserveScroll: true });
-    };
+function SectionMediaUpload({
+    section,
+    media,
+    data,
+    setData,
+    errors,
+}: {
+    section: string;
+    media: PageMedia[];
+    data: ContentFormData;
+    setData: <K extends keyof ContentFormData>(key: K, value: ContentFormData[K]) => void;
+    errors: Record<string, string | undefined>;
+}) {
+    const mediaSlot = media.filter((item) => item.section_key === section)[0];
+    const mediaKey = `media.${section}`;
+    const mediaData = data.media[section] ?? { media_key: mediaSlot?.media_key ?? 'image', alt_text: mediaSlot?.alt_text ?? '', image: null };
 
     return (
-        <form onSubmit={saveMedia} className="mt-6 border-t pt-5">
+        <div className="mt-6 border-t pt-5">
             <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
                 <div>
                     <p className="text-sm font-semibold">Gambar bagian</p>
-                    <p className="text-muted-foreground mt-1 text-xs">Unggah gambar yang digunakan bagian ini. Gambar yang ada akan diganti.</p>
+                    <p className="text-muted-foreground mt-1 text-xs">Gambar akan disimpan bersama teks saat Anda menekan tombol Simpan konten.</p>
                 </div>
                 {mediaSlot && <span className="bg-muted text-muted-foreground rounded-full px-2.5 py-1 text-xs">Gambar saat ini</span>}
             </div>
@@ -55,10 +56,10 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
                         <Input
                             id={`media-alt-${section}`}
                             placeholder={`Jelaskan gambar ${formatLabel(section, sectionLabels).toLowerCase()}`}
-                            value={mediaForm.data.alt_text}
-                            onChange={(event) => mediaForm.setData('alt_text', event.target.value)}
+                            value={mediaData.alt_text}
+                            onChange={(event) => setData('media', { ...data.media, [section]: { ...mediaData, alt_text: event.target.value } })}
                         />
-                        {mediaForm.errors.alt_text && <p className="text-destructive mt-1 text-xs">{mediaForm.errors.alt_text}</p>}
+                        {errors[`${mediaKey}.alt_text`] && <p className="text-destructive mt-1 text-xs">{errors[`${mediaKey}.alt_text`]}</p>}
                     </div>
                     <div>
                         <Label htmlFor={`media-file-${section}`} className="mb-2 block text-xs">
@@ -68,24 +69,23 @@ function SectionMediaUpload({ page, section, media }: { page: string; section: s
                             id={`media-file-${section}`}
                             type="file"
                             accept="image/jpeg,image/png,image/webp"
-                            onChange={(event) => mediaForm.setData('image', event.target.files?.[0] ?? null)}
-                            required={!mediaSlot?.image_url}
+                            onChange={(event) =>
+                                setData('media', { ...data.media, [section]: { ...mediaData, image: event.target.files?.[0] ?? null } })
+                            }
                             className="file:bg-muted file:text-foreground file:mr-4 file:border-0 file:px-3 file:py-1.5"
                         />
                         <ImageUploadPreview
-                            file={mediaForm.data.image}
-                            alt={mediaForm.data.alt_text || `${section} image`}
+                            file={mediaData.image}
+                            currentUrl={mediaSlot?.image_url}
+                            alt={mediaData.alt_text || `${section} image`}
                             className="mt-3 h-28 w-full rounded-md border object-cover"
                         />
                         <p className="text-muted-foreground mt-1 text-xs">JPG, PNG, atau WebP. Maksimal 5 MB.</p>
-                        {mediaForm.errors.image && <p className="text-destructive mt-1 text-xs">{mediaForm.errors.image}</p>}
+                        {errors[`${mediaKey}.image`] && <p className="text-destructive mt-1 text-xs">{errors[`${mediaKey}.image`]}</p>}
                     </div>
-                    <Button type="submit" size="sm" disabled={mediaForm.processing}>
-                        {mediaForm.processing ? 'Mengunggah…' : mediaSlot?.image_url ? 'Ganti gambar' : 'Unggah gambar'}
-                    </Button>
                 </div>
             </div>
-        </form>
+        </div>
     );
 }
 
@@ -101,6 +101,18 @@ const pageLabels: Record<string, string> = {
     projects: 'Proyek',
     contact: 'Kontak',
     consultation: 'Konsultasi',
+};
+
+type ContentMediaForm = {
+    media_key: string;
+    alt_text: string;
+    image: File | null;
+};
+
+type ContentFormData = {
+    page_key: string;
+    contents: Record<string, string>;
+    media: Record<string, ContentMediaForm>;
 };
 
 const sectionLabels: Record<string, string> = {
@@ -147,9 +159,10 @@ export default function Content({
     media: PageMedia[];
 }) {
     const { flash } = usePage<SharedData>().props;
-    const contentForm = useForm<{ page_key: string; contents: Record<string, string> }>({
+    const contentForm = useForm<ContentFormData>({
         page_key: page,
         contents: Object.fromEntries(contents.map((item) => [`${item.section_key}.${item.field_key}`, item.value ?? ''])),
+        media: Object.fromEntries(media.map((item) => [item.section_key, { media_key: item.media_key, alt_text: item.alt_text ?? '', image: null }])),
     });
     const groupedContents = useMemo(() => {
         return contents.reduce<Record<string, PageContentItem[]>>((groups, item) => {
@@ -162,7 +175,17 @@ export default function Content({
     const selectPage = (value: string) => router.get(route('admin.content.index'), { page: value });
     const saveContent: FormEventHandler = (event) => {
         event.preventDefault();
-        contentForm.put(route('admin.content.update'), { preserveScroll: true });
+        contentForm.transform((formData) => {
+            const media = Object.fromEntries(
+                Object.entries(formData.media).map(([section, item]) => [
+                    section,
+                    { media_key: item.media_key, alt_text: item.alt_text, image: item.image },
+                ]),
+            );
+
+            return { ...formData, media, _method: 'put' };
+        });
+        contentForm.post(route('admin.content.update'), { forceFormData: true, preserveScroll: true });
     };
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -275,7 +298,13 @@ export default function Content({
                                             );
                                         })}
                                     </div>
-                                    <SectionMediaUpload page={page} section={section} media={media} />
+                                    <SectionMediaUpload
+                                        section={section}
+                                        media={media}
+                                        data={contentForm.data}
+                                        setData={contentForm.setData}
+                                        errors={contentForm.errors as Record<string, string | undefined>}
+                                    />
                                 </section>
                             ))}
 

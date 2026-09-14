@@ -55,19 +55,47 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
         onChange(html);
     };
 
-    const handleImageButton = () => {
+    const captureSelection = () => {
         const selection = window.getSelection();
-        selectionRef.current = selection && selection.rangeCount > 0 ? selection.getRangeAt(0).cloneRange() : null;
+        if (selection && selection.rangeCount > 0 && editorRef.current?.contains(selection.anchorNode)) {
+            selectionRef.current = selection.getRangeAt(0).cloneRange();
+        }
+    };
+
+    const handleImageButton = () => {
+        captureSelection();
         fileInputRef.current?.click();
     };
 
-    const restoreSelection = () => {
-        editorRef.current?.focus();
+    const insertUploadedImage = (url: string) => {
+        const editor = editorRef.current;
+        if (!editor) return;
+
+        editor.focus();
         const selection = window.getSelection();
-        if (selection && selectionRef.current) {
-            selection.removeAllRanges();
-            selection.addRange(selectionRef.current);
+        const range = selectionRef.current && editor.contains(selectionRef.current.startContainer) ? selectionRef.current : document.createRange();
+
+        if (!selectionRef.current || !editor.contains(selectionRef.current.startContainer)) {
+            range.selectNodeContents(editor);
+            range.collapse(false);
         }
+
+        range.deleteContents();
+        const image = document.createElement('img');
+        image.src = url;
+        image.alt = 'Gambar artikel';
+        image.className = 'my-3 h-auto max-w-full rounded-md';
+        range.insertNode(image);
+
+        range.setStartAfter(image);
+        range.collapse(true);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        selectionRef.current = range.cloneRange();
+
+        const html = editor.innerHTML;
+        lastValueRef.current = html;
+        onChange(html);
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,18 +109,36 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
         formData.append('image', file);
         formData.append('_token', document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '');
 
-        fetch(uploadUrl, { method: 'POST', body: formData, headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-            .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
-            .then((payload: { url?: string }) => {
-                if (!payload.url) throw new Error('no-url');
-                restoreSelection();
-                document.execCommand('insertImage', false, payload.url);
-                const html = editorRef.current?.innerHTML ?? '';
-                lastValueRef.current = html;
-                onChange(html);
+        fetch(uploadUrl, {
+            method: 'POST',
+            body: formData,
+            credentials: 'same-origin',
+            headers: {
+                Accept: 'application/json',
+                'X-CSRF-TOKEN': document.querySelector<HTMLMetaElement>('meta[name="csrf-token"]')?.content ?? '',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+            .then(async (response) => {
+                const payload = (await response.json().catch(() => null)) as {
+                    url?: string;
+                    message?: string;
+                    errors?: Record<string, string[]>;
+                } | null;
+                if (!response.ok) {
+                    throw new Error(payload?.errors?.image?.[0] ?? payload?.message ?? `Upload gagal (${response.status})`);
+                }
+                if (!payload) {
+                    throw new Error('Respons upload tidak valid.');
+                }
+                return payload;
             })
-            .catch(() => {
-                setUploadError('Gagal mengunggah gambar. Silakan coba lagi.');
+            .then((payload: { url?: string }) => {
+                if (!payload.url) throw new Error('Respons upload tidak berisi URL gambar.');
+                insertUploadedImage(payload.url);
+            })
+            .catch((error: unknown) => {
+                setUploadError(error instanceof Error ? error.message : 'Gagal mengunggah gambar. Silakan coba lagi.');
             })
             .finally(() => setUploading(false));
     };
@@ -142,7 +188,7 @@ export function RichTextEditor({ id, label, value, onChange, error, rows = 5, hi
                     aria-multiline="true"
                     aria-invalid={Boolean(error)}
                     onInput={handleInput}
-                    className="prose prose-sm dark:prose-invert min-h-32 max-w-none px-3 py-2 text-sm outline-none [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-md"
+                    className="prose prose-sm dark:prose-invert max-h-[min(50vh,32rem)] min-h-32 max-w-none overflow-y-auto overscroll-contain px-3 py-2 text-sm outline-none [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-md"
                     style={{ minHeight: `${rows * 1.5}rem` }}
                 />
                 <input ref={fileInputRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleFileChange} />
