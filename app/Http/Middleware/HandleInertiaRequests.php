@@ -25,23 +25,6 @@ class HandleInertiaRequests extends Middleware
     protected $rootView = 'app';
 
     /**
-     * Keep authenticated application screens client-rendered; public pages use SSR for SEO.
-     *
-     * @var array<int, string>
-     */
-    protected $withoutSsr = [
-        'admin/*',
-        'dashboard',
-        'settings/*',
-        'login',
-        'register',
-        'forgot-password',
-        'reset-password/*',
-        'verify-email*',
-        'confirm-password',
-    ];
-
-    /**
      * Determines the current asset version.
      *
      * @see https://inertiajs.com/asset-versioning
