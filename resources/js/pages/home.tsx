@@ -57,6 +57,7 @@ export default function Home() {
         galleryImages[0] ??
         'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2200&q=85';
     const serviceImages = SERVICES.map((service, index) => galleryImages[index] ?? service.image);
+    const galleryItems = gallery.filter((item) => item.image_url).slice(0, 5);
 
     return (
         <PublicLayout preloadImage={heroImage}>
@@ -220,6 +221,65 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+
+                {/* Gallery Preview Section */}
+                {galleryItems.length > 0 && (
+                    <section id="gallery" className="bg-night relative border-t border-white/10 py-24 lg:py-36">
+                        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                            <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+                                <div>
+                                    <p className="text-cyan font-mono text-[11px] tracking-[.2em] uppercase">Dokumentasi / 03</p>
+                                    <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-.05em] sm:text-6xl">
+                                        Pekerjaan nyata di lapangan.
+                                    </h2>
+                                    <p className="text-soft mt-6 max-w-xl text-[15px] leading-8">
+                                        Lihat sebagian dokumentasi proyek dan solusi teknis yang telah kami kerjakan untuk berbagai kebutuhan
+                                        industri.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/projects"
+                                    className="text-cyan inline-flex items-center gap-2 text-sm font-semibold tracking-[.14em] uppercase hover:underline"
+                                >
+                                    Lihat Semua Proyek <Icon icon="lucide:arrow-right" className="text-base" />
+                                </Link>
+                            </div>
+
+                            <div className="grid gap-5 lg:grid-cols-2">
+                                {galleryItems.map((item, index) => (
+                                    <Link
+                                        key={item.id}
+                                        href="/projects"
+                                        className={`${index === 0 ? 'lg:row-span-2' : ''} group hover:border-cyan/70 relative min-h-72 overflow-hidden border border-white/10 transition duration-500`}
+                                    >
+                                        <img
+                                            src={item.image_url as string}
+                                            alt={item.caption || item.project || 'Dokumentasi proyek CPS'}
+                                            width={index === 0 ? 1200 : 800}
+                                            height={index === 0 ? 900 : 600}
+                                            loading="lazy"
+                                            className="h-full min-h-72 w-full object-cover transition duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent" />
+                                        <div className="absolute right-5 bottom-5 left-5 flex items-end justify-between gap-4">
+                                            <div>
+                                                <p className="text-cyan font-mono text-[10px] tracking-[.16em] uppercase">
+                                                    {item.category?.name ?? 'Dokumentasi Proyek'}
+                                                </p>
+                                                <h3 className="mt-2 text-xl font-semibold text-white">{item.caption}</h3>
+                                                {item.project && <p className="text-soft mt-1 text-sm">{item.project}</p>}
+                                            </div>
+                                            <Icon
+                                                icon="lucide:arrow-up-right"
+                                                className="text-cyan shrink-0 text-2xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                            />
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                )}
 
                 {/* Contact CTA Section */}
                 <section id="contact" className="bg-night relative border-t border-white/10 py-24 lg:py-36">
