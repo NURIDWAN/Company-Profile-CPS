@@ -38,7 +38,7 @@ class ProjectReferenceController extends Controller
             'user' => 'required|string|max:255',
             'year' => 'nullable|integer|min:1970|max:2100',
             'project' => 'required|string|max:500',
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:5120'],
+            'image' => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
         ]);
 
         ProjectReference::create($this->attributes($request, $validated));
@@ -55,7 +55,7 @@ class ProjectReferenceController extends Controller
             'user' => 'required|string|max:255',
             'year' => 'nullable|integer|min:1970|max:2100',
             'project' => 'required|string|max:500',
-            'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:5120'],
+            'image' => ['nullable', 'file', 'mimes:jpeg,jpg,png,webp', 'max:2048'],
         ]);
 
         $reference->update($this->attributes($request, $validated, $reference));

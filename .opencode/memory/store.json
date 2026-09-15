@@ -1,0 +1,6 @@
+{
+  "keputusan_terakhir": {
+    "value": "Memperbaiki 403 saat create referensi proyek di resources/js/pages/admin/projects.tsx: create tidak lagi memaksa forceFormData atau mengirim _method undefined; update tetap POST multipart dengan _method=put. Verifikasi: 98 test Laravel lulus, 544 assertions, npm build, tsc, ESLint lulus.",
+    "updatedAt": "2026-09-15T08:18:14.373Z"
+  }
+}

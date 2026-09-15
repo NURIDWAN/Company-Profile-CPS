@@ -61,7 +61,10 @@ export default function Projects({ references, category }: { references: Paginat
         if (editing) {
             post(route('admin.projects.update', editing.id), { forceFormData: true, onSuccess: () => setOpen(false) });
         } else {
-            post(route('admin.projects.store'), { onSuccess: () => setOpen(false) });
+            post(route('admin.projects.store'), {
+                forceFormData: true,
+                onSuccess: () => setOpen(false),
+            });
         }
     };
 
@@ -161,7 +164,30 @@ export default function Projects({ references, category }: { references: Paginat
                                             id="image"
                                             type="file"
                                             accept="image/jpeg,image/png,image/webp"
-                                            onChange={(event) => setData('image', event.target.files?.[0] ?? null)}
+                                            onChange={(event) => {
+                                                const file = event.target.files?.[0];
+
+                                                if (!file) {
+                                                    setData('image', null);
+                                                    return;
+                                                }
+
+                                                const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+                                                if (!allowedTypes.includes(file.type)) {
+                                                    event.target.value = '';
+                                                    setData('image', null);
+                                                    return;
+                                                }
+
+                                                if (file.size > 2 * 1024 * 1024) {
+                                                    event.target.value = '';
+                                                    setData('image', null);
+                                                    return;
+                                                }
+
+                                                setData('image', file);
+                                            }}
                                             className="border-input bg-background h-9 rounded-md border px-3 py-1 text-sm"
                                         />
                                         <ImageUploadPreview
