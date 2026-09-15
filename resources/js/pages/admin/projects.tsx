@@ -56,15 +56,12 @@ export default function Projects({ references, category }: { references: Paginat
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        transform((formData) => ({
-            ...formData,
-            _method: editing ? 'put' : undefined,
-        }));
+        transform((formData) => (editing ? { ...formData, _method: 'put' } : formData));
 
         if (editing) {
             post(route('admin.projects.update', editing.id), { forceFormData: true, onSuccess: () => setOpen(false) });
         } else {
-            post(route('admin.projects.store'), { forceFormData: true, onSuccess: () => setOpen(false) });
+            post(route('admin.projects.store'), { onSuccess: () => setOpen(false) });
         }
     };
 
